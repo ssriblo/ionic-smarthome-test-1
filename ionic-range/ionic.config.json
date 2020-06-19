@@ -1,0 +1,8 @@
+{
+  "name": "ionic-range",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

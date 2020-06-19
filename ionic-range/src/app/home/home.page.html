@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-title>
+      Умный дом
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-toolbar color="secondary">
+  <div class="ion-padding">
+    <h1  align="center"><b><font size="+7"> {{rangeVal}} </font></b></h1>
+    <ion-item>
+      <ion-range (ionChange)="updateRange()" [(ngModel)]="rangeVal" pin="false" min="10" max="35" step="1" snaps="true" color="secondary" ticks="false">
+        <ion-icon slot="start" color="danger" size="small" name="thermometer"></ion-icon>
+          <ion-icon slot="end" color="danger" name="thermometer"></ion-icon>
+      </ion-range>
+    </ion-item>
+  </div>
+</ion-toolbar>
+
+
+<ion-content padding>
+   <ion-toolbar>
+    <section class="full-width">
+        <ion-button [fill]="isFillComfort" strong="true" shape="round" size="large" expand="full" color="secondary" (click)="clickComfort()" [disabled]="isDisabledComfort">Комфорт</ion-button>
+    </section>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <section class="full-width">
+      <ion-button [fill]="isFillEconom" strong="true"  shape="round" size="large" expand="full" color="secondary" (click)="clickEconom()" [disabled]="isDisabledEconom">Эконом</ion-button>
+    </section>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <section class="full-width">
+      <ion-button [fill]="isFillTimetable" strong="true"  shape="round" size="large" expand="full" color="secondary" (click)="clickTimetable()" [disabled]="isDisabledTimetable" >Расписание</ion-button>
+    </section>
+  </ion-toolbar>
+</ion-content>
