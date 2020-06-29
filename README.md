@@ -2,8 +2,15 @@
 first step to try ionic/angular/ion-range/ion-button
 ------------------------------
 
-web server at /ionic-smarthome-test-1/web_serv
-mobile app at /ionic-smarthome-test-1/ionic-range
+web server at 
+
+/ionic-smarthome-test-1/web_serv
+
+mobile app at 
+
+/ionic-smarthome-test-1/ionic-range
+
+------------------------------
 
 For start 
 
