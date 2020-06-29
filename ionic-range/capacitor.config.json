@@ -1,13 +1,1 @@
-{
-  "appId": "io.ionic.starter",
-  "appName": "ionic-range",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {}
-}
+{}
