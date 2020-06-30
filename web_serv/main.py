@@ -36,7 +36,7 @@ def index():
 #POST allright b'{"12345"}'
 @app.route("/api/post_data", methods=['POST', 'GET'])
 def post_fun():
-    weather_temp = request_current_weather(520555,) # 520555 - Nizhniy Novgorod
+    weather_temp = "%.1f" % (request_current_weather(520555,) ) # 520555 - Nizhniy Novgorod
 #    print(">1 ",request.path, " >2")
 #    print(">2 ",request.pragma, " >2")
 #    print(">3 ",request.view_args, " >2")
