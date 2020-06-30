@@ -9,6 +9,8 @@ import { Platform } from '@ionic/angular';
 
 export class HomePage {
   rangeVal:string;
+  weather_t_s:string = "0";
+  room_t_s:string = "0";
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
@@ -70,6 +72,8 @@ export class HomePage {
   .then((data) => {
       console.log('FROM SERVER: ', data); 
       console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
+      this.room_t_s = data['room_temp']
+      this.weather_t_s = data['weather_temp']
     });
   
   }

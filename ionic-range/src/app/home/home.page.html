@@ -6,35 +6,33 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-grid>
+<ion-grid fixed=false>
   <ion-row >
     <ion-col >
-      <div class="ion-padding">
-        <h1  align="left"><b><font size="+7"> {{rangeVal}} </font></b></h1>
-      </div>
-    </ion-col>
-    <ion-col >
-      <div>
-        <h1  align="left"><b><font size="+7"><pre> </pre></font></b></h1>
-      </div>
-    </ion-col>
-    <ion-col >
-      <div>
-        <h1  align="left"><b><font size="+7"><pre> </pre></font></b></h1>
-      </div>
-    </ion-col>
-    <ion-col >
-      <div>
-        <h1  align="left"><b><font size="+7"><pre> </pre></font></b></h1>
-      </div>
-    </ion-col>
-    <ion-col >
-      <div class="ion-padding">
-        <h1  align="right"><b><font size="+7"> {{rangeVal}} </font></b></h1>
-      </div>
-    </ion-col>
-  </ion-row>
+
+  <table border = "1"> <!--начало содержимого таблицы-->
+    <tr> <!--описываем вторую строку-->
+      <td>
+        <div class="ion-padding">
+          <h1  align="center"><b><font size="+3"> {{room_t_s}} </font></b></h1>
+        </div>
+      </td>
+      <td><pre>       </pre></td>
+      <td>
+        <div class="ion-padding">
+          <h1  align="center"><b><font size="+3"> {{weather_t_s}} </font></b></h1>
+        </div>
+
+      </td>
+    </tr>
+  </table> <!-- конец таблицы-->
+
+</ion-col>
+
+</ion-row>
+
 </ion-grid>
+
 
 <ion-toolbar color="secondary">
   <div class="ion-padding">

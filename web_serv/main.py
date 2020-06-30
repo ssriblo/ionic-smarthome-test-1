@@ -24,19 +24,17 @@ def request_current_weather(city_id):
 app = Flask(__name__)
 CORS(app)
 
-def weather_ask():
-    flask()
 
 @app.route("/")
 def index():
-    return "You went to www.example.com"
+    return "<form>  Curtain Opening Time: <br><input type =\"text\" name=\"Curtain_OPENTIME\"><br></form>"
 
 
 # POST Request example:
 # curl -i -H "Content-Type: text/html; charset=UTF-8" -X POST -d '{"12345"}'  http://127.0.0.1:8080/api/post_data
 # return:
 #POST allright b'{"12345"}'
-@app.route("/api/post_data", methods=['POST'])
+@app.route("/api/post_data", methods=['POST', 'GET'])
 def post_fun():
     weather_temp = request_current_weather(520555,) # 520555 - Nizhniy Novgorod
 #    print(">1 ",request.path, " >2")
@@ -48,7 +46,7 @@ def post_fun():
 #    print(">7 ",request.get_data(), " >2")
     data = request.json
     print("TARGET t=", data, type(data), data['target_t'])
-    room_temp = 25.5
+    room_temp = data['target_t'] - 1.5
     return {'room_temp': room_temp,  'weather_temp': weather_temp}
 
 @app.route('/api3')
