@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">ionic-range</string>
-    <string name="title_activity_main">ionic-range</string>
-    <string name="package_name">io.ionic.ionic_range_test_1</string>
-    <string name="custom_url_scheme">io.ionic.ionic_range_test_1</string>
-</resources>
