@@ -9,14 +9,15 @@ import { Platform } from '@ionic/angular';
 
 export class HomePage {
   rangeVal:string;
-  weather_t_s:string = "0";
-  room_t_s:string = "0";
+  weather_t_s:string = "   ";
+  room_t_s:string = "";
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
   constructor(public platform:Platform) {
     this.platform.ready().then(()=>{
       this.rangeVal = "22";
+      this.room_t_s  = "20.5"
     })
   }
 
@@ -66,16 +67,13 @@ export class HomePage {
       this.isFillEconom = "solid"
     }
     console.log('update rangeVal', this.rangeVal, this.isFillComfort, this.isFillEconom)
- //   this.fetch_fun()
-
- this.postData('http://127.0.0.1:8080/api/post_data', { target_t: this.rangeVal })
-  .then((data) => {
-      console.log('FROM SERVER: ', data); 
-      console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
-      this.room_t_s = data['room_temp']
-      this.weather_t_s = data['weather_temp']
+    this.postData('http://127.0.0.1:8080/api/post_data', { target_t: this.rangeVal })
+      .then((data) => {
+          console.log('FROM SERVER: ', data); 
+          console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
+          this.room_t_s = data['room_temp']
+          this.weather_t_s = data['weather_temp']
     });
-  
   }
 
   isDisabledTimetable = true

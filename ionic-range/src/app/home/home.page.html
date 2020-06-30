@@ -6,12 +6,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-grid fixed=false>
-  <ion-row >
-    <ion-col >
 
-  <table border = "1"> <!--начало содержимого таблицы-->
-    <tr> <!--описываем вторую строку-->
+  <table border = "0" width=100%> <!--начало содержимого таблицы-->
+    <tr color=#3880ff> <!--описываем вторую строку-->
       <td>
         <div class="ion-padding">
           <h1  align="center"><b><font size="+3"> {{room_t_s}} </font></b></h1>
@@ -27,16 +24,11 @@
     </tr>
   </table> <!-- конец таблицы-->
 
-</ion-col>
-
-</ion-row>
-
-</ion-grid>
 
 
 <ion-toolbar color="secondary">
   <div class="ion-padding">
-    <h1  align="center"><b><font size="+7"> {{rangeVal}} </font></b></h1>
+    <h1  align="center" style=font-size:600%><b> {{rangeVal}}</b></h1>
     <ion-item>
       <ion-range (ionChange)="updateRange()" [(ngModel)]="rangeVal" pin="false" min="10" max="35" step="1" snaps="true" color="secondary" ticks="false">
         <ion-icon slot="start" color="danger" size="small" name="thermometer"></ion-icon>
