@@ -14,6 +14,8 @@ export class HomePage {
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
+//  url_post = 'http://127.0.0.1:8080/api/post_data'
+  url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
   constructor(public platform:Platform) {
     this.platform.ready().then(()=>{
       this.rangeVal = "22";
@@ -67,7 +69,7 @@ export class HomePage {
       this.isFillEconom = "solid"
     }
     console.log('update rangeVal', this.rangeVal, this.isFillComfort, this.isFillEconom)
-    this.postData('http://127.0.0.1:8080/api/post_data', { target_t: this.rangeVal })
+    this.postData(this.url_post, { target_t: this.rangeVal })
       .then((data) => {
           console.log('FROM SERVER: ', data); 
           console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
