@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { IonRouterOutlet } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
+const { App } = Plugins;
 
 @Component({
   selector: 'app-home',
@@ -16,11 +19,17 @@ export class HomePage {
   isFillTimetable = "outline";
 //  url_post = 'http://127.0.0.1:8080/api/post_data'
   url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
-  constructor(public platform:Platform) {
+
+  constructor(public platform:Platform, private routerOutlet: IonRouterOutlet) {
     this.platform.ready().then(()=>{
       this.rangeVal = "22";
       this.room_t_s  = "20.5"
     })
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      if (!this.routerOutlet.canGoBack()) {
+        App.exitApp();
+      }
+    });
   }
 
   async postData(url = '', data = {}) {
