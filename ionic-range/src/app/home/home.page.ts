@@ -30,7 +30,23 @@ export class HomePage {
         App.exitApp();
       }
     });
+    setInterval(()=> {
+      console.log("every 4s");
+    //   this.postData(this.url_post, { target_t: this.rangeVal })
+    //   .then((data) => {
+    //       console.log('FROM SERVER: ', data); 
+    //       console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
+    //       this.room_t_s = data['room_temp']
+    //       this.weather_t_s = data['weather_temp']
+    // });
+    },4000);       
+
+    platform.ready().then(() => {
+      console.log("platform ready");
+    });
   }
+
+
 
   async postData(url = '', data = {}) {
     // Default options are marked with *
