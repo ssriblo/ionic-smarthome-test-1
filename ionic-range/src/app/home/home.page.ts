@@ -31,11 +31,9 @@ export class HomePage {
       }
     });
     setInterval(()=> {
-      console.log("every 10s");
+      console.log("every 60s");
     this.postDataWrap();
-    },10000);       
-
-    this.postDataWrap();
+    },60000);       
     this.postDataWrap();
   }
 
