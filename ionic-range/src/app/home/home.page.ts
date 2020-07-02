@@ -11,7 +11,7 @@ const { App } = Plugins;
 })
 
 export class HomePage {
-  rangeVal:string;
+  rangeVal:string = "22";
   weather_t_s:string = "   ";
   room_t_s:string = "";
   isFillComfort = "solid";
@@ -31,21 +31,23 @@ export class HomePage {
       }
     });
     setInterval(()=> {
-      console.log("every 4s");
-    //   this.postData(this.url_post, { target_t: this.rangeVal })
-    //   .then((data) => {
-    //       console.log('FROM SERVER: ', data); 
-    //       console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
-    //       this.room_t_s = data['room_temp']
-    //       this.weather_t_s = data['weather_temp']
-    // });
-    },4000);       
+      console.log("every 10s");
+    this.postDataWrap();
+    },10000);       
 
-    platform.ready().then(() => {
-      console.log("platform ready");
-    });
+    this.postDataWrap();
+    this.postDataWrap();
   }
 
+  postDataWrap() {
+    this.postData(this.url_post, { target_t: this.rangeVal })
+    .then((data) => {
+        console.log('FROM SERVER: ', data); 
+        console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
+        this.room_t_s = data['room_temp']
+        this.weather_t_s = data['weather_temp']
+    });
+  }
 
 
   async postData(url = '', data = {}) {
@@ -94,13 +96,14 @@ export class HomePage {
       this.isFillEconom = "solid"
     }
     console.log('update rangeVal', this.rangeVal, this.isFillComfort, this.isFillEconom)
-    this.postData(this.url_post, { target_t: this.rangeVal })
-      .then((data) => {
-          console.log('FROM SERVER: ', data); 
-          console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
-          this.room_t_s = data['room_temp']
-          this.weather_t_s = data['weather_temp']
-    });
+    // this.postData(this.url_post, { target_t: this.rangeVal })
+    //   .then((data) => {
+    //       console.log('FROM SERVER: ', data); 
+    //       console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
+    //       this.room_t_s = data['room_temp']
+    //       this.weather_t_s = data['weather_temp']
+    // });
+    this.postDataWrap();
   }
 
   isDisabledTimetable = true

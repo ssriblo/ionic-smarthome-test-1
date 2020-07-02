@@ -45,8 +45,11 @@ def post_fun():
 #    print(">6 ",request.data, " >2")
 #    print(">7 ",request.get_data(), " >2")
     data = request.json
-    print("TARGET t=", data, type(data), data['target_t'])
-    room_temp = data['target_t'] - 1.5
+#    print("TARGET t=", data, type(data), data['target_t'])
+    try:
+        room_temp = data['target_t'] - 1.5
+    except: # catch *all* exception
+        room_temp = 20.5
     return {'room_temp': room_temp,  'weather_temp': weather_temp}
 
 @app.route('/api3')
