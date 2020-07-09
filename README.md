@@ -70,3 +70,15 @@ Example:
 {
   "linuxAndroidStudioPath": "/usr/local/android-studio/bin/studio.sh"
 }
+
+------------------
+Строим мобильное приложение
+~/Working/Angular/Angular_20h_course/ionic-smarthome-test-1/ionic-range/src$ npx cap init
+
+Follow the Developer Workflow guide to get building: https://capacitor.ionicframework.com/docs/basics/workflow
+
+ionic cap add android
+
+Заработало построение apk файл на Linux!
+
+--------------------------
