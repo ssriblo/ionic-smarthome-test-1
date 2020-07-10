@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { IonRouterOutlet } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 const { App } = Plugins;
 
 @Component({
@@ -10,17 +13,20 @@ const { App } = Plugins;
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage {
+export class HomePage  implements OnInit  {
   rangeVal:string = "22";
   weather_t_s:string = "   ";
   room_t_s:string = "";
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
+
+  films: Observable<any>;
+
 //  url_post = 'http://127.0.0.1:8080/api/post_data'
   url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
 
-  constructor(public platform:Platform, private routerOutlet: IonRouterOutlet) {
+  constructor(public platform:Platform, private routerOutlet: IonRouterOutlet,  private http: HttpClient) {
     this.platform.ready().then(()=>{
       this.rangeVal = "22";
       this.room_t_s  = "20.5"
@@ -32,19 +38,15 @@ export class HomePage {
     });
     setInterval(()=> {
       console.log("every 60s");
-    this.postDataWrap();
+//    this.postDataWrap();
+    this.ngPostData();
     },60000);       
-    this.postDataWrap();
+//    this.postDataWrap();
+    this.ngPostData();
   }
 
-  postDataWrap() {
-    this.postData(this.url_post, { target_t: this.rangeVal })
-    .then((data) => {
-        console.log('FROM SERVER: ', data); 
-        console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
-        this.room_t_s = data['room_temp']
-        this.weather_t_s = data['weather_temp']
-    });
+
+  ngOnInit() {
   }
 
 
@@ -66,22 +68,18 @@ export class HomePage {
 });
     return await response.json(); // parses JSON response into native JavaScript objects
   }
-
+  ngPostData(url = this.url_post, data = { target_t: this.rangeVal }) {
+    const body = data // body data type must match "Content-Type" header
+    return this.http.post(url, body).subscribe(
+      out => {
+        console.log('FROM SERVER: ', out); 
+        console.log("ROOM t=", out['room_temp'], "WEATHER t=", out["weather_temp"])
+        this.room_t_s = out['room_temp']
+        this.weather_t_s = out['weather_temp']
+      }
+    );
+  }
  
-
- async fetch_fun() {
-   let response = await fetch('http://127.0.0.1:8080/temperature/26');
-   console.log(response.type)
-   if (response.ok) { // если HTTP-статус в диапазоне 200-299
-     // получаем тело ответа 
-     let text = await response.text();
-     console.log("TEXT RESPOSE: ",text)
-   } else {
-     alert("Ошибка HTTP: " + response.status);
-   }
- }
-
-
   updateRange() {
     if ((this.rangeVal != "22") && (this.rangeVal != "18")) {
       this.isFillComfort = "outline"
@@ -101,7 +99,9 @@ export class HomePage {
     //       this.room_t_s = data['room_temp']
     //       this.weather_t_s = data['weather_temp']
     // });
-    this.postDataWrap();
+//    this.postDataWrap();
+    this.ngPostData();
+
   }
 
   isDisabledTimetable = true
