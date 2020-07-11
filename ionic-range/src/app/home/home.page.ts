@@ -4,6 +4,7 @@ import { IonRouterOutlet } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 const { App } = Plugins;
 
@@ -26,7 +27,7 @@ export class HomePage  implements OnInit  {
 //  url_post = 'http://127.0.0.1:8080/api/post_data'
   url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
 
-  constructor(public platform:Platform, private routerOutlet: IonRouterOutlet,  private http: HttpClient) {
+  constructor(public platform:Platform, private routerOutlet: IonRouterOutlet,  private http: HttpClient, public router: Router) {
     this.platform.ready().then(()=>{
       this.rangeVal = "22";
       this.room_t_s  = "20.5"
@@ -40,7 +41,7 @@ export class HomePage  implements OnInit  {
       console.log("every 60s");
 //    this.postDataWrap();
     this.ngPostData();
-    },60000);       
+    },600000);       
 //    this.postDataWrap();
     this.ngPostData();
   }
@@ -49,6 +50,9 @@ export class HomePage  implements OnInit  {
   ngOnInit() {
   }
 
+  toSetupPage() {
+    this.router.navigate(['setup']);  
+  }
 
   async postData(url = '', data = {}) {
     // Default options are marked with *
