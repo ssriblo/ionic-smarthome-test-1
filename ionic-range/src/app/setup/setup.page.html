@@ -1,9 +1,40 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>setup</ion-title>
+  <ion-toolbar  color="secondary">
+    <ion-buttons slot="start"  (click)="toHomePage()">
+      <ion-icon size="large" name="arrow-back-outline"></ion-icon><h2>Назад</h2></ion-buttons>
+    <ion-title slot=""><h2>Настройки</h2></ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="secondary">
+  <ion-grid fixed style="background-color: #3dc2ff">
+    <ion-row>
+      <ion-col class="width-100" style="background-color:#3dc2ff ;">
+        <!--  -->
+          <ion-item class="inputarea">
+            <ion-label ><h1>Комфорт</h1></ion-label>
+            <ion-input 
+              class="inputform"
+              type="number"
+              placeholder="22.5"
+              name=comfort-t>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label><h1>Эконом</h1></ion-label>
+            <ion-input 
+              class="inputform"
+              type="number" 
+              placeholder="18.5"
+              name="econom-t">
+            </ion-input>
+          </ion-item>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
 
 </ion-content>
