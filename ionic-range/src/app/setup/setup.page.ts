@@ -14,6 +14,7 @@ export class SetupPage implements OnInit {
 
   ngOnInit() {
     this.getComfortT();
+    this.getEconomT();
   }
   toHomePage() {
     this.router.navigate(['home']);  
@@ -24,19 +25,29 @@ export class SetupPage implements OnInit {
     console.log(this.comfortInpVal, typeof this.comfortInpVal);
   }
   economInput() {
+    this.updateEconomT(this.economInpVal);
     console.log(this.economInpVal)
   }
 
   updateComfortT(val) {
     this.storage.set('comfortT', val);
-
   }
 
   getComfortT() {
-    // Or to get a key/value pair
     this.storage.get('comfortT').then((val) => {
-      console.log('comfortT is', val, typeof val);
+      console.log('comfortT is', val);
       this.comfortInpVal = val;
+    });  
+  }
+
+  updateEconomT(val) {
+    this.storage.set('economT', val);
+  }
+
+  getEconomT() {
+    this.storage.get('economT').then((val) => {
+      console.log('economT is', val);
+      this.economInpVal = val;
     });  
   }
 }
