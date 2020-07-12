@@ -20,5 +20,7 @@ export class SetupPage implements OnInit {
   comfortInput() {
     console.log(this.comfortInpVal)
   }
-
+  economInput() {
+    console.log(this.economInpVal)
+  }
 }
