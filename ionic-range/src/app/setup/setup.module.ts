@@ -6,7 +6,6 @@ import { SetupPageRoutingModule } from './setup-routing.module';
 import { SetupPage } from './setup.page';
 import { Storage, IonicStorageModule } from '@ionic/storage';
 
-
 @NgModule({
   imports: [
     CommonModule,

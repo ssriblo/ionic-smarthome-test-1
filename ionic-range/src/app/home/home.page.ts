@@ -5,6 +5,7 @@ import { Plugins } from '@capacitor/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 const { App } = Plugins;
 
@@ -15,22 +16,44 @@ const { App } = Plugins;
 })
 
 export class HomePage  implements OnInit  {
-  rangeVal:string = "22";
-  weather_t_s:string = "   ";
+  rangeVal:number;
+  comfortT: number;
+  economT: number;
+  weather_t_s:string = "";
   room_t_s:string = "";
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
-
-  films: Observable<any>;
-
 //  url_post = 'http://127.0.0.1:8080/api/post_data'
   url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
 
-  constructor(public platform:Platform, private routerOutlet: IonRouterOutlet,  private http: HttpClient, public router: Router) {
+  constructor(
+    public platform:Platform, 
+    private routerOutlet: IonRouterOutlet,  
+    private http: HttpClient, 
+    public router: Router,
+    private storage: Storage
+    ) {
     this.platform.ready().then(()=>{
-      this.rangeVal = "22";
       this.room_t_s  = "20.5"
+      this.storage.get('targetT').then((val) => {
+        if(val){
+          this.rangeVal = val
+          this.storage.get('comfortT').then((val) => {
+            this.comfortT = val;
+          });
+          this.storage.get('economT').then((val) => {
+            this.economT = val;
+          });
+          console.log('(constructor)HOME-targetT is', val, 'Comfort:', this.comfortT, 'Econom:', this.economT)      
+        }else{
+          val = 22;
+          this.rangeVal = val;
+          this.storage.set('targetT', val);
+          console.log('(constructor init val)HOME-targetT is', val)
+        }
+      });
+  
     })
     this.platform.backButton.subscribeWithPriority(-1, () => {
       if (!this.routerOutlet.canGoBack()) {
@@ -44,6 +67,10 @@ export class HomePage  implements OnInit  {
     },600000);       
 //    this.postDataWrap();
     this.ngPostData();
+    
+    this.storage.get('targetT').then((val) => {
+      console.log('(constructor)HOME-targetT is', val)
+    });
   }
 
 
@@ -85,17 +112,20 @@ export class HomePage  implements OnInit  {
   }
  
   updateRange() {
-    if ((this.rangeVal != "22") && (this.rangeVal != "18")) {
+    if ((this.rangeVal != this.comfortT) && (this.rangeVal != this.economT)) {
       this.isFillComfort = "outline"
       this.isFillEconom = "outline"
     }
-    if (this.rangeVal == "22" ) {
+    if (this.rangeVal == this.comfortT ) {
       this.isFillComfort = "solid"
     }
-    if (this.rangeVal == "18" ) {
+    if (this.rangeVal == this.economT ) {
       this.isFillEconom = "solid"
     }
-    console.log('update rangeVal', this.rangeVal, this.isFillComfort, this.isFillEconom)
+    console.log('update rangeVal', this.rangeVal, 
+      'Comfort', this.comfortT,
+      'Econom', this.economT,
+      this.isFillComfort, this.isFillEconom)
     // this.postData(this.url_post, { target_t: this.rangeVal })
     //   .then((data) => {
     //       console.log('FROM SERVER: ', data); 
@@ -105,6 +135,8 @@ export class HomePage  implements OnInit  {
     // });
 //    this.postDataWrap();
     this.ngPostData();
+    this.storage.set('targetT', this.rangeVal);
+
 
   }
 
@@ -114,19 +146,24 @@ export class HomePage  implements OnInit  {
     console.log('click Comfort')
     this.isFillComfort = "solid"
     this.isFillEconom = "outline"
-    this.rangeVal = "22";
+    this.storage.get('comfortT').then((val) => {
+      console.log('(click)HOME-comfortT is', val)
+      this.rangeVal = val;
+    });
   }
 
   clickEconom() {
     console.log('click Econom')
     this.isFillComfort = "outline"
     this.isFillEconom = "solid"
-    this.rangeVal = "18";
+    this.storage.get('economT').then((val) => {
+      console.log('(click)HOME-economT is', val)
+      this.rangeVal = val;
+    });
   }
 
   clickTimetable() {
     console.log('click Timetable')
-
   }
 }
 

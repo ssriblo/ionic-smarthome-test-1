@@ -22,11 +22,9 @@ export class SetupPage implements OnInit {
 
   comfortInput() {
     this.updateComfortT(this.comfortInpVal);
-    console.log(this.comfortInpVal, typeof this.comfortInpVal);
   }
   economInput() {
     this.updateEconomT(this.economInpVal);
-    console.log(this.economInpVal)
   }
 
   updateComfortT(val) {
