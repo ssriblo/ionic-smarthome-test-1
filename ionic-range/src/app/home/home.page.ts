@@ -25,7 +25,8 @@ export class HomePage  implements OnInit  {
   isFillEconom = "outline";
   isFillTimetable = "outline";
 //  url_post = 'http://127.0.0.1:8080/api/post_data'
-  url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
+url_serv = 'http://localhost:8080/OVK/OVK_mob1/1.0.4/'
+url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
 
   constructor(
     public platform:Platform, 
@@ -33,46 +34,46 @@ export class HomePage  implements OnInit  {
     private http: HttpClient, 
     public router: Router,
     private storage: Storage
-    ) {
-    this.platform.ready().then(()=>{
-      this.room_t_s  = "20.5"
-      this.storage.get('targetT').then((val) => {
-        if(val){
-          this.rangeVal = val
-          this.storage.get('comfortT').then((val) => {
-            this.comfortT = val;
-          });
-          this.storage.get('economT').then((val) => {
-            this.economT = val;
-          });
-          console.log('(constructor)HOME-targetT is', val, 'Comfort:', this.comfortT, 'Econom:', this.economT)      
-        }else{
-          val = 22;
-          this.rangeVal = val;
-          this.storage.set('targetT', val);
-          console.log('(constructor init val)HOME-targetT is', val)
+    ) 
+    {
+      this.platform.ready().then(()=>{
+        this.room_t_s  = "20.5"
+        this.storage.get('targetT').then((val) => {
+          if(val){
+            this.rangeVal = val
+            this.storage.get('comfortT').then((val) => {
+              this.comfortT = val;
+            });
+            this.storage.get('economT').then((val) => {
+              this.economT = val;
+            });
+            console.log('(constructor)HOME-targetT is', val, 'Comfort:', this.comfortT, 'Econom:', this.economT)      
+          }else{
+            val = 22;
+            this.rangeVal = val;
+            this.storage.set('targetT', val);
+            console.log('(constructor init val)HOME-targetT is', val)
+          }
+        });
+    
+      }) // this.platform.ready().then()
+      this.platform.backButton.subscribeWithPriority(-1, () => {
+        if (!this.routerOutlet.canGoBack()) {
+          App.exitApp();
         }
       });
-  
-    })
-    this.platform.backButton.subscribeWithPriority(-1, () => {
-      if (!this.routerOutlet.canGoBack()) {
-        App.exitApp();
-      }
-    });
-    setInterval(()=> {
-      console.log("every 60s");
-//    this.postDataWrap();
-    this.ngPostData();
-    },600000);       
-//    this.postDataWrap();
-    this.ngPostData();
-    
-    this.storage.get('targetT').then((val) => {
-      console.log('(constructor)HOME-targetT is', val)
-    });
+      setInterval(()=> {
+        console.log("every 60s");
+  //    this.postDataWrap();
+      this.ngPostData();
+      },600000);       
+  //    this.postDataWrap();
+      this.ngPostData();
+      
+      this.storage.get('targetT').then((val) => {
+        console.log('(constructor)HOME-targetT is', val)
+      });
   }
-
 
   ngOnInit() {
   }
@@ -99,6 +100,7 @@ export class HomePage  implements OnInit  {
 });
     return await response.json(); // parses JSON response into native JavaScript objects
   }
+//////////////  
   ngPostData(url = this.url_post, data = { target_t: this.rangeVal }) {
     const body = data // body data type must match "Content-Type" header
     return this.http.post(url, body).subscribe(
@@ -110,7 +112,24 @@ export class HomePage  implements OnInit  {
       }
     );
   }
- 
+
+  ngGetPostData(url=this.url_serv, data = {target_t: this.rangeVal}) {
+    const body = data // body data type must match "Content-Type" header
+    const apartment = '133'
+    const urlPostSuff = 'updateTargetTemperature/'
+    const urlPostTarget = url.concat(urlPostSuff.concat(apartment))
+    this.http.post(urlPostTarget, {"id":"target_room_t", "value":data['target_t']}).subscribe(
+      out => { console.log('POST FROM SERVER: ', out); 
+      }
+    );
+    const urlGetRoomTSuff = 'temperatureRoom/'
+    const urlGetTargetTSuff = ''
+    const urlGetComfortTSuff = ''
+    const urlGetEconomTSuff = ''
+    const urlGet = url.concat(urlGetRoomTSuff.concat(apartment))
+    this.http.get(urlGet).subscribe(out => {console.log('GET FROM SERVER:', out)})
+  }
+ //////////////
   updateRange() {
     if ((this.rangeVal != this.comfortT) && (this.rangeVal != this.economT)) {
       this.isFillComfort = "outline"
@@ -135,6 +154,7 @@ export class HomePage  implements OnInit  {
     // });
 //    this.postDataWrap();
     this.ngPostData();
+    this.ngGetPostData();
     this.storage.set('targetT', this.rangeVal);
 
 
