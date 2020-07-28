@@ -1,0 +1,499 @@
+openapi: 3.0.0
+info:
+  title: home-iot-api
+  description: The API for the OVK-1 IOT project
+  version: 1.0.4
+servers:
+- url: https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.4
+  description: SwaggerHub API Auto Mocking
+paths:
+  /temperatureRoom/{apartment}:
+    get:
+      tags:
+      - Environment
+      operationId: temperature_room
+      parameters:
+      - name: apartment
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureSensorGet'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /temperatureWater/{apartment}:
+    get:
+      tags:
+      - Environment
+      operationId: temperature_water
+      parameters:
+      - name: apartment
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureSensorGet'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /temperatureWeather:
+    get:
+      tags:
+      - Environment
+      summary: Call current weather data for one location
+      operationId: temperature_weather
+      parameters:
+      - name: q
+        in: query
+        description: '**City name**. *Example: London*. You can call by city name,
+          or by city name and country code. The API responds with a list of results
+          that match a searching word. For the query value, type the city name and
+          optionally the country code divided by a comma; use ISO 3166 country codes.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: '**City ID**. *Example: `2172797`*. You can call by city ID.
+          The API responds with the exact result. The List of city IDs can be downloaded
+          [here](http://bulk.openweathermap.org/sample/). You can include multiple
+          cities in this parameter &mdash; just separate them by commas. The limit
+          of locations is 20. *Note: A single ID counts as a one API call. So, if
+          you have city IDs, it''s treated as 3 API calls.*'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: lat
+        in: query
+        description: '**Latitude**. *Example: 35*. The latitude coordinate of the
+          location of your interest. Must use with `lon`.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: lon
+        in: query
+        description: '**Longitude**. *Example: 139*. Longitude coordinate of the location
+          of your interest. Must use with `lat`.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: zip
+        in: query
+        description: '**Zip code**. Search by zip code. *Example: 95050,us*. Please
+          note that if the country is not specified, the search uses USA as a default.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureSensorGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /targetTemperature/{apartment}:
+    get:
+      tags:
+      - Environment
+      operationId: target_temperature
+      parameters:
+      - name: apartment
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureTargetGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /temperatureComfort/{apartment}:
+    get:
+      tags:
+      - Environment
+      operationId: temperature_comfort
+      parameters:
+      - name: apartment
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureTargetGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /temperatureEconom/{apartment}:
+    get:
+      tags:
+      - Environment
+      operationId: temperature_econom
+      parameters:
+      - name: apartment
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureTargetGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /updateTargetTemperature/{apartment}:
+    post:
+      tags:
+      - Environment
+      description: target room temperature
+      operationId: update_target_temperature
+      parameters:
+      - name: apartment
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: target t
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemperaturePost'
+        required: true
+      responses:
+        "200":
+          description: Status of the operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /updateComfortTemperature/{apartment}:
+    post:
+      tags:
+      - Environment
+      description: target room temperature
+      operationId: update_comfort_temperature
+      parameters:
+      - name: apartment
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: Comfort t
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemperaturePost'
+        required: true
+      responses:
+        "200":
+          description: Status of the operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /updateEconomTemperature/{apartment}:
+    post:
+      tags:
+      - Environment
+      description: target room temperature
+      operationId: update_econom_temperature
+      parameters:
+      - name: apartment
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: Econom t
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemperaturePost'
+        required: true
+      responses:
+        "200":
+          description: Status of the operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+components:
+  schemas:
+    TemperatureTargetGet:
+      required:
+      - id
+      - value
+      type: object
+      properties:
+        id:
+          type: string
+          description: the unique identifier for the zone
+        name:
+          type: string
+        value:
+          type: integer
+          description: the temperature in "Kelvin", step=0.1K
+          format: int16
+      description: temperature target value
+      example:
+        name: name
+        id: id
+        value: 0
+    TemperatureSensorGet:
+      required:
+      - id
+      - status
+      - timestamp
+      - value
+      type: object
+      properties:
+        id:
+          type: string
+          description: the unique identifier for the zone
+        name:
+          type: string
+        value:
+          type: integer
+          description: the temperature in "Kelvin", step=0.1K
+          format: int16
+        timestamp:
+          type: string
+          description: the timestamp when the temperature was measured
+          format: date-time
+        status:
+          type: string
+      description: temperature sensor value and status (normal, failed and so on)
+      example:
+        name: name
+        id: id
+        value: 0
+        timestamp: 2000-01-23T04:56:07.000+00:00
+        status: status
+    TemperaturePost:
+      required:
+      - id
+      - value
+      type: object
+      properties:
+        id:
+          type: string
+          description: the unique identifier for the zone
+        value:
+          type: integer
+          description: the temperature in "Kelvin", step=0.1K
+          format: int16
+      description: Target temperature from user
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+          example: everything is ok
+      example:
+        code: 0
+        message: everything is ok
+    HeaterState:
+      type: object
+      properties:
+        id:
+          type: string
+        state:
+          type: string
+      description: Just for case, not used yet
+    DeviceState:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        lastUpdate:
+          type: string
+          format: date-time
+        level:
+          type: integer
+          format: int32
+      description: Just for case, not used yet
+    DeviceRegistrationInfo:
+      type: object
+      properties:
+        uri:
+          type: string
+          format: uri
+          example: http://10.0.0.220:8080
+        id:
+          type: string
+          format: uuid
+          example: 0729a580-2240-11e6-9eb5-0002a5d5c51b
+      description: Just for case, not used yet
+    Errors:
+      type: object
+      properties:
+        status:
+          type: integer
+        type:
+          type: string
+        message:
+          type: string
+  parameters:
+    q:
+      name: q
+      in: query
+      description: '**City name**. *Example: London*. You can call by city name, or
+        by city name and country code. The API responds with a list of results that
+        match a searching word. For the query value, type the city name and optionally
+        the country code divided by a comma; use ISO 3166 country codes.'
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    id:
+      name: id
+      in: query
+      description: '**City ID**. *Example: `2172797`*. You can call by city ID. The
+        API responds with the exact result. The List of city IDs can be downloaded
+        [here](http://bulk.openweathermap.org/sample/). You can include multiple cities
+        in this parameter &mdash; just separate them by commas. The limit of locations
+        is 20. *Note: A single ID counts as a one API call. So, if you have city IDs,
+        it''s treated as 3 API calls.*'
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    lat:
+      name: lat
+      in: query
+      description: '**Latitude**. *Example: 35*. The latitude coordinate of the location
+        of your interest. Must use with `lon`.'
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    lon:
+      name: lon
+      in: query
+      description: '**Longitude**. *Example: 139*. Longitude coordinate of the location
+        of your interest. Must use with `lat`.'
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+    zip:
+      name: zip
+      in: query
+      description: '**Zip code**. Search by zip code. *Example: 95050,us*. Please
+        note that if the country is not specified, the search uses USA as a default.'
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+
