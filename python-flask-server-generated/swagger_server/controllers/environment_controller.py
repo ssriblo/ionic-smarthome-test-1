@@ -8,6 +8,13 @@ from swagger_server.models.temperature_sensor_get import TemperatureSensorGet  #
 from swagger_server.models.temperature_target_get import TemperatureTargetGet  # noqa: E501
 from swagger_server import util
 
+import os    
+credential_path = "/media/me/86D07263D072597F/OVK/SwaggerAPI/104/web-serv13802-c8a969d5a2ed.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
+from google.cloud import firestore
+# Project ID is determined by the GCLOUD_PROJECT environment variable
+db = firestore.Client()
+
 class TempVal():
     # This is set for temperatures
     targetT: int
@@ -18,6 +25,18 @@ class TempVal():
     waterT: int
 
     def __init__(self):
+        doc_ref = db.collection(u'smarthome').document(u'test-apartment-133') # Let apartment=133 for test only
+        doc_ref.set({
+        u'targetT': 21
+        })
+        doc_ref = db.collection(u'smarthome').document(u'test-apartment-133')
+
+        doc = doc_ref.get()
+        if doc.exists:
+            print(f'Document data: {doc.to_dict()}')
+        else:
+            print(u'No such document!')
+
         self.targetT = 20
         self.weatherT = 20
         self.airT = 20
