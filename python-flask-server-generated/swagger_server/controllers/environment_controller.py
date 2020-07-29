@@ -10,41 +10,50 @@ from swagger_server import util
 
 class TempVal():
     # This is set for temperatures
-    targetT = 20
-    weatherT = 20
-    airT = 20
-    comfortT = 20
-    economT = 20
-    waterT = 20
+    targetT: int
+    weatherT: int
+    airT: int
+    comfortT: int
+    economT: int
+    waterT: int
 
+    def __init__(self):
+        self.targetT = 20
+        self.weatherT = 20
+        self.airT = 20
+        self.comfortT = 20
+        self.economT = 20
+        self.waterT = 20
+
+TV = TempVal()
 
 def target_temperature(apartment):  # noqa: E501
     t = TemperatureTargetGet()
-    t.value = TempVal.targetT
+    t.value = TV.targetT
     return t
 
 
 def temperature_comfort(apartment):  # noqa: E501
     t = TemperatureTargetGet()
-    t.value = TempVal.comfortT
+    t.value = TV.comfortT
     return t
 
 
 def temperature_econom(apartment):  # noqa: E501
     t = TemperatureTargetGet()
-    t.value = TempVal.economT
+    t.value = TV.economT
     return t
 
 
 def temperature_room(apartment):  # noqa: E501
     t = TemperatureTargetGet()
-    t.value = TempVal.airT
+    t.value = TV.airT
     return t
 
 
 def temperature_water(apartment):  # noqa: E501
     t = TemperatureTargetGet()
-    t.value = TempVal.waterT
+    t.value = TV.waterT
     return t
 
 
@@ -73,22 +82,23 @@ def temperature_weather(q=None, idd=None, lat=None, lon=None, zipp=None):  # noq
     print("zip", zipp)
 #    return {"id":"weather", "name":"city", "value":TempVal.weatherT, "timestamp":"27.07.2020", "status":"true"}
     t = TemperatureTargetGet()
-    t.value = TempVal.weatherT
+#    t.value = TempVal.weatherT
+    t.value = TV.weatherT
     return t
 
 
 def update_comfort_temperature(body, apartment):  # noqa: E501
     if connexion.request.is_json:
         body = TemperaturePost.from_dict(connexion.request.get_json())  # noqa: E501
-        TempVal.comfortT = body.value
-    return 'update_comfort_temperature:' + str(TempVal.comfortT)
+        TV.comfortT = body.value
+    return 'update_comfort_temperature:' + str(TV.comfortT)
 
 
 def update_econom_temperature(body, apartment):  # noqa: E501
     if connexion.request.is_json:
         body = TemperaturePost.from_dict(connexion.request.get_json())  # noqa: E501
-        TempVal.economT = body.value
-    return 'update_econom_temperature:' + str(TempVal.economT)
+        TV.economT = body.value
+    return 'update_econom_temperature:' + str(TV.economT)
 
 
 def update_target_temperature(body, apartment):  # noqa: E501
@@ -102,5 +112,5 @@ def update_target_temperature(body, apartment):  # noqa: E501
 #        print(js["id"], js["value"])
         body = TemperaturePost.from_dict(connexion.request.get_json())  # noqa: E501
         print(body.to_dict()["id"], body.to_dict()["value"])
-        TempVal.targetT = body.value
-    return 'update_target_temperature:' + str(TempVal.targetT)
+        TV.targetT = body.value
+    return 'update_target_temperature:' + str(TV.targetT)
