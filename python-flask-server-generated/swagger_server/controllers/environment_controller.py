@@ -55,14 +55,14 @@ def temperature_weather(q=None, idd=None, lat=None, lon=None, zipp=None):  # noq
 
     :param q: **City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes.
     :type q: str
-    :param id: **City ID**. *Example: &#x60;2172797&#x60;*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &amp;mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it&#x27;s treated as 3 API calls.*
-    :type id: str
+    :param idd: **City ID**. *Example: &#x60;2172797&#x60;*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &amp;mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it&#x27;s treated as 3 API calls.*
+    :type idd: str
     :param lat: **Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with &#x60;lon&#x60;.
     :type lat: str
     :param lon: **Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with &#x60;lat&#x60;.
     :type lon: str
-    :param zip: **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default.
-    :type zip: str
+    :param zipp: **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default.
+    :type zipp: str
 
     :rtype: TemperatureSensorGet
     """
@@ -71,7 +71,10 @@ def temperature_weather(q=None, idd=None, lat=None, lon=None, zipp=None):  # noq
     print("lat", lat)
     print("lon", lon)
     print("zip", zipp)
-    return {"id":"weather", "name":"city", "value":TempVal.weatherT, "timestamp":"27.07.2020", "status":"true"}
+#    return {"id":"weather", "name":"city", "value":TempVal.weatherT, "timestamp":"27.07.2020", "status":"true"}
+    t = TemperatureTargetGet()
+    t.value = TempVal.weatherT
+    return t
 
 
 def update_comfort_temperature(body, apartment):  # noqa: E501

@@ -2,9 +2,9 @@ openapi: 3.0.0
 info:
   title: home-iot-api
   description: The API for the OVK-1 IOT project
-  version: 1.0.4
+  version: 1.0.5
 servers:
-- url: https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.4
+- url: https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.5
   description: SwaggerHub API Auto Mocking
 paths:
   /temperatureRoom/{apartment}:
@@ -71,7 +71,7 @@ paths:
         explode: true
         schema:
           type: string
-      - name: id
+      - name: idd
         in: query
         description: '**City ID**. *Example: `2172797`*. You can call by city ID.
           The API responds with the exact result. The List of city IDs can be downloaded
@@ -102,7 +102,7 @@ paths:
         explode: true
         schema:
           type: string
-      - name: zip
+      - name: zipp
         in: query
         description: '**Zip code**. Search by zip code. *Example: 95050,us*. Please
           note that if the country is not specified, the search uses USA as a default.'
@@ -452,8 +452,8 @@ components:
       explode: true
       schema:
         type: string
-    id:
-      name: id
+    idd:
+      name: idd
       in: query
       description: '**City ID**. *Example: `2172797`*. You can call by city ID. The
         API responds with the exact result. The List of city IDs can be downloaded
@@ -486,8 +486,8 @@ components:
       explode: true
       schema:
         type: string
-    zip:
-      name: zip
+    zipp:
+      name: zipp
       in: query
       description: '**Zip code**. Search by zip code. *Example: 95050,us*. Please
         note that if the country is not specified, the search uses USA as a default.'

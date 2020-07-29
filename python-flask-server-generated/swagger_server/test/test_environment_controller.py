@@ -22,7 +22,7 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.4/targetTemperature/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.5/targetTemperature/{apartment}'.format(apartment=56),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -33,7 +33,7 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.4/temperatureComfort/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.5/temperatureComfort/{apartment}'.format(apartment=56),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -44,7 +44,7 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.4/temperatureEconom/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.5/temperatureEconom/{apartment}'.format(apartment=56),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -55,7 +55,7 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.4/temperatureRoom/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.5/temperatureRoom/{apartment}'.format(apartment=56),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -66,7 +66,7 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.4/temperatureWater/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.5/temperatureWater/{apartment}'.format(apartment=56),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -77,12 +77,12 @@ class TestEnvironmentController(BaseTestCase):
         Call current weather data for one location
         """
         query_string = [('q', 'q_example'),
-                        ('id', 'id_example'),
+                        ('idd', 'idd_example'),
                         ('lat', 'lat_example'),
                         ('lon', 'lon_example'),
-                        ('zip', 'zip_example')]
+                        ('zipp', 'zipp_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.4/temperatureWeather',
+            '/OVK/OVK_mob1/1.0.5/temperatureWeather',
             method='GET',
             query_string=query_string)
         self.assert200(response,
@@ -95,7 +95,7 @@ class TestEnvironmentController(BaseTestCase):
         """
         body = TemperaturePost()
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.4/updateComfortTemperature/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.5/updateComfortTemperature/{apartment}'.format(apartment=56),
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -109,7 +109,7 @@ class TestEnvironmentController(BaseTestCase):
         """
         body = TemperaturePost()
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.4/updateEconomTemperature/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.5/updateEconomTemperature/{apartment}'.format(apartment=56),
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -123,7 +123,7 @@ class TestEnvironmentController(BaseTestCase):
         """
         body = TemperaturePost()
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.4/updateTargetTemperature/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.5/updateTargetTemperature/{apartment}'.format(apartment=56),
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
