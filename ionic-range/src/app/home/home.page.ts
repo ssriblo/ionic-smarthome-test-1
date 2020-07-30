@@ -64,11 +64,13 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
       });
       setInterval(()=> {
         console.log("every 60s");
-  //    this.postDataWrap();
-      this.ngPostData();
+//      this.postDataWrap();
+//      this.ngPostData();
+      this.ngGetPostData();
       },600000);       
-  //    this.postDataWrap();
-      this.ngPostData();
+//    this.postDataWrap();
+//      this.ngPostData();
+      this.ngGetPostData();
       
       this.storage.get('targetT').then((val) => {
         console.log('(constructor)HOME-targetT is', val)
@@ -123,11 +125,14 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
       }
     );
     const urlGetRoomTSuff = 'temperatureRoom/'
-    const urlGetTargetTSuff = ''
-    const urlGetComfortTSuff = ''
-    const urlGetEconomTSuff = ''
-    const urlGet = url.concat(urlGetRoomTSuff.concat(apartment))
-    this.http.get(urlGet).subscribe(out => {console.log('GET FROM SERVER:', out)})
+    const urlGetTargetTSuff = 'targetTemperature/'
+    const urlGetComfortTSuff = 'temperatureComfort/'
+    const urlGetEconomTSuff = 'temperatureEconom/'
+    const urlGetWeatherTSuff = 'temperatureWeather?q=444'
+    let urlGet = url.concat(urlGetRoomTSuff.concat(apartment))
+    this.http.get(urlGet).subscribe(out => { console.log("temperatureRoom", out['value']); this.room_t_s = out['value'] })
+    urlGet = url.concat(urlGetWeatherTSuff.concat(apartment))
+    this.http.get(urlGet).subscribe(out => { console.log("temperatureWeather", out['value']); this.weather_t_s = out['value'] })
   }
  //////////////
   updateRange() {
@@ -153,7 +158,7 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
     //       this.weather_t_s = data['weather_temp']
     // });
 //    this.postDataWrap();
-    this.ngPostData();
+//    this.ngPostData();
     this.ngGetPostData();
     this.storage.set('targetT', this.rangeVal);
 
