@@ -25,7 +25,7 @@ export class HomePage  implements OnInit  {
   isFillEconom = "outline";
   isFillTimetable = "outline";
 //  url_post = 'http://127.0.0.1:8080/api/post_data'
-url_serv = 'http://localhost:8080/OVK/OVK_mob1/1.0.4/'
+url_serv = 'http://localhost:8080/OVK/OVK_mob1/1.0.5/'
 url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
 
   constructor(
