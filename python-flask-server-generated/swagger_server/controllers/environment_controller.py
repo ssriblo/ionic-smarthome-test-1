@@ -10,7 +10,6 @@ from swagger_server import util
 from swagger_server.controllers.temperatures_firestore import TempVal
 
 TV = TempVal()
-print(">12", TV.targetT)
 
 def target_temperature(apartment):  # noqa: E501
     t = TemperatureTargetGet()

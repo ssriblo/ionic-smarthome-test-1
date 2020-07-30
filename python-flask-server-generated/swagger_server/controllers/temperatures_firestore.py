@@ -1,8 +1,12 @@
 import os    
-credential_path = "/media/me/86D07263D072597F/OVK/SwaggerAPI/104/web-serv13802-c8a969d5a2ed.json"
+
+#credential_path = "/media/me/86D07263D072597F/OVK/SwaggerAPI/104/web-serv13802-c8a969d5a2ed.json"
+# Project ID is determined by the GCLOUD_PROJECT environment variable
+credential_path = "/home/me/Working/Angular/Angular_20h_course/private_keys_store_dont_delete/web-serv13802-c8a969d5a2ed.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 from google.cloud import firestore
-# Project ID is determined by the GCLOUD_PROJECT environment variable
+
+from swagger_server.controllers.weather_temp import Weather
 
 class TempVal():
     # This is set for temperatures
@@ -14,8 +18,10 @@ class TempVal():
     _waterT: int
     apartment = u'test-apartment-135'
     db = None
+    WT = None
 
     def __init__(self):
+        self.WT = Weather()
         self.db = firestore.Client()
         doc_ref = self.db.collection(u'smarthome').document(self.apartment) # Let apartment=133 for test only
         doc = doc_ref.get()
@@ -49,13 +55,18 @@ class TempVal():
 ######################################
     @property
     def weatherT(self):
-        self._weatherT = self.fs_ref().get().to_dict()['weatherT']
-        return self._weatherT
-
-    @weatherT.setter
-    def weatherT(self, val):
-        self._weatherT = val
-        self.fs_ref().set({'weatherT': val}, merge=True)
+        weather_temp = "%.1f" % (self.WT.request_current_weather(520555,) ) # 520555 - Nizhniy Novgorod
+        print("NN temp:", weather_temp)
+        return weather_temp
+#    @property
+#    def weatherT(self):
+#        self._weatherT = self.fs_ref().get().to_dict()['weatherT']
+#        return self._weatherT
+#
+#    @weatherT.setter
+#    def weatherT(self, val):
+#        self._weatherT = val
+#        self.fs_ref().set({'weatherT': val}, merge=True)      
 ######################################
     @property
     def airT(self):
