@@ -35,6 +35,22 @@ class SubHandler(object):
     def event_notification(self, event):
         print("Python: New event", event)
 
+############### from https://github.com/FreeOpcUa/python-opcua/issues/863 #########################
+def browse_recursive(node):
+    for childId in node.get_children():
+        ch = client.get_node(childId)
+        print("NODE is:", ch.get_node_class(), ch.get_browse_name(), ch.get_path())
+        if ch.get_node_class() == ua.NodeClass.Object:
+            browse_recursive(ch)
+        elif ch.get_node_class() == ua.NodeClass.Variable:
+            try:
+                print("{bn} has value {val}".format(
+                    bn=ch.get_browse_name(),
+                    val=str(ch.get_value()))
+                )
+            except ua.uaerrors._auto.BadWaitingForInitialData:
+                pass
+################################################################################################
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.WARN)
@@ -81,6 +97,54 @@ if __name__ == "__main__":
 #        myvar = root.get_child(["0:Objects", "{}:MyObject".format(idx), "{}:MyVariable".format(idx)])
 #        obj = root.get_child(["0:Objects", "{}:MyObject".format(idx)])
 #        print("myvar is: ", myvar)
+
+#YA1002d00213437471231373739
+        print(root.get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[1].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[2].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_value())
+#        QualifiedName(0:Root)
+#        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:f1)
+#        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:Счетчики)
+#        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:f2)
+#        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:temperature)
+#        myvar is:  20.225364685058594
+
+        t1 = client.get_node("ns=0;i=85")
+        print(t1, t1.get_children())
+        v = client.get_node("ns=0;i=85")
+        node_plc = v.get_child("YA1002d00213437471231373739")
+        print(v, node_plc, node_plc.get_children())
+        vars = node_plc.get_children()
+        print(vars, type(vars), len(vars))
+        print(*vars, sep='\n')
+        v0 = vars[0]
+        print(v0, type(v0), v0.get_children())
+        print(v0, type(v0.get_children()) )
+        par_list = v0.get_children()
+        par0 = par_list
+        print(">>27",par0, type(par0), par0[3], type(par0[3]))
+        tobj = par0[3]
+        print(">>28",tobj, tobj.get_data_value(), tobj.get_value())
+        print(tobj.get_browse_name())
+        print(tobj.get_data_type())
+        print(tobj.get_description())
+        print(tobj.get_description_refs())
+        print(tobj.get_display_name())
+        print(tobj.get_parent())
+        print(tobj.get_path())
+        print(tobj.get_properties())
+        print(tobj.get_type_definition())
+        print(tobj.get_variables())
+
+      
+#        browse_recursive(root)
+#       QualifiedName(0:YA1002d00213437471231373739:vars:temperature) has value 20.225364685058594
+
+        
+
 
         # subscribing to a variable node
 #        handler = SubHandler()
