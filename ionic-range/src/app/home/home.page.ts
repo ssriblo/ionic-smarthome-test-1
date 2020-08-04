@@ -133,15 +133,11 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
     let urlGet = url.concat(urlGetRoomTSuff.concat(apartment))
     let temp: any
     let temp_s: string
-    this.http.get(urlGet).subscribe(out => { console.log("temperatureRoom", out['value'], typeof this.room_t_s); temp = out['value'] })
-    if(temp instanceof Number) {
-      temp_s = temp.toString(10)
-    }else{
-      temp_s = temp
-    }
-    temp_s = temp_s.substring(0, 4);
-    this.room_t_s = temp_s;
-
+    this.http.get(urlGet).subscribe(out => { 
+      console.log("temperatureRoom", out['value'], typeof this.room_t_s); 
+      temp_s = out['value'].toString(10).substring(0, 4);
+      this.room_t_s = temp_s;
+    })
 
     urlGet = url.concat(urlGetWeatherTSuff.concat(apartment))
     this.http.get(urlGet).subscribe(out => { console.log("temperatureWeather", out['value']); this.weather_t_s = out['value'] })
