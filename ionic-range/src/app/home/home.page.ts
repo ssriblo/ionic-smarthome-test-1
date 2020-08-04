@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+//import { templateJitUrl } from '@angular/compiler';
 
 const { App } = Plugins;
 
@@ -130,7 +131,18 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
     const urlGetEconomTSuff = 'temperatureEconom/'
     const urlGetWeatherTSuff = 'temperatureWeather?q=444'
     let urlGet = url.concat(urlGetRoomTSuff.concat(apartment))
-    this.http.get(urlGet).subscribe(out => { console.log("temperatureRoom", out['value']); this.room_t_s = out['value'] })
+    let temp: any
+    let temp_s: string
+    this.http.get(urlGet).subscribe(out => { console.log("temperatureRoom", out['value'], typeof this.room_t_s); temp = out['value'] })
+    if(temp instanceof Number) {
+      temp_s = temp.toString(10)
+    }else{
+      temp_s = temp
+    }
+    temp_s = temp_s.substring(0, 4);
+    this.room_t_s = temp_s;
+
+
     urlGet = url.concat(urlGetWeatherTSuff.concat(apartment))
     this.http.get(urlGet).subscribe(out => { console.log("temperatureWeather", out['value']); this.weather_t_s = out['value'] })
   }
