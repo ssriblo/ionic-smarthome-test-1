@@ -1,10 +1,7 @@
+
+
 # Firestore using:
 import os    
-#credential_path = "/media/me/86D07263D072597F/OVK/SwaggerAPI/104/web-serv13802-c8a969d5a2ed.json"
-# Project ID is determined by the GCLOUD_PROJECT environment variable
-credential_path = "/home/me/Working/Angular/Angular_20h_course/private_keys_store_dont_delete/web-serv13802-c8a969d5a2ed.json"
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
-from google.cloud import firestore
 
 #  Based on example/client-example.py
 import sys

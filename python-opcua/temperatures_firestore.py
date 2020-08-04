@@ -1,27 +1,35 @@
 import os    
+import configparser
+import platform
 
-#credential_path = "/media/me/86D07263D072597F/OVK/SwaggerAPI/104/web-serv13802-c8a969d5a2ed.json"
+config = configparser.ConfigParser()                                     
+config.read('../config.ini')
+platform = platform.system()
+print("platform", platform)
+if platform == "Windows":
+    credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'WINDOWS')
+    credential_path = credential_path.strip('\"')
+    print("windows")
+elif platform == "Linux":
+    credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'LINUX')
+#    credential_path = credential_path.strip('\"') # ???QUESTION??? Did not check at Linux yet. BUT, it need for Windows !!!!!!!!!!!!!!!!!!!!!!!!!
+    print("linux")
+
 # Project ID is determined by the GCLOUD_PROJECT environment variable
-credential_path = "/home/me/Working/Angular/Angular_20h_course/private_keys_store_dont_delete/web-serv13802-c8a969d5a2ed.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 from google.cloud import firestore
-
-from swagger_server.controllers.weather_temp import Weather
 
 class TempVal():
     # This is set for temperatures
     _targetT: int
-    _weatherT: int
     _airT: int
     _comfortT: int
     _economT: int
     _waterT: int
     apartment = u'test-apartment-135'
     db = None
-    WT = None
 
     def __init__(self):
-        self.WT = Weather()
         self.db = firestore.Client()
         doc_ref = self.db.collection(u'smarthome').document(self.apartment) # Let apartment=133 for test only
         doc = doc_ref.get()
@@ -53,20 +61,6 @@ class TempVal():
         self._targetT = val
         self.fs_ref().set({'targetT': val}, merge=True)
 ######################################
-    @property
-    def weatherT(self):
-        weather_temp = "%.1f" % (self.WT.request_current_weather(520555,) ) # 520555 - Nizhniy Novgorod
-        print("NN temp:", weather_temp)
-        return weather_temp
-#    @property
-#    def weatherT(self):
-#        self._weatherT = self.fs_ref().get().to_dict()['weatherT']
-#        return self._weatherT
-#
-#    @weatherT.setter
-#    def weatherT(self, val):
-#        self._weatherT = val
-#        self.fs_ref().set({'weatherT': val}, merge=True)      
 ######################################
     @property
     def airT(self):
