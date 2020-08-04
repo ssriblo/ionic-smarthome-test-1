@@ -115,7 +115,7 @@ if __name__ == "__main__":
         while True:
             airT = root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_value()
             print("airT is:", airT)
-            TV.targetT = airT
+            TV.airT = airT
             time.sleep(3)
 #        QualifiedName(0:Root)
 #        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:f1)

@@ -1,3 +1,21 @@
+import os    
+import configparser
+import platform
+
+config = configparser.ConfigParser()                                     
+config.read('../config.ini')
+platform = platform.system()
+print("platform", platform)
+if platform == "Windows":
+    credential_path = config.get('OPENWEATHERMAP_KEY_FILE', 'WINDOWS')
+    credential_path = credential_path.strip('\"')
+    print("windows")
+elif platform == "Linux":
+    credential_path = config.get('OPENWEATHERMAP_KEY_FILE', 'LINUX')
+#    credential_path = credential_path.strip('\"') # ???QUESTION??? Did not check at Linux yet. BUT, it need for Windows !!!!!!!!!!!!!!!!!!!!!!!!!
+    print("linux")
+
+
 import json
 import datetime
 from flask import Flask, render_template, request
@@ -8,10 +26,11 @@ import requests
 class Weather():
     appid = None
     def __init__(self):
-        with open('/home/me/Working/Angular/Angular_20h_course/private_keys_store_dont_delete/openweathermap.json') as f:
+#        with open('/home/me/Working/Angular/Angular_20h_course/private_keys_store_dont_delete/openweathermap.json') as f:
+        with open(credential_path) as f:
             data = json.load(f)
         self.appid = data["key"]
-#        print(data, self.appid)
+#        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>1", data, self.appid)
 
     # Запрос текущей погоды
     def request_current_weather(self, city_id):

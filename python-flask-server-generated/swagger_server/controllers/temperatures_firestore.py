@@ -1,8 +1,21 @@
 import os    
+import configparser
+import platform
 
-#credential_path = "/media/me/86D07263D072597F/OVK/SwaggerAPI/104/web-serv13802-c8a969d5a2ed.json"
+config = configparser.ConfigParser()                                     
+config.read('../config.ini')
+platform = platform.system()
+print("platform", platform)
+if platform == "Windows":
+    credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'WINDOWS')
+    credential_path = credential_path.strip('\"')
+    print("windows")
+elif platform == "Linux":
+    credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'LINUX')
+#    credential_path = credential_path.strip('\"') # ???QUESTION??? Did not check at Linux yet. BUT, it need for Windows !!!!!!!!!!!!!!!!!!!!!!!!!
+    print("linux")
+
 # Project ID is determined by the GCLOUD_PROJECT environment variable
-credential_path = "/home/me/Working/Angular/Angular_20h_course/private_keys_store_dont_delete/web-serv13802-c8a969d5a2ed.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 from google.cloud import firestore
 
