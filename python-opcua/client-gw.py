@@ -1,3 +1,11 @@
+# Firestore using:
+import os    
+#credential_path = "/media/me/86D07263D072597F/OVK/SwaggerAPI/104/web-serv13802-c8a969d5a2ed.json"
+# Project ID is determined by the GCLOUD_PROJECT environment variable
+credential_path = "/home/me/Working/Angular/Angular_20h_course/private_keys_store_dont_delete/web-serv13802-c8a969d5a2ed.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
+from google.cloud import firestore
+
 #  Based on example/client-example.py
 import sys
 sys.path.insert(0, "..")
@@ -18,7 +26,9 @@ except ImportError:
 
 from opcua import Client
 from opcua import ua
+from temperatures_firestore import TempVal
 
+TV = TempVal()
 
 class SubHandler(object):
 
@@ -105,6 +115,11 @@ if __name__ == "__main__":
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[2].get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_value())
+        while True:
+            airT = root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_value()
+            print("airT is:", airT)
+            TV.targetT = airT
+            time.sleep(2)
 #        QualifiedName(0:Root)
 #        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:f1)
 #        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:Счетчики)
