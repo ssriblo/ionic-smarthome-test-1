@@ -16,9 +16,15 @@ export class IntroductionPage implements OnInit {
     private routerOutlet: IonRouterOutlet,
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
   }
-  openSignup() {
-  // TODO
+
+  async openSignup() {
+    const modal = await this.modalCtrl.create({
+      component: SignupPage,
+      presentingElement: this.routerOutlet.nativeEl,
+      swipeToClose: true,
+    });
+    await modal.present();
   }
 }
