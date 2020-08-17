@@ -1,9 +1,35 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()" color="primary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Регистрация</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding-top">
+  <form (ngSubmit)="signUp()" [formGroup]="registerForm">
+      <ion-input
+        placeholder="Ключ"
+        formControlName="key"
+        autofocus="true"
+        clearInput="true"
+      ></ion-input>
 
+
+    <ion-row>
+      <ion-col size="10" offset="1">
+        <ion-button
+          expand="block"
+          type="button"
+          (click)="continue()"
+        >
+          ВВОД</ion-button
+        >
+
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>

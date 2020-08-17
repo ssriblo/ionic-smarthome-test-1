@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class SignupPage implements OnInit {
   registerForm: FormGroup;
-  showDetails = false;
+//  showDetails = false;
 
 constructor(
     private modalCtrl: ModalController,
@@ -28,6 +28,7 @@ constructor(
 
 ngOnInit() {
     this.registerForm = this.fb.group({
+      key: ['', [Validators.required, Validators.minLength(8)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       fullname: ['', Validators.required],
@@ -35,7 +36,7 @@ ngOnInit() {
   }
 
   continue() {
-    this.showDetails = true;
+//    this.showDetails = true;
   }
 
   async signUp() {
