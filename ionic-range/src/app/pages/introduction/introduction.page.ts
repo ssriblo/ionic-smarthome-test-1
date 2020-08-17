@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  ModalController,
+  IonRouterOutlet,
+} from '@ionic/angular';
+import { SignupPage } from '../signup/signup.page';
 
 @Component({
   selector: 'app-introduction',
@@ -6,10 +11,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./introduction.page.scss'],
 })
 export class IntroductionPage implements OnInit {
-
-  constructor() { }
+  constructor(
+    private modalCtrl: ModalController,
+    private routerOutlet: IonRouterOutlet,
+  ) {}
 
   ngOnInit() {
   }
-
+  openSignup() {
+  // TODO
+  }
 }
