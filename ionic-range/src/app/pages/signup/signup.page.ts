@@ -4,9 +4,10 @@ import {
   LoadingController,
   AlertController,
 } from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+
 
 @Component({
   selector: 'app-signup',
@@ -14,57 +15,77 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
-  registerForm: FormGroup;
-//  showDetails = false;
+  data: any;
+  barcodeScanner: BarcodeScanner;
 
-constructor(
-    private modalCtrl: ModalController,
-    private fb: FormBuilder,
-    private auth: AuthService,
-    private loadingController: LoadingController,
-    private alertController: AlertController,
-    private router: Router
-  ) {}
+  constructor(
+      private modalCtrl: ModalController,
+      private auth: AuthService,
+      private loadingController: LoadingController,
+      private alertController: AlertController,
+      private router: Router,
+    ) {}
 
-ngOnInit() {
-    this.registerForm = this.fb.group({
-      key: ['', [Validators.required, Validators.minLength(8)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      fullname: ['', Validators.required],
-    });
-  }
+  ngOnInit() {}
 
-  continue() {
-//    this.showDetails = true;
-  }
+    continue() {}
 
-  async signUp() {
-    const loading = await this.loadingController.create();
-    await loading.present();
-    this.auth.jwtSignup(
-        this.registerForm.value
-      )
-      .then(
-        (res) => {
-          loading.dismiss();
-          this.close();
-          this.router.navigateByUrl('/app');
-        },
-        async (err) => {
-          loading.dismiss();
-          const alert = await this.alertController.create({
-            header: 'Sign up failed',
-            message: err.message,
-            buttons: ['OK'],
-          });
+    async signUp() {
+      const loading = await this.loadingController.create();
+      await loading.present();
 
-          await alert.present();
-        }
-      );
-  }
 
-  close() {
-    this.modalCtrl.dismiss();
-  }  
+      // send token to server and obtain response:
+      this.auth.jwtSignup(
+          this.data
+        )
+        .then(
+          (res) => {
+            loading.dismiss();
+            this.close();
+            this.router.navigateByUrl('/app');
+          },
+          async (err) => {
+            loading.dismiss();
+            const alert = await this.alertController.create({
+              header: 'Sign up failed',
+              message: err.message,
+              buttons: ['OK'],
+            });
+
+            await alert.present();
+          }
+        );
+    }
+
+    close() {
+      this.modalCtrl.dismiss();
+    }  
+  
+
+    scan() {
+      this.data = null;
+      this.barcodeScanner.scan(
+        {
+          preferFrontCamera : true, // iOS and Android
+          showFlipCameraButton : true, // iOS and Android
+          showTorchButton : true, // iOS and Android
+          torchOn: true, // Android, launch with the torch switched on (if available)
+//          saveHistory: true, // Android, save scan history (default false)
+          prompt : "Place a barcode inside the scan area", // Android
+          resultDisplayDuration: 4500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+          formats : "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+          orientation : "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
+          disableAnimations : true, // iOS
+          disableSuccessBeep: false // iOS and Android
+      }
+      ).then(barcodeData => {
+        console.log('Barcode data', barcodeData);
+        this.data = barcodeData;
+      }).catch(err => {
+        console.log('Error', err);
+      });
+    }
+  
+  
 }
