@@ -17,23 +17,9 @@
         <h1>Для регистрации у Вас должен быть QR код, примерно как на картинке выше.</h1>
       </ion-text>
       <ion-text>
-          <h1>Надо нажать кнопку "Сканирование" и навести камеру на QR код 888</h1>
+          <h1>Надо нажать кнопку "Сканирование" и навести камеру на QR код</h1>
       </ion-text>
       <ion-button color="success" expand="full" (click)="scan_qr()">Сканирование</ion-button>
     </ion-card-content>
   </ion-card>
-  <ion-item *ngIf="data">
-    <ion-label position="stacked">Scan Format</ion-label>
-    <ion-input > [value]="data.format" readonly</ion-input>
-  </ion-item>
-  <ion-item *ngIf="data">
-    <ion-label position="stacked">Scan Information</ion-label>
-    <ion-input >
-      <ion-textarea>
-        [value]="data.text" 
-        readonly
-        autoGrow
-      </ion-textarea>
-    </ion-input>
-  </ion-item>
 </ion-content>
