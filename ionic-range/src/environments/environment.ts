@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  mobileBuild: false, // setup FALSE for Chrome and TRUE for Android
+  serverLocal: true, // setup TRUE if local server and FALSE if Google Server
+  SERVER_URL_LOCAL: 'http://localhost:8080/OVK/OVK_mob1/1.0.5/',
+  SERVER_URL_GOOGLE: 'https://web-serv13802.nw.r.appspot.com/api/post_data',
 };
 
 /*

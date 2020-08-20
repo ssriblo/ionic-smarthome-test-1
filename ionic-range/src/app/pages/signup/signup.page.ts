@@ -7,6 +7,7 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +24,8 @@ export class SignupPage implements OnInit {
       private loadingController: LoadingController,
       private alertController: AlertController,
       private router: Router,
-      private barcodeScanner: BarcodeScanner
+      private barcodeScanner: BarcodeScanner,
+      private storage: Storage
       ) {}
 
   ngOnInit() {}
@@ -64,7 +66,7 @@ export class SignupPage implements OnInit {
   
 
   scan_qr() {
-    this.data = null;
+//    this.data = null;
     this.barcodeScanner.scan(
       {
         preferFrontCamera : false, // iOS and Android
@@ -80,8 +82,11 @@ export class SignupPage implements OnInit {
         disableSuccessBeep: false // iOS and Android
     }
     ).then(barcodeData => {
-      console.log('Barcode data', barcodeData);
-      this.data = barcodeData;
+//      console.log('Barcode data', barcodeData);
+//      this.data = barcodeData;
+      this.storage.set('jwtString', barcodeData.text);
+      // TODO: crate api.servises and call GET request to check obtained QR code - JWT Token
+      
     }).catch(err => {
       console.log('Error', err);
     });
