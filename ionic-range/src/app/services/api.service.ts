@@ -10,13 +10,15 @@ import {HttpParams} from "@angular/common/http";
 export class ApiService {
   private isJWT: boolean = false;
   private SERVER_URL: string = "";
+  private jwtString: string;
+  private httpParams: { params: HttpParams; } | { params?: undefined; };
 
   constructor(
     private http: HttpClient, 
     private storage: Storage,
-    private jwtString: any,
-    private httpParams: { params: HttpParams; } | { params?: undefined; },
-  ) { this.initApi(); }
+  ) { 
+      this.initApi();       
+    }
 
   initApi() {
     if ( environment.serverLocal == true ) {
@@ -24,6 +26,11 @@ export class ApiService {
     }else {
       this.SERVER_URL = environment.SERVER_URL_GOOGLE
     }
+    console.log(">>>>>>>>>>>>>>>>> - 1", this.SERVER_URL)
+    
+    // // TEMPORARY !!! -> One Time write down JWT Token to Store. Next time it will be reading well
+    // this.storage.set('jwtString', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk');
+
 
     this.storage.get('jwtString').then((val) => {
         this.jwtString = val;
@@ -50,12 +57,12 @@ export class ApiService {
     .subscribe(
       // Successful responses call the first callback.
       data => { 
-        console.log("temperatureWeather", data['value']); 
-        console.log("temperatureWeather.toString", data.toString()); 
+        console.log("getWeatherT() -> ", data['value']); 
+        console.log("getWeatherT() -> .toString", data.toString()); 
       },
       // Errors will call this callback instead:
       err => {
-        console.log('Something went wrong!', err);
+        console.log('getWeatherT() -> Something went wrong!', err);
       }
     );
   }  

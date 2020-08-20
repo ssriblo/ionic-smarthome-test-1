@@ -4,6 +4,7 @@ import {
   IonRouterOutlet,
 } from '@ionic/angular';
 import { SignupPage } from '../signup/signup.page';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-introduction',
@@ -14,6 +15,7 @@ export class IntroductionPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private routerOutlet: IonRouterOutlet,
+    private apiService: ApiService,
   ) {}
 
   async ngOnInit() {

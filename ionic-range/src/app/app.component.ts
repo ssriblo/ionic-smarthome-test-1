@@ -9,7 +9,7 @@ import { ApiService } from './services/api.service';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  providers: [ApiService],
+//  providers: [ApiService],
 })
 export class AppComponent {
   constructor(
