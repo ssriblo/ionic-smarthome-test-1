@@ -8,7 +8,7 @@ import {HttpParams} from "@angular/common/http";
   providedIn: 'root'
 })
 export class ApiService {
-  private isJWT: boolean = false;
+  public isJWT: boolean = false;
   private SERVER_URL: string = "";
   private jwtString: string;
   private httpParams: { params: HttpParams; } | { params?: undefined; };
