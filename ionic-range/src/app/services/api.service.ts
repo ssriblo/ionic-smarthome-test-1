@@ -26,19 +26,26 @@ export class ApiService {
     }else {
       this.SERVER_URL = environment.SERVER_URL_GOOGLE
     }
-    console.log(">>>>>>>>>>>>>>>>> - 1", this.SERVER_URL)
-    
-    // // TEMPORARY !!! -> One Time write down JWT Token to Store. Next time it will be reading well
-    // this.storage.set('jwtString', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk');
 
+    if( (environment.forceWriteJwt == true) && (environment.mobileBuild == false)) {
+      // One Time write down JWT Token to Store. Next time it will be reading well
+      this.storage.set(
+        'jwtString', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk'
+        ).then(val => {console.log('Forse store default JWT Token at Local Store')})
+    }
+
+    if ( environment.forceDeleteJwt == true) {
+      this.storage.remove('jwtString').then(val => { console.log('remove jwtString from Local Store', val)});
+    }
 
     this.storage.get('jwtString').then((val) => {
         this.jwtString = val;
-        console.log('get jwtString from storage: ', this.jwtString);  
-        this.isJWT = true;
-        this.httpParams =  this.initHttpParams(this.jwtString);
-        this.getWeatherT();
-
+        console.log('get jwtString from storage: ', this.jwtString );  
+        if (val) {
+            this.isJWT = true;
+            this.httpParams =  this.initHttpParams(this.jwtString);
+            this.getWeatherT();
+          }
       });
 
   }
@@ -58,7 +65,6 @@ export class ApiService {
       // Successful responses call the first callback.
       data => { 
         console.log("getWeatherT() -> ", data['value']); 
-        console.log("getWeatherT() -> .toString", data.toString()); 
       },
       // Errors will call this callback instead:
       err => {
