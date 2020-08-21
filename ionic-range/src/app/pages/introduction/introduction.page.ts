@@ -21,14 +21,13 @@ export class IntroductionPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    setInterval(()=> {
-      console.log("every 1s");
-      if ( this.apiService.isJWT == true) {
-        this.router.navigateByUrl('/home');
-        console.log('navigate from introduction page to home page')
-      }
-    },10000); 
-
+    // setInterval(()=> {
+    //   console.log("every 1s");
+    //   if ( this.apiService.isJWT == true) {
+    //     this.router.navigateByUrl('/home');
+    //     console.log('navigate from introduction page to home page', this.apiService.isJWT)
+    //   }
+    // },10000); 
   }
 
   async openSignup() {
