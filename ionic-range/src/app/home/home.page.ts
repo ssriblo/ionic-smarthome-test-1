@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 //import { templateJitUrl } from '@angular/compiler';
+import { ApiService } from '../services/api.service';
 
 const { App } = Plugins;
 
@@ -34,7 +35,8 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
     private routerOutlet: IonRouterOutlet,  
     private http: HttpClient, 
     public router: Router,
-    private storage: Storage
+    private storage: Storage,
+    private apiService: ApiService,
     ) 
     {
       this.platform.ready().then(()=>{
