@@ -14,6 +14,8 @@ export class AuthGuardService implements CanActivate {
   private async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
+      animated: true,
+      backdropDismiss: true,
       header: 'Внимание',
 //      subHeader: 'Subtitle',
       message: 'Сначала надо зарегистритоваться, для этого приготовьте QR код регистрации и нажмите кнопку "Регистрация" ',
