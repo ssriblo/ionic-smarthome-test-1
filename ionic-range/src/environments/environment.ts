@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  forceWriteJwt: true, // Force write down JWT to Local Store without QR code scane. Used for Chrome test only
-  forceDeleteJwt: false, // Force delete JWT from Local Store - for test only !!
+  forceWriteJwt: false, // Force write down JWT to Local Store without QR code scane. Used for Chrome test only
+  forceDeleteJwt: true, // Force delete JWT from Local Store - for test only !!
   mobileBuild: false, // setup FALSE for Chrome and TRUE for Android
   serverLocal: true, // setup TRUE if local server and FALSE if Google Server
   SERVER_URL_LOCAL: 'http://localhost:8080/OVK/OVK_mob1/1.0.5/',

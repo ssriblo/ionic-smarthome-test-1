@@ -6,12 +6,12 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
-//    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: '',
-//    redirectTo: 'home',
-    redirectTo: 'introduction',
+    redirectTo: 'home',
+//    redirectTo: 'introduction',
     pathMatch: 'full'
   },
   {
