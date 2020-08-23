@@ -689,7 +689,7 @@
   <script>
     // Script section to load models into a JS Var
     var defs = {}
-            defs.ApiResponse = {
+            defs["ApiResponse"] = {
   "type" : "object",
   "properties" : {
     "code" : {
@@ -702,7 +702,7 @@
     }
   }
 };
-            defs.DeviceRegistrationInfo = {
+            defs["DeviceRegistrationInfo"] = {
   "type" : "object",
   "properties" : {
     "uri" : {
@@ -718,7 +718,7 @@
   },
   "description" : "Just for case, not used yet"
 };
-            defs.DeviceState = {
+            defs["DeviceState"] = {
   "type" : "object",
   "properties" : {
     "id" : {
@@ -738,7 +738,7 @@
   },
   "description" : "Just for case, not used yet"
 };
-            defs.Errors = {
+            defs["Errors"] = {
   "type" : "object",
   "properties" : {
     "status" : {
@@ -752,7 +752,7 @@
     }
   }
 };
-            defs.HeaterState = {
+            defs["HeaterState"] = {
   "type" : "object",
   "properties" : {
     "id" : {
@@ -764,7 +764,7 @@
   },
   "description" : "Just for case, not used yet"
 };
-            defs.TemperaturePost = {
+            defs["TemperaturePost"] = {
   "required" : [ "id", "value" ],
   "type" : "object",
   "properties" : {
@@ -780,7 +780,7 @@
   },
   "description" : "Target temperature from user"
 };
-            defs.TemperatureSensorGet = {
+            defs["TemperatureSensorGet"] = {
   "required" : [ "id", "status", "timestamp", "value" ],
   "type" : "object",
   "properties" : {
@@ -807,7 +807,7 @@
   },
   "description" : "temperature sensor value and status (normal, failed and so on)"
 };
-            defs.TemperatureTargetGet = {
+            defs["TemperatureTargetGet"] = {
   "required" : [ "id", "value" ],
   "type" : "object",
   "properties" : {
@@ -883,7 +883,7 @@
         <div id="header">
           <div id="api-_">
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
-              <div class="app-desc">Version: 1.0.5</div>
+              <div class="app-desc">Version: 1.0.6</div>
             <hr>
             <div>The API for the OVK-1 IOT project</div>
           </div>
@@ -903,7 +903,7 @@
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/targetTemperature/{apartment}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/targetTemperature</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -923,7 +923,9 @@
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Environment-targetTemperature-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.5/targetTemperature/{apartment}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/targetTemperature"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-targetTemperature-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -939,9 +941,8 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
-        Integer apartment = 56; // Integer | 
         try {
-            TemperatureTargetGet result = apiInstance.targetTemperature(apartment);
+            TemperatureTargetGet result = apiInstance.targetTemperature();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#targetTemperature");
@@ -958,9 +959,8 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
-        Integer apartment = 56; // Integer | 
         try {
-            TemperatureTargetGet result = apiInstance.targetTemperature(apartment);
+            TemperatureTargetGet result = apiInstance.targetTemperature();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#targetTemperature");
@@ -974,12 +974,11 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-targetTemperature-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Integer *apartment = 56; // 
-
+                              <pre class="prettyprint"><code class="language-cpp">
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
-[apiInstance targetTemperatureWith:apartment
-              completionHandler: ^(TemperatureTargetGet output, NSError* error) {
+[apiInstance targetTemperatureWithCompletionHandler: 
+              ^(TemperatureTargetGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -994,8 +993,6 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
-var apartment = 56; // {{Integer}} 
-
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1003,7 +1000,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.targetTemperature(apartment, callback);
+api.targetTemperature(callback);
 </code></pre>
                             </div>
 
@@ -1025,11 +1022,10 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
-            var apartment = 56;  // Integer | 
 
             try
             {
-                TemperatureTargetGet result = apiInstance.targetTemperature(apartment);
+                TemperatureTargetGet result = apiInstance.targetTemperature();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -1047,10 +1043,9 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
-$apartment = 56; // Integer | 
 
 try {
-    $result = $api_instance->targetTemperature($apartment);
+    $result = $api_instance->targetTemperature();
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->targetTemperature: ', $e->getMessage(), PHP_EOL;
@@ -1064,10 +1059,9 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
-my $apartment = 56; # Integer | 
 
 eval { 
-    my $result = $api_instance->targetTemperature(apartment => $apartment);
+    my $result = $api_instance->targetTemperature();
     print Dumper($result);
 };
 if ($@) {
@@ -1084,10 +1078,9 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
-apartment = 56 # Integer | 
 
 try: 
-    api_response = api_instance.target_temperature(apartment)
+    api_response = api_instance.target_temperature()
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->targetTemperature: %s\n" % e)</code></pre>
@@ -1096,35 +1089,6 @@ except ApiException as e:
 
                           <h2>Parameters</h2>
 
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">apartment*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_targetTemperature_apartment">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      Integer
-                                                  </span>
-                                                      <span class="format">
-                                                          (int32)
-                                                      </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
 
 
 
@@ -1242,7 +1206,7 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureComfort/{apartment}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureComfort</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1262,7 +1226,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Environment-temperatureComfort-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.5/temperatureComfort/{apartment}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/temperatureComfort"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-temperatureComfort-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1278,9 +1244,8 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
-        Integer apartment = 56; // Integer | 
         try {
-            TemperatureTargetGet result = apiInstance.temperatureComfort(apartment);
+            TemperatureTargetGet result = apiInstance.temperatureComfort();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureComfort");
@@ -1297,9 +1262,8 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
-        Integer apartment = 56; // Integer | 
         try {
-            TemperatureTargetGet result = apiInstance.temperatureComfort(apartment);
+            TemperatureTargetGet result = apiInstance.temperatureComfort();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureComfort");
@@ -1313,12 +1277,11 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-temperatureComfort-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Integer *apartment = 56; // 
-
+                              <pre class="prettyprint"><code class="language-cpp">
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
-[apiInstance temperatureComfortWith:apartment
-              completionHandler: ^(TemperatureTargetGet output, NSError* error) {
+[apiInstance temperatureComfortWithCompletionHandler: 
+              ^(TemperatureTargetGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -1333,8 +1296,6 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
-var apartment = 56; // {{Integer}} 
-
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1342,7 +1303,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.temperatureComfort(apartment, callback);
+api.temperatureComfort(callback);
 </code></pre>
                             </div>
 
@@ -1364,11 +1325,10 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
-            var apartment = 56;  // Integer | 
 
             try
             {
-                TemperatureTargetGet result = apiInstance.temperatureComfort(apartment);
+                TemperatureTargetGet result = apiInstance.temperatureComfort();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -1386,10 +1346,9 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
-$apartment = 56; // Integer | 
 
 try {
-    $result = $api_instance->temperatureComfort($apartment);
+    $result = $api_instance->temperatureComfort();
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->temperatureComfort: ', $e->getMessage(), PHP_EOL;
@@ -1403,10 +1362,9 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
-my $apartment = 56; # Integer | 
 
 eval { 
-    my $result = $api_instance->temperatureComfort(apartment => $apartment);
+    my $result = $api_instance->temperatureComfort();
     print Dumper($result);
 };
 if ($@) {
@@ -1423,10 +1381,9 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
-apartment = 56 # Integer | 
 
 try: 
-    api_response = api_instance.temperature_comfort(apartment)
+    api_response = api_instance.temperature_comfort()
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->temperatureComfort: %s\n" % e)</code></pre>
@@ -1435,35 +1392,6 @@ except ApiException as e:
 
                           <h2>Parameters</h2>
 
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">apartment*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_temperatureComfort_apartment">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      Integer
-                                                  </span>
-                                                      <span class="format">
-                                                          (int32)
-                                                      </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
 
 
 
@@ -1581,7 +1509,7 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureEconom/{apartment}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureEconom</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1601,7 +1529,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Environment-temperatureEconom-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.5/temperatureEconom/{apartment}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/temperatureEconom"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-temperatureEconom-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1617,9 +1547,8 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
-        Integer apartment = 56; // Integer | 
         try {
-            TemperatureTargetGet result = apiInstance.temperatureEconom(apartment);
+            TemperatureTargetGet result = apiInstance.temperatureEconom();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureEconom");
@@ -1636,9 +1565,8 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
-        Integer apartment = 56; // Integer | 
         try {
-            TemperatureTargetGet result = apiInstance.temperatureEconom(apartment);
+            TemperatureTargetGet result = apiInstance.temperatureEconom();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureEconom");
@@ -1652,12 +1580,11 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-temperatureEconom-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Integer *apartment = 56; // 
-
+                              <pre class="prettyprint"><code class="language-cpp">
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
-[apiInstance temperatureEconomWith:apartment
-              completionHandler: ^(TemperatureTargetGet output, NSError* error) {
+[apiInstance temperatureEconomWithCompletionHandler: 
+              ^(TemperatureTargetGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -1672,8 +1599,6 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
-var apartment = 56; // {{Integer}} 
-
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1681,7 +1606,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.temperatureEconom(apartment, callback);
+api.temperatureEconom(callback);
 </code></pre>
                             </div>
 
@@ -1703,11 +1628,10 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
-            var apartment = 56;  // Integer | 
 
             try
             {
-                TemperatureTargetGet result = apiInstance.temperatureEconom(apartment);
+                TemperatureTargetGet result = apiInstance.temperatureEconom();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -1725,10 +1649,9 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
-$apartment = 56; // Integer | 
 
 try {
-    $result = $api_instance->temperatureEconom($apartment);
+    $result = $api_instance->temperatureEconom();
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->temperatureEconom: ', $e->getMessage(), PHP_EOL;
@@ -1742,10 +1665,9 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
-my $apartment = 56; # Integer | 
 
 eval { 
-    my $result = $api_instance->temperatureEconom(apartment => $apartment);
+    my $result = $api_instance->temperatureEconom();
     print Dumper($result);
 };
 if ($@) {
@@ -1762,10 +1684,9 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
-apartment = 56 # Integer | 
 
 try: 
-    api_response = api_instance.temperature_econom(apartment)
+    api_response = api_instance.temperature_econom()
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->temperatureEconom: %s\n" % e)</code></pre>
@@ -1774,35 +1695,6 @@ except ApiException as e:
 
                           <h2>Parameters</h2>
 
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">apartment*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_temperatureEconom_apartment">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      Integer
-                                                  </span>
-                                                      <span class="format">
-                                                          (int32)
-                                                      </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
 
 
 
@@ -1920,7 +1812,7 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureRoom/{apartment}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureRoom/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1940,7 +1832,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Environment-temperatureRoom-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.5/temperatureRoom/{apartment}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/temperatureRoom/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-temperatureRoom-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1956,9 +1850,8 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
-        Integer apartment = 56; // Integer | 
         try {
-            TemperatureSensorGet result = apiInstance.temperatureRoom(apartment);
+            TemperatureSensorGet result = apiInstance.temperatureRoom();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureRoom");
@@ -1975,9 +1868,8 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
-        Integer apartment = 56; // Integer | 
         try {
-            TemperatureSensorGet result = apiInstance.temperatureRoom(apartment);
+            TemperatureSensorGet result = apiInstance.temperatureRoom();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureRoom");
@@ -1991,12 +1883,11 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-temperatureRoom-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Integer *apartment = 56; // 
-
+                              <pre class="prettyprint"><code class="language-cpp">
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
-[apiInstance temperatureRoomWith:apartment
-              completionHandler: ^(TemperatureSensorGet output, NSError* error) {
+[apiInstance temperatureRoomWithCompletionHandler: 
+              ^(TemperatureSensorGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2011,8 +1902,6 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
-var apartment = 56; // {{Integer}} 
-
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -2020,7 +1909,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.temperatureRoom(apartment, callback);
+api.temperatureRoom(callback);
 </code></pre>
                             </div>
 
@@ -2042,11 +1931,10 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
-            var apartment = 56;  // Integer | 
 
             try
             {
-                TemperatureSensorGet result = apiInstance.temperatureRoom(apartment);
+                TemperatureSensorGet result = apiInstance.temperatureRoom();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2064,10 +1952,9 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
-$apartment = 56; // Integer | 
 
 try {
-    $result = $api_instance->temperatureRoom($apartment);
+    $result = $api_instance->temperatureRoom();
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->temperatureRoom: ', $e->getMessage(), PHP_EOL;
@@ -2081,10 +1968,9 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
-my $apartment = 56; # Integer | 
 
 eval { 
-    my $result = $api_instance->temperatureRoom(apartment => $apartment);
+    my $result = $api_instance->temperatureRoom();
     print Dumper($result);
 };
 if ($@) {
@@ -2101,10 +1987,9 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
-apartment = 56 # Integer | 
 
 try: 
-    api_response = api_instance.temperature_room(apartment)
+    api_response = api_instance.temperature_room()
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->temperatureRoom: %s\n" % e)</code></pre>
@@ -2113,35 +1998,6 @@ except ApiException as e:
 
                           <h2>Parameters</h2>
 
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">apartment*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_temperatureRoom_apartment">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      Integer
-                                                  </span>
-                                                      <span class="format">
-                                                          (int32)
-                                                      </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
 
 
 
@@ -2196,6 +2052,54 @@ except ApiException as e:
                                 </div>
                             </div>
 
+                            <h3> Status: 404 - some errors... </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-temperatureRoom-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-temperatureRoom-404-schema">
+                                  <div id='responses-temperatureRoom-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "some errors...",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Errors"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-temperatureRoom-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-temperatureRoom-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-temperatureRoom-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
                         </article>
                       </div>
                       <hr>
@@ -2211,7 +2115,7 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureWater/{apartment}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureWater/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2231,7 +2135,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Environment-temperatureWater-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.5/temperatureWater/{apartment}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/temperatureWater/"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-temperatureWater-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2247,9 +2153,8 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
-        Integer apartment = 56; // Integer | 
         try {
-            TemperatureSensorGet result = apiInstance.temperatureWater(apartment);
+            TemperatureSensorGet result = apiInstance.temperatureWater();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureWater");
@@ -2266,9 +2171,8 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
-        Integer apartment = 56; // Integer | 
         try {
-            TemperatureSensorGet result = apiInstance.temperatureWater(apartment);
+            TemperatureSensorGet result = apiInstance.temperatureWater();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureWater");
@@ -2282,12 +2186,11 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-temperatureWater-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Integer *apartment = 56; // 
-
+                              <pre class="prettyprint"><code class="language-cpp">
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
-[apiInstance temperatureWaterWith:apartment
-              completionHandler: ^(TemperatureSensorGet output, NSError* error) {
+[apiInstance temperatureWaterWithCompletionHandler: 
+              ^(TemperatureSensorGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2302,8 +2205,6 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
-var apartment = 56; // {{Integer}} 
-
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -2311,7 +2212,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.temperatureWater(apartment, callback);
+api.temperatureWater(callback);
 </code></pre>
                             </div>
 
@@ -2333,11 +2234,10 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
-            var apartment = 56;  // Integer | 
 
             try
             {
-                TemperatureSensorGet result = apiInstance.temperatureWater(apartment);
+                TemperatureSensorGet result = apiInstance.temperatureWater();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2355,10 +2255,9 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
-$apartment = 56; // Integer | 
 
 try {
-    $result = $api_instance->temperatureWater($apartment);
+    $result = $api_instance->temperatureWater();
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->temperatureWater: ', $e->getMessage(), PHP_EOL;
@@ -2372,10 +2271,9 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
-my $apartment = 56; # Integer | 
 
 eval { 
-    my $result = $api_instance->temperatureWater(apartment => $apartment);
+    my $result = $api_instance->temperatureWater();
     print Dumper($result);
 };
 if ($@) {
@@ -2392,10 +2290,9 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
-apartment = 56 # Integer | 
 
 try: 
-    api_response = api_instance.temperature_water(apartment)
+    api_response = api_instance.temperature_water()
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->temperatureWater: %s\n" % e)</code></pre>
@@ -2404,35 +2301,6 @@ except ApiException as e:
 
                           <h2>Parameters</h2>
 
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">apartment*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_temperatureWater_apartment">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      Integer
-                                                  </span>
-                                                      <span class="format">
-                                                          (int32)
-                                                      </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
 
 
 
@@ -2522,7 +2390,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Environment-temperatureWeather-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.5/temperatureWeather?q=&idd=&lat=&lon=&zipp="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/temperatureWeather"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-temperatureWeather-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2538,13 +2408,8 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
-        String q = q_example; // String | **City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes.
-        String idd = idd_example; // String | **City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it's treated as 3 API calls.*
-        String lat = lat_example; // String | **Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`.
-        String lon = lon_example; // String | **Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`.
-        String zipp = zipp_example; // String | **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default.
         try {
-            TemperatureSensorGet result = apiInstance.temperatureWeather(q, idd, lat, lon, zipp);
+            TemperatureSensorGet result = apiInstance.temperatureWeather();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureWeather");
@@ -2561,13 +2426,8 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
-        String q = q_example; // String | **City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes.
-        String idd = idd_example; // String | **City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it's treated as 3 API calls.*
-        String lat = lat_example; // String | **Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`.
-        String lon = lon_example; // String | **Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`.
-        String zipp = zipp_example; // String | **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default.
         try {
-            TemperatureSensorGet result = apiInstance.temperatureWeather(q, idd, lat, lon, zipp);
+            TemperatureSensorGet result = apiInstance.temperatureWeather();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureWeather");
@@ -2581,21 +2441,12 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-temperatureWeather-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">String *q = q_example; // **City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes. (optional)
-String *idd = idd_example; // **City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it's treated as 3 API calls.* (optional)
-String *lat = lat_example; // **Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`. (optional)
-String *lon = lon_example; // **Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`. (optional)
-String *zipp = zipp_example; // **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default. (optional)
-
+                              <pre class="prettyprint"><code class="language-cpp">
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 // Call current weather data for one location
-[apiInstance temperatureWeatherWith:q
-    idd:idd
-    lat:lat
-    lon:lon
-    zipp:zipp
-              completionHandler: ^(TemperatureSensorGet output, NSError* error) {
+[apiInstance temperatureWeatherWithCompletionHandler: 
+              ^(TemperatureSensorGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2610,13 +2461,6 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
-var opts = { 
-  'q': q_example, // {{String}} **City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes.
-  'idd': idd_example, // {{String}} **City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it's treated as 3 API calls.*
-  'lat': lat_example, // {{String}} **Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`.
-  'lon': lon_example, // {{String}} **Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`.
-  'zipp': zipp_example // {{String}} **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default.
-};
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -2624,7 +2468,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.temperatureWeather(opts, callback);
+api.temperatureWeather(callback);
 </code></pre>
                             </div>
 
@@ -2646,16 +2490,11 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
-            var q = q_example;  // String | **City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes. (optional) 
-            var idd = idd_example;  // String | **City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it's treated as 3 API calls.* (optional) 
-            var lat = lat_example;  // String | **Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`. (optional) 
-            var lon = lon_example;  // String | **Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`. (optional) 
-            var zipp = zipp_example;  // String | **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default. (optional) 
 
             try
             {
                 // Call current weather data for one location
-                TemperatureSensorGet result = apiInstance.temperatureWeather(q, idd, lat, lon, zipp);
+                TemperatureSensorGet result = apiInstance.temperatureWeather();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2673,14 +2512,9 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
-$q = q_example; // String | **City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes.
-$idd = idd_example; // String | **City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it's treated as 3 API calls.*
-$lat = lat_example; // String | **Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`.
-$lon = lon_example; // String | **Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`.
-$zipp = zipp_example; // String | **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default.
 
 try {
-    $result = $api_instance->temperatureWeather($q, $idd, $lat, $lon, $zipp);
+    $result = $api_instance->temperatureWeather();
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->temperatureWeather: ', $e->getMessage(), PHP_EOL;
@@ -2694,14 +2528,9 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
-my $q = q_example; # String | **City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes.
-my $idd = idd_example; # String | **City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it's treated as 3 API calls.*
-my $lat = lat_example; # String | **Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`.
-my $lon = lon_example; # String | **Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`.
-my $zipp = zipp_example; # String | **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default.
 
 eval { 
-    my $result = $api_instance->temperatureWeather(q => $q, idd => $idd, lat => $lat, lon => $lon, zipp => $zipp);
+    my $result = $api_instance->temperatureWeather();
     print Dumper($result);
 };
 if ($@) {
@@ -2718,15 +2547,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
-q = q_example # String | **City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes. (optional)
-idd = idd_example # String | **City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it's treated as 3 API calls.* (optional)
-lat = lat_example # String | **Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`. (optional)
-lon = lon_example # String | **Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`. (optional)
-zipp = zipp_example # String | **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default. (optional)
 
 try: 
     # Call current weather data for one location
-    api_response = api_instance.temperature_weather(q=q, idd=idd, lat=lat, lon=lon, zipp=zipp)
+    api_response = api_instance.temperature_weather()
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->temperatureWeather: %s\n" % e)</code></pre>
@@ -2739,108 +2563,6 @@ except ApiException as e:
 
 
 
-                            <div class="methodsubtabletitle">Query parameters</div>
-                            <table id="methodsubtable">
-                              <tr>
-                                <th width="150px">Name</th>
-                                <th>Description</th>
-                              </tr>
-                                <tr><td style="width:150px;">q</td>
-                                <td>
-                                
-                                
-                                    <div id="d2e199_temperatureWeather_q">
-                                        <div class="json-schema-view">
-                                            <div class="primitive">
-                                                <span class="type">
-                                                    String
-                                                </span>
-                                
-                                                    <div class="inner description">
-                                                        **City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes.
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                </tr>
-                                <tr><td style="width:150px;">idd</td>
-                                <td>
-                                
-                                
-                                    <div id="d2e199_temperatureWeather_idd">
-                                        <div class="json-schema-view">
-                                            <div class="primitive">
-                                                <span class="type">
-                                                    String
-                                                </span>
-                                
-                                                    <div class="inner description">
-                                                        **City ID**. *Example: &#x60;2172797&#x60;*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &amp;mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it&#x27;s treated as 3 API calls.*
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                </tr>
-                                <tr><td style="width:150px;">lat</td>
-                                <td>
-                                
-                                
-                                    <div id="d2e199_temperatureWeather_lat">
-                                        <div class="json-schema-view">
-                                            <div class="primitive">
-                                                <span class="type">
-                                                    String
-                                                </span>
-                                
-                                                    <div class="inner description">
-                                                        **Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with &#x60;lon&#x60;.
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                </tr>
-                                <tr><td style="width:150px;">lon</td>
-                                <td>
-                                
-                                
-                                    <div id="d2e199_temperatureWeather_lon">
-                                        <div class="json-schema-view">
-                                            <div class="primitive">
-                                                <span class="type">
-                                                    String
-                                                </span>
-                                
-                                                    <div class="inner description">
-                                                        **Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with &#x60;lat&#x60;.
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                </tr>
-                                <tr><td style="width:150px;">zipp</td>
-                                <td>
-                                
-                                
-                                    <div id="d2e199_temperatureWeather_zipp">
-                                        <div class="json-schema-view">
-                                            <div class="primitive">
-                                                <span class="type">
-                                                    String
-                                                </span>
-                                
-                                                    <div class="inner description">
-                                                        **Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default.
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                </tr>
-                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - ok </h3>
@@ -2954,7 +2676,7 @@ except ApiException as e:
                         <p class="marked">target room temperature</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/updateComfortTemperature/{apartment}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/updateComfortTemperature</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2974,7 +2696,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Environment-updateComfortTemperature-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.5/updateComfortTemperature/{apartment}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/updateComfortTemperature"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-updateComfortTemperature-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2991,9 +2716,8 @@ public class EnvironmentApiExample {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | Comfort t
-        Integer apartment = 56; // Integer | 
         try {
-            ApiResponse result = apiInstance.updateComfortTemperature(body, apartment);
+            ApiResponse result = apiInstance.updateComfortTemperature(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateComfortTemperature");
@@ -3011,9 +2735,8 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | Comfort t
-        Integer apartment = 56; // Integer | 
         try {
-            ApiResponse result = apiInstance.updateComfortTemperature(body, apartment);
+            ApiResponse result = apiInstance.updateComfortTemperature(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateComfortTemperature");
@@ -3028,12 +2751,10 @@ public class EnvironmentApiExample {
   </div> -->
                             <div class="tab-pane" id="examples-Environment-updateComfortTemperature-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">TemperaturePost *body = ; // Comfort t
-Integer *apartment = 56; // 
 
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 [apiInstance updateComfortTemperatureWith:body
-    apartment:apartment
               completionHandler: ^(ApiResponse output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -3050,7 +2771,6 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 var api = new HomeIotApi.EnvironmentApi()
 var body = ; // {{TemperaturePost}} Comfort t
-var apartment = 56; // {{Integer}} 
 
 var callback = function(error, data, response) {
   if (error) {
@@ -3059,7 +2779,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.updateComfortTemperature(bodyapartment, callback);
+api.updateComfortTemperature(body, callback);
 </code></pre>
                             </div>
 
@@ -3082,11 +2802,10 @@ namespace Example
 
             var apiInstance = new EnvironmentApi();
             var body = new TemperaturePost(); // TemperaturePost | Comfort t
-            var apartment = 56;  // Integer | 
 
             try
             {
-                ApiResponse result = apiInstance.updateComfortTemperature(body, apartment);
+                ApiResponse result = apiInstance.updateComfortTemperature(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3105,10 +2824,9 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
 $body = ; // TemperaturePost | Comfort t
-$apartment = 56; // Integer | 
 
 try {
-    $result = $api_instance->updateComfortTemperature($body, $apartment);
+    $result = $api_instance->updateComfortTemperature($body);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->updateComfortTemperature: ', $e->getMessage(), PHP_EOL;
@@ -3123,10 +2841,9 @@ use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
 my $body = WWW::SwaggerClient::Object::TemperaturePost->new(); # TemperaturePost | Comfort t
-my $apartment = 56; # Integer | 
 
 eval { 
-    my $result = $api_instance->updateComfortTemperature(body => $body, apartment => $apartment);
+    my $result = $api_instance->updateComfortTemperature(body => $body);
     print Dumper($result);
 };
 if ($@) {
@@ -3144,10 +2861,9 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
 body =  # TemperaturePost | Comfort t
-apartment = 56 # Integer | 
 
 try: 
-    api_response = api_instance.update_comfort_temperature(body, apartment)
+    api_response = api_instance.update_comfort_temperature(body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->updateComfortTemperature: %s\n" % e)</code></pre>
@@ -3156,35 +2872,6 @@ except ApiException as e:
 
                           <h2>Parameters</h2>
 
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">apartment*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_updateComfortTemperature_apartment">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      Integer
-                                                  </span>
-                                                      <span class="format">
-                                                          (int32)
-                                                      </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
 
 
                             <div class="methodsubtabletitle">Body parameters</div>
@@ -3346,7 +3033,7 @@ except ApiException as e:
                         <p class="marked">target room temperature</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/updateEconomTemperature/{apartment}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/updateEconomTemperature</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -3366,7 +3053,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Environment-updateEconomTemperature-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.5/updateEconomTemperature/{apartment}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/updateEconomTemperature"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-updateEconomTemperature-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3383,9 +3073,8 @@ public class EnvironmentApiExample {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | Econom t
-        Integer apartment = 56; // Integer | 
         try {
-            ApiResponse result = apiInstance.updateEconomTemperature(body, apartment);
+            ApiResponse result = apiInstance.updateEconomTemperature(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateEconomTemperature");
@@ -3403,9 +3092,8 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | Econom t
-        Integer apartment = 56; // Integer | 
         try {
-            ApiResponse result = apiInstance.updateEconomTemperature(body, apartment);
+            ApiResponse result = apiInstance.updateEconomTemperature(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateEconomTemperature");
@@ -3420,12 +3108,10 @@ public class EnvironmentApiExample {
   </div> -->
                             <div class="tab-pane" id="examples-Environment-updateEconomTemperature-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">TemperaturePost *body = ; // Econom t
-Integer *apartment = 56; // 
 
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 [apiInstance updateEconomTemperatureWith:body
-    apartment:apartment
               completionHandler: ^(ApiResponse output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -3442,7 +3128,6 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 var api = new HomeIotApi.EnvironmentApi()
 var body = ; // {{TemperaturePost}} Econom t
-var apartment = 56; // {{Integer}} 
 
 var callback = function(error, data, response) {
   if (error) {
@@ -3451,7 +3136,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.updateEconomTemperature(bodyapartment, callback);
+api.updateEconomTemperature(body, callback);
 </code></pre>
                             </div>
 
@@ -3474,11 +3159,10 @@ namespace Example
 
             var apiInstance = new EnvironmentApi();
             var body = new TemperaturePost(); // TemperaturePost | Econom t
-            var apartment = 56;  // Integer | 
 
             try
             {
-                ApiResponse result = apiInstance.updateEconomTemperature(body, apartment);
+                ApiResponse result = apiInstance.updateEconomTemperature(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3497,10 +3181,9 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
 $body = ; // TemperaturePost | Econom t
-$apartment = 56; // Integer | 
 
 try {
-    $result = $api_instance->updateEconomTemperature($body, $apartment);
+    $result = $api_instance->updateEconomTemperature($body);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->updateEconomTemperature: ', $e->getMessage(), PHP_EOL;
@@ -3515,10 +3198,9 @@ use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
 my $body = WWW::SwaggerClient::Object::TemperaturePost->new(); # TemperaturePost | Econom t
-my $apartment = 56; # Integer | 
 
 eval { 
-    my $result = $api_instance->updateEconomTemperature(body => $body, apartment => $apartment);
+    my $result = $api_instance->updateEconomTemperature(body => $body);
     print Dumper($result);
 };
 if ($@) {
@@ -3536,10 +3218,9 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
 body =  # TemperaturePost | Econom t
-apartment = 56 # Integer | 
 
 try: 
-    api_response = api_instance.update_econom_temperature(body, apartment)
+    api_response = api_instance.update_econom_temperature(body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->updateEconomTemperature: %s\n" % e)</code></pre>
@@ -3548,35 +3229,6 @@ except ApiException as e:
 
                           <h2>Parameters</h2>
 
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">apartment*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_updateEconomTemperature_apartment">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      Integer
-                                                  </span>
-                                                      <span class="format">
-                                                          (int32)
-                                                      </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
 
 
                             <div class="methodsubtabletitle">Body parameters</div>
@@ -3690,7 +3342,7 @@ except ApiException as e:
                         <p class="marked">target room temperature</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/updateTargetTemperature/{apartment}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/updateTargetTemperature</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -3710,7 +3362,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Environment-updateTargetTemperature-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.5/updateTargetTemperature/{apartment}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/updateTargetTemperature"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-updateTargetTemperature-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3727,9 +3382,8 @@ public class EnvironmentApiExample {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | target t
-        Integer apartment = 56; // Integer | 
         try {
-            ApiResponse result = apiInstance.updateTargetTemperature(body, apartment);
+            ApiResponse result = apiInstance.updateTargetTemperature(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateTargetTemperature");
@@ -3747,9 +3401,8 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | target t
-        Integer apartment = 56; // Integer | 
         try {
-            ApiResponse result = apiInstance.updateTargetTemperature(body, apartment);
+            ApiResponse result = apiInstance.updateTargetTemperature(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateTargetTemperature");
@@ -3764,12 +3417,10 @@ public class EnvironmentApiExample {
   </div> -->
                             <div class="tab-pane" id="examples-Environment-updateTargetTemperature-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">TemperaturePost *body = ; // target t
-Integer *apartment = 56; // 
 
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 [apiInstance updateTargetTemperatureWith:body
-    apartment:apartment
               completionHandler: ^(ApiResponse output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -3786,7 +3437,6 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 var api = new HomeIotApi.EnvironmentApi()
 var body = ; // {{TemperaturePost}} target t
-var apartment = 56; // {{Integer}} 
 
 var callback = function(error, data, response) {
   if (error) {
@@ -3795,7 +3445,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.updateTargetTemperature(bodyapartment, callback);
+api.updateTargetTemperature(body, callback);
 </code></pre>
                             </div>
 
@@ -3818,11 +3468,10 @@ namespace Example
 
             var apiInstance = new EnvironmentApi();
             var body = new TemperaturePost(); // TemperaturePost | target t
-            var apartment = 56;  // Integer | 
 
             try
             {
-                ApiResponse result = apiInstance.updateTargetTemperature(body, apartment);
+                ApiResponse result = apiInstance.updateTargetTemperature(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3841,10 +3490,9 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
 $body = ; // TemperaturePost | target t
-$apartment = 56; // Integer | 
 
 try {
-    $result = $api_instance->updateTargetTemperature($body, $apartment);
+    $result = $api_instance->updateTargetTemperature($body);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->updateTargetTemperature: ', $e->getMessage(), PHP_EOL;
@@ -3859,10 +3507,9 @@ use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
 my $body = WWW::SwaggerClient::Object::TemperaturePost->new(); # TemperaturePost | target t
-my $apartment = 56; # Integer | 
 
 eval { 
-    my $result = $api_instance->updateTargetTemperature(body => $body, apartment => $apartment);
+    my $result = $api_instance->updateTargetTemperature(body => $body);
     print Dumper($result);
 };
 if ($@) {
@@ -3880,10 +3527,9 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
 body =  # TemperaturePost | target t
-apartment = 56 # Integer | 
 
 try: 
-    api_response = api_instance.update_target_temperature(body, apartment)
+    api_response = api_instance.update_target_temperature(body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->updateTargetTemperature: %s\n" % e)</code></pre>
@@ -3892,35 +3538,6 @@ except ApiException as e:
 
                           <h2>Parameters</h2>
 
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">apartment*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_updateTargetTemperature_apartment">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      Integer
-                                                  </span>
-                                                      <span class="format">
-                                                          (int32)
-                                                      </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
 
 
                             <div class="methodsubtabletitle">Body parameters</div>

@@ -22,7 +22,7 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.5/targetTemperature/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.6/targetTemperature',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -33,7 +33,7 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.5/temperatureComfort/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.6/temperatureComfort',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -44,7 +44,7 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.5/temperatureEconom/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.6/temperatureEconom',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -55,7 +55,7 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.5/temperatureRoom/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.6/temperatureRoom/',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -66,7 +66,7 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.5/temperatureWater/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.6/temperatureWater/',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -76,15 +76,9 @@ class TestEnvironmentController(BaseTestCase):
 
         Call current weather data for one location
         """
-        query_string = [('q', 'q_example'),
-                        ('idd', 'idd_example'),
-                        ('lat', 'lat_example'),
-                        ('lon', 'lon_example'),
-                        ('zipp', 'zipp_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.5/temperatureWeather',
-            method='GET',
-            query_string=query_string)
+            '/OVK/OVK_mob1/1.0.6/temperatureWeather',
+            method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -95,7 +89,7 @@ class TestEnvironmentController(BaseTestCase):
         """
         body = TemperaturePost()
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.5/updateComfortTemperature/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.6/updateComfortTemperature',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -109,7 +103,7 @@ class TestEnvironmentController(BaseTestCase):
         """
         body = TemperaturePost()
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.5/updateEconomTemperature/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.6/updateEconomTemperature',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -123,7 +117,7 @@ class TestEnvironmentController(BaseTestCase):
         """
         body = TemperaturePost()
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.5/updateTargetTemperature/{apartment}'.format(apartment=56),
+            '/OVK/OVK_mob1/1.0.6/updateTargetTemperature',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')

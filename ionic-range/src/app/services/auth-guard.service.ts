@@ -1,7 +1,7 @@
 import { Injectable }     from '@angular/core';
 import { CanActivate }    from '@angular/router';
 import { Router } from '@angular/router';
-import { ApiService } from './api.service';
+//import { ApiService } from './api.service';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
 
@@ -44,6 +44,6 @@ export class AuthGuardService implements CanActivate {
 
   constructor(
     private router: Router,
-    private apiService: ApiService,
+//    private apiService: ApiService,
   ) { }
 }

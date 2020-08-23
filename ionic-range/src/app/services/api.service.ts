@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Storage } from '@ionic/storage';
 import {HttpParams} from "@angular/common/http";
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class ApiService {
   constructor(
     private http: HttpClient, 
     private storage: Storage,
+    public platform:Platform, 
   ) { 
       this.initApi();       
     }
@@ -44,10 +46,14 @@ export class ApiService {
         if (val) {
             this.isJWT = true;
             this.httpParams =  this.initHttpParams(this.jwtString);
-            this.getApi('temperatureWeather?q=444');
+            this.getApi('temperatureWeather');
+//            this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":'22.9'})
+          }else{
+            console.log("[initApi] jwtString not exist yet !! ")
           }
       });
-
+      
+      this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":'22.9'})
   }
 
   initHttpParams(term: string) {
@@ -56,7 +62,7 @@ export class ApiService {
     return options;
   }
 
-  getApi(urlSurf: string) {
+  public getApi(urlSurf: string) {
     const body = {jwtKey: this.jwtString};
     const url = this.SERVER_URL.concat(urlSurf)
     this.http.get(url, this.httpParams)
@@ -72,17 +78,18 @@ export class ApiService {
     );
   }
 
-  postApi(urlSurf: string, postData: {}) {
+  public postApi(urlSurf: string, postData: {}) {
     const body = {jwtKey: this.jwtString};
     const url = this.SERVER_URL.concat(urlSurf)
-    this.http.post(url, this.httpParams)
+    this.http.post(url, this.httpParams, postData)
+//    this.http.post(urlPostTarget, {"id":"target_room_t", "value":data['target_t']}).subscribe(
     .subscribe(
       data => { 
-        console.log('GET Result: '.concat(urlSurf), data['value']); 
+        console.log('POST Result:   '.concat(urlSurf), data['value']); 
         return data['value'];
       },
       err => {
-        console.log('GET - Something went wrong!'.concat(urlSurf), err);
+        console.log('POST - Something went wrong!   '.concat(urlSurf), err);
         return null;
       }
     );
