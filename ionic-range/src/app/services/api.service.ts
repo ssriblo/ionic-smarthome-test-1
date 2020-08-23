@@ -47,13 +47,13 @@ export class ApiService {
             this.isJWT = true;
             this.httpParams =  this.initHttpParams(this.jwtString);
             this.getApi('temperatureWeather');
-//            this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":'22.9'})
+//            this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":'22'})
           }else{
             console.log("[initApi] jwtString not exist yet !! ")
           }
       });
       
-      this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":22})
+      this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":21})
   }
 
   initHttpParams(term: string) {
@@ -81,9 +81,8 @@ export class ApiService {
   public postApi(urlSurf: string, postData: {}) {
     const body = {jwtKey: this.jwtString};
     const url = this.SERVER_URL.concat(urlSurf)
-//    this.http.post(url, this.httpParams, postData)
-    this.http.post(url,  postData)
-//    this.http.post(urlPostTarget, {"id":"target_room_t", "value":data['target_t']}).subscribe(
+    this.http.post(url, postData, this.httpParams )
+//    this.http.post(url, postData)
     .subscribe(
       data => { 
         console.log('POST Result:   '.concat(urlSurf), data['value']); 
