@@ -44,7 +44,7 @@ export class ApiService {
         if (val) {
             this.isJWT = true;
             this.httpParams =  this.initHttpParams(this.jwtString);
-            this.getWeatherT();
+            this.getApi('temperatureWeather?q=444');
           }
       });
 
@@ -56,20 +56,36 @@ export class ApiService {
     return options;
   }
 
-  getWeatherT() {
+  getApi(urlSurf: string) {
     const body = {jwtKey: this.jwtString};
-    const urlGetWeatherTSuff = 'temperatureWeather?q=444'
-    const urlGetWeather = this.SERVER_URL.concat(urlGetWeatherTSuff)
-    this.http.get(urlGetWeather, this.httpParams)
+    const url = this.SERVER_URL.concat(urlSurf)
+    this.http.get(url, this.httpParams)
     .subscribe(
-      // Successful responses call the first callback.
       data => { 
-        console.log("getWeatherT() -> ", data['value']); 
+        console.log('GET Result: '.concat(urlSurf), data['value']); 
+        return data['value'];
       },
-      // Errors will call this callback instead:
       err => {
-        console.log('getWeatherT() -> Something went wrong!', err);
+        console.log('GET - Something went wrong!'.concat(urlSurf), err);
+        return null;
       }
     );
-  }  
+  }
+
+  postApi(urlSurf: string, postData: {}) {
+    const body = {jwtKey: this.jwtString};
+    const url = this.SERVER_URL.concat(urlSurf)
+    this.http.post(url, this.httpParams)
+    .subscribe(
+      data => { 
+        console.log('GET Result: '.concat(urlSurf), data['value']); 
+        return data['value'];
+      },
+      err => {
+        console.log('GET - Something went wrong!'.concat(urlSurf), err);
+        return null;
+      }
+    );
+  }
+
 }

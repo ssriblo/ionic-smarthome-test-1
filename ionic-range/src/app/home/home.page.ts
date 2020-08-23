@@ -81,6 +81,7 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
   }
 
   ngOnInit() {
+    this.apiService.getApi('temperatureWeather?q=444');
   }
 
   toSetupPage() {
@@ -106,18 +107,6 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
     return await response.json(); // parses JSON response into native JavaScript objects
   }
 //////////////  
-  ngPostData(url = this.url_post, data = { target_t: this.rangeVal }) {
-    const body = data // body data type must match "Content-Type" header
-    return this.http.post(url, body).subscribe(
-      out => {
-        console.log('FROM SERVER: ', out); 
-        console.log("ROOM t=", out['room_temp'], "WEATHER t=", out["weather_temp"])
-        this.room_t_s = out['room_temp']
-        this.weather_t_s = out['weather_temp']
-      }
-    );
-  }
-
   ngGetPostData(url=this.url_serv, data = {target_t: this.rangeVal}) {
     const body = data // body data type must match "Content-Type" header
     const apartment = '133'
@@ -160,15 +149,6 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
       'Comfort', this.comfortT,
       'Econom', this.economT,
       this.isFillComfort, this.isFillEconom)
-    // this.postData(this.url_post, { target_t: this.rangeVal })
-    //   .then((data) => {
-    //       console.log('FROM SERVER: ', data); 
-    //       console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
-    //       this.room_t_s = data['room_temp']
-    //       this.weather_t_s = data['weather_temp']
-    // });
-//    this.postDataWrap();
-//    this.ngPostData();
     this.ngGetPostData();
     this.storage.set('targetT', this.rangeVal);
 

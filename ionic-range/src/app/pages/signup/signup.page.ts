@@ -30,35 +30,35 @@ export class SignupPage implements OnInit {
 
   ngOnInit() {}
 
-  continue() {}
+//  continue() {}
 
-  async signUp() {
-    const loading = await this.loadingController.create();
-    await loading.present();
+  // async signUp() {
+  //   const loading = await this.loadingController.create();
+  //   await loading.present();
 
 
-    // send token to server and obtain response:
-    this.auth.jwtSignup(
-        this.data
-      )
-      .then(
-        (res) => {
-          loading.dismiss();
-          this.close();
-          this.router.navigateByUrl('/app');
-        },
-        async (err) => {
-          loading.dismiss();
-          const alert = await this.alertController.create({
-            header: 'Sign up failed',
-            message: err.message,
-            buttons: ['OK'],
-          });
+  //   // send token to server and obtain response:
+  //   this.auth.jwtSignup(
+  //       this.data
+  //     )
+  //     .then(
+  //       (res) => {
+  //         loading.dismiss();
+  //         this.close();
+  //         this.router.navigateByUrl('/app');
+  //       },
+  //       async (err) => {
+  //         loading.dismiss();
+  //         const alert = await this.alertController.create({
+  //           header: 'Sign up failed',
+  //           message: err.message,
+  //           buttons: ['OK'],
+  //         });
 
-          await alert.present();
-        }
-      );
-  }
+  //         await alert.present();
+  //       }
+  //     );
+  // }
 
   close() {
     this.modalCtrl.dismiss();
