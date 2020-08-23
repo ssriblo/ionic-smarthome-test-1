@@ -53,7 +53,7 @@ export class ApiService {
           }
       });
       
-      this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":'22.9'})
+      this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":22})
   }
 
   initHttpParams(term: string) {
@@ -81,7 +81,8 @@ export class ApiService {
   public postApi(urlSurf: string, postData: {}) {
     const body = {jwtKey: this.jwtString};
     const url = this.SERVER_URL.concat(urlSurf)
-    this.http.post(url, this.httpParams, postData)
+//    this.http.post(url, this.httpParams, postData)
+    this.http.post(url,  postData)
 //    this.http.post(urlPostTarget, {"id":"target_room_t", "value":data['target_t']}).subscribe(
     .subscribe(
       data => { 

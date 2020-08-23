@@ -151,7 +151,7 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
     this.ngGetPostData();
     this.storage.set('targetT', this.rangeVal);
 
-    this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":'22.9'})
+    this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":22})
 
   }
 
