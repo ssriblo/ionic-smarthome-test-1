@@ -44,10 +44,12 @@ export class ApiService {
         this.jwtString = val;
         console.log('get jwtString from storage: ', this.jwtString );  
         if (val) {
-            this.isJWT = true;
             this.httpParams =  this.initHttpParams(this.jwtString);
-            this.getApi('temperatureWeather');
-//            this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":'22'})
+            this.getApiCB('temperatureWeather', (result) => {
+              if(result != null) {
+                this.isJWT = true;
+              }
+             });
           }else{
             console.log("[initApi] jwtString not exist yet !! ")
           }
@@ -62,6 +64,7 @@ export class ApiService {
     return options;
   }
 
+  // not used more, save just for case...
   public getApi(urlSurf: string) {
     const body = {jwtKey: this.jwtString};
     const url = this.SERVER_URL.concat(urlSurf)
@@ -69,20 +72,24 @@ export class ApiService {
     .subscribe(
       data => { 
         console.log('GET Result: '.concat(urlSurf), data['value']); 
-        return data['value'];
       },
       err => {
         console.log('GET - Something went wrong!'.concat(urlSurf), err);
-        return null;
       }
     );
+  }
+
+  public getApiCB(urlSurf: string, onSuccess) {
+    const body = {jwtKey: this.jwtString};
+    const url = this.SERVER_URL.concat(urlSurf)
+    this.http.get(url, this.httpParams)
+    .subscribe(onSuccess);
   }
 
   public postApi(urlSurf: string, postData: {}) {
     const body = {jwtKey: this.jwtString};
     const url = this.SERVER_URL.concat(urlSurf)
     this.http.post(url, postData, this.httpParams )
-//    this.http.post(url, postData)
     .subscribe(
       data => { 
         console.log('POST Result:   '.concat(urlSurf), data['value']); 
@@ -94,5 +101,7 @@ export class ApiService {
       }
     );
   }
+
+
 
 }
