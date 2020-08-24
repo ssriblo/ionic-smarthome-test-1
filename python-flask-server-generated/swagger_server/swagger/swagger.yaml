@@ -2,16 +2,25 @@ openapi: 3.0.0
 info:
   title: home-iot-api
   description: The API for the OVK-1 IOT project
-  version: 1.0.6
+  version: 1.0.7
 servers:
-- url: https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6
+- url: https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7
   description: SwaggerHub API Auto Mocking
 paths:
-  /temperatureRoom/:
+  /temperatureRoom:
     get:
       tags:
       - Environment
       operationId: temperature_room
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: ok
@@ -27,11 +36,20 @@ paths:
                 $ref: '#/components/schemas/Errors'
       x-swagger-router-controller: Environment
       x-openapi-router-controller: swagger_server.controllers.environment_controller
-  /temperatureWater/:
+  /temperatureWater:
     get:
       tags:
       - Environment
       operationId: temperature_water
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: ok
@@ -47,6 +65,15 @@ paths:
       - Environment
       summary: Call current weather data for one location
       operationId: temperature_weather
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: ok
@@ -67,6 +94,15 @@ paths:
       tags:
       - Environment
       operationId: target_temperature
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: ok
@@ -87,6 +123,15 @@ paths:
       tags:
       - Environment
       operationId: temperature_comfort
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: ok
@@ -107,6 +152,15 @@ paths:
       tags:
       - Environment
       operationId: temperature_econom
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: ok
@@ -122,12 +176,50 @@ paths:
                 $ref: '#/components/schemas/Errors'
       x-swagger-router-controller: Environment
       x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /serversStatus:
+    get:
+      tags:
+      - Environment
+      operationId: servers_status
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerStatusGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
   /updateTargetTemperature:
     post:
       tags:
       - Environment
       description: target room temperature
       operationId: update_target_temperature
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       requestBody:
         description: target t
         content:
@@ -156,6 +248,15 @@ paths:
       - Environment
       description: target room temperature
       operationId: update_comfort_temperature
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       requestBody:
         description: Comfort t
         content:
@@ -184,6 +285,15 @@ paths:
       - Environment
       description: target room temperature
       operationId: update_econom_temperature
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       requestBody:
         description: Econom t
         content:
@@ -252,6 +362,26 @@ components:
         value: 0
         timestamp: 2000-01-23T04:56:07.000+00:00
         status: status
+    ServerStatusGet:
+      required:
+      - status
+      - timestamp
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: The servers status
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: string
+      description: TBD
+      example:
+        value: value
+        timestamp: 2000-01-23T04:56:07.000+00:00
+        status: status
     TemperaturePost:
       required:
       - id
@@ -278,40 +408,6 @@ components:
       example:
         code: 0
         message: everything is ok
-    HeaterState:
-      type: object
-      properties:
-        id:
-          type: string
-        state:
-          type: string
-      description: Just for case, not used yet
-    DeviceState:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        lastUpdate:
-          type: string
-          format: date-time
-        level:
-          type: integer
-          format: int32
-      description: Just for case, not used yet
-    DeviceRegistrationInfo:
-      type: object
-      properties:
-        uri:
-          type: string
-          format: uri
-          example: http://10.0.0.220:8080
-        id:
-          type: string
-          format: uuid
-          example: 0729a580-2240-11e6-9eb5-0002a5d5c51b
-      description: Just for case, not used yet
     Errors:
       type: object
       properties:
@@ -321,4 +417,14 @@ components:
           type: string
         message:
           type: string
+  parameters:
+    jwtToken:
+      name: jwt
+      in: query
+      description: JWT token for authorization
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: string
 

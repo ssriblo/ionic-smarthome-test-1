@@ -702,42 +702,6 @@
     }
   }
 };
-            defs["DeviceRegistrationInfo"] = {
-  "type" : "object",
-  "properties" : {
-    "uri" : {
-      "type" : "string",
-      "format" : "uri",
-      "example" : "http://10.0.0.220:8080"
-    },
-    "id" : {
-      "type" : "string",
-      "format" : "uuid",
-      "example" : "0729a580-2240-11e6-9eb5-0002a5d5c51b"
-    }
-  },
-  "description" : "Just for case, not used yet"
-};
-            defs["DeviceState"] = {
-  "type" : "object",
-  "properties" : {
-    "id" : {
-      "type" : "string"
-    },
-    "name" : {
-      "type" : "string"
-    },
-    "lastUpdate" : {
-      "type" : "string",
-      "format" : "date-time"
-    },
-    "level" : {
-      "type" : "integer",
-      "format" : "int32"
-    }
-  },
-  "description" : "Just for case, not used yet"
-};
             defs["Errors"] = {
   "type" : "object",
   "properties" : {
@@ -752,17 +716,23 @@
     }
   }
 };
-            defs["HeaterState"] = {
+            defs["ServerStatusGet"] = {
+  "required" : [ "status", "timestamp", "value" ],
   "type" : "object",
   "properties" : {
-    "id" : {
-      "type" : "string"
+    "value" : {
+      "type" : "string",
+      "description" : "The servers status"
     },
-    "state" : {
+    "timestamp" : {
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "status" : {
       "type" : "string"
     }
   },
-  "description" : "Just for case, not used yet"
+  "description" : "TBD"
 };
             defs["TemperaturePost"] = {
   "required" : [ "id", "value" ],
@@ -843,6 +813,9 @@
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
                   <li class="nav-header" data-group="Environment"><a href="#api-Environment">API Methods - Environment</a></li>
+                    <li data-group="Environment" data-name="serversStatus" class="">
+                      <a href="#api-Environment-serversStatus">serversStatus</a>
+                    </li>
                     <li data-group="Environment" data-name="targetTemperature" class="">
                       <a href="#api-Environment-targetTemperature">targetTemperature</a>
                     </li>
@@ -883,7 +856,7 @@
         <div id="header">
           <div id="api-_">
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
-              <div class="app-desc">Version: 1.0.6</div>
+              <div class="app-desc">Version: 1.0.7</div>
             <hr>
             <div>The API for the OVK-1 IOT project</div>
           </div>
@@ -891,6 +864,347 @@
         <div id="sections">
                 <section id="api-Environment">
                   <h1>Environment</h1>
+                    <div id="api-Environment-serversStatus">
+                      <article id="api-Environment-serversStatus-0" data-group="User" data-name="serversStatus" data-version="0">
+                        <div class="pull-left">
+                          <h1>serversStatus</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/serversStatus</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Environment-serversStatus-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Environment-serversStatus-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Environment-serversStatus-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Environment-serversStatus-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Environment-serversStatus-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Environment-serversStatus-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Environment-serversStatus-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Environment-serversStatus-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Environment-serversStatus-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Environment-serversStatus-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Environment-serversStatus-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Environment-serversStatus-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7/serversStatus?jwt="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Environment-serversStatus-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.EnvironmentApi;
+
+import java.io.File;
+import java.util.*;
+
+public class EnvironmentApiExample {
+
+    public static void main(String[] args) {
+        
+        EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
+        try {
+            ServerStatusGet result = apiInstance.serversStatus(jwt);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling EnvironmentApi#serversStatus");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Environment-serversStatus-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.EnvironmentApi;
+
+public class EnvironmentApiExample {
+
+    public static void main(String[] args) {
+        EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
+        try {
+            ServerStatusGet result = apiInstance.serversStatus(jwt);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling EnvironmentApi#serversStatus");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Environment-serversStatus-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Environment-serversStatus-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *jwt = jwt_example; // JWT token for authorization
+
+EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
+
+[apiInstance serversStatusWith:jwt
+              completionHandler: ^(ServerStatusGet output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Environment-serversStatus-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
+
+var api = new HomeIotApi.EnvironmentApi()
+var jwt = jwt_example; // {{String}} JWT token for authorization
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.serversStatus(jwt, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Environment-serversStatus-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Environment-serversStatus-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class serversStatusExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new EnvironmentApi();
+            var jwt = jwt_example;  // String | JWT token for authorization
+
+            try
+            {
+                ServerStatusGet result = apiInstance.serversStatus(jwt);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling EnvironmentApi.serversStatus: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Environment-serversStatus-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiEnvironmentApi();
+$jwt = jwt_example; // String | JWT token for authorization
+
+try {
+    $result = $api_instance->serversStatus($jwt);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling EnvironmentApi->serversStatus: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Environment-serversStatus-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::EnvironmentApi;
+
+my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
+my $jwt = jwt_example; # String | JWT token for authorization
+
+eval { 
+    my $result = $api_instance->serversStatus(jwt => $jwt);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling EnvironmentApi->serversStatus: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Environment-serversStatus-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.EnvironmentApi()
+jwt = jwt_example # String | JWT token for authorization
+
+try: 
+    api_response = api_instance.servers_status(jwt)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling EnvironmentApi->serversStatus: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">jwt*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_serversStatus_jwt">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        JWT token for authorization
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - ok </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-serversStatus-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-serversStatus-200-schema">
+                                  <div id='responses-serversStatus-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "ok",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/ServerStatusGet"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-serversStatus-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-serversStatus-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-serversStatus-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - some errors... </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-serversStatus-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-serversStatus-404-schema">
+                                  <div id='responses-serversStatus-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "some errors...",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Errors"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-serversStatus-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-serversStatus-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-serversStatus-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Environment-targetTemperature">
                       <article id="api-Environment-targetTemperature-0" data-group="User" data-name="targetTemperature" data-version="0">
                         <div class="pull-left">
@@ -925,7 +1239,7 @@
                           <div class="tab-pane active" id="examples-Environment-targetTemperature-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/targetTemperature"</code></pre>
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7/targetTemperature?jwt="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-targetTemperature-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -941,8 +1255,9 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureTargetGet result = apiInstance.targetTemperature();
+            TemperatureTargetGet result = apiInstance.targetTemperature(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#targetTemperature");
@@ -959,8 +1274,9 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureTargetGet result = apiInstance.targetTemperature();
+            TemperatureTargetGet result = apiInstance.targetTemperature(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#targetTemperature");
@@ -974,11 +1290,12 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-targetTemperature-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
+                              <pre class="prettyprint"><code class="language-cpp">String *jwt = jwt_example; // JWT token for authorization
+
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
-[apiInstance targetTemperatureWithCompletionHandler: 
-              ^(TemperatureTargetGet output, NSError* error) {
+[apiInstance targetTemperatureWith:jwt
+              completionHandler: ^(TemperatureTargetGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -993,6 +1310,8 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
+var jwt = jwt_example; // {{String}} JWT token for authorization
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1000,7 +1319,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.targetTemperature(callback);
+api.targetTemperature(jwt, callback);
 </code></pre>
                             </div>
 
@@ -1022,10 +1341,11 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
+            var jwt = jwt_example;  // String | JWT token for authorization
 
             try
             {
-                TemperatureTargetGet result = apiInstance.targetTemperature();
+                TemperatureTargetGet result = apiInstance.targetTemperature(jwt);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -1043,9 +1363,10 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
+$jwt = jwt_example; // String | JWT token for authorization
 
 try {
-    $result = $api_instance->targetTemperature();
+    $result = $api_instance->targetTemperature($jwt);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->targetTemperature: ', $e->getMessage(), PHP_EOL;
@@ -1059,9 +1380,10 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
+my $jwt = jwt_example; # String | JWT token for authorization
 
 eval { 
-    my $result = $api_instance->targetTemperature();
+    my $result = $api_instance->targetTemperature(jwt => $jwt);
     print Dumper($result);
 };
 if ($@) {
@@ -1078,9 +1400,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
+jwt = jwt_example # String | JWT token for authorization
 
 try: 
-    api_response = api_instance.target_temperature()
+    api_response = api_instance.target_temperature(jwt)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->targetTemperature: %s\n" % e)</code></pre>
@@ -1093,6 +1416,35 @@ except ApiException as e:
 
 
 
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">jwt*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_targetTemperature_jwt">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        JWT token for authorization
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - ok </h3>
@@ -1228,7 +1580,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Environment-temperatureComfort-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/temperatureComfort"</code></pre>
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7/temperatureComfort?jwt="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-temperatureComfort-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1244,8 +1596,9 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureTargetGet result = apiInstance.temperatureComfort();
+            TemperatureTargetGet result = apiInstance.temperatureComfort(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureComfort");
@@ -1262,8 +1615,9 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureTargetGet result = apiInstance.temperatureComfort();
+            TemperatureTargetGet result = apiInstance.temperatureComfort(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureComfort");
@@ -1277,11 +1631,12 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-temperatureComfort-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
+                              <pre class="prettyprint"><code class="language-cpp">String *jwt = jwt_example; // JWT token for authorization
+
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
-[apiInstance temperatureComfortWithCompletionHandler: 
-              ^(TemperatureTargetGet output, NSError* error) {
+[apiInstance temperatureComfortWith:jwt
+              completionHandler: ^(TemperatureTargetGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -1296,6 +1651,8 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
+var jwt = jwt_example; // {{String}} JWT token for authorization
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1303,7 +1660,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.temperatureComfort(callback);
+api.temperatureComfort(jwt, callback);
 </code></pre>
                             </div>
 
@@ -1325,10 +1682,11 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
+            var jwt = jwt_example;  // String | JWT token for authorization
 
             try
             {
-                TemperatureTargetGet result = apiInstance.temperatureComfort();
+                TemperatureTargetGet result = apiInstance.temperatureComfort(jwt);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -1346,9 +1704,10 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
+$jwt = jwt_example; // String | JWT token for authorization
 
 try {
-    $result = $api_instance->temperatureComfort();
+    $result = $api_instance->temperatureComfort($jwt);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->temperatureComfort: ', $e->getMessage(), PHP_EOL;
@@ -1362,9 +1721,10 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
+my $jwt = jwt_example; # String | JWT token for authorization
 
 eval { 
-    my $result = $api_instance->temperatureComfort();
+    my $result = $api_instance->temperatureComfort(jwt => $jwt);
     print Dumper($result);
 };
 if ($@) {
@@ -1381,9 +1741,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
+jwt = jwt_example # String | JWT token for authorization
 
 try: 
-    api_response = api_instance.temperature_comfort()
+    api_response = api_instance.temperature_comfort(jwt)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->temperatureComfort: %s\n" % e)</code></pre>
@@ -1396,6 +1757,35 @@ except ApiException as e:
 
 
 
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">jwt*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_temperatureComfort_jwt">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        JWT token for authorization
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - ok </h3>
@@ -1531,7 +1921,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Environment-temperatureEconom-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/temperatureEconom"</code></pre>
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7/temperatureEconom?jwt="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-temperatureEconom-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1547,8 +1937,9 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureTargetGet result = apiInstance.temperatureEconom();
+            TemperatureTargetGet result = apiInstance.temperatureEconom(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureEconom");
@@ -1565,8 +1956,9 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureTargetGet result = apiInstance.temperatureEconom();
+            TemperatureTargetGet result = apiInstance.temperatureEconom(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureEconom");
@@ -1580,11 +1972,12 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-temperatureEconom-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
+                              <pre class="prettyprint"><code class="language-cpp">String *jwt = jwt_example; // JWT token for authorization
+
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
-[apiInstance temperatureEconomWithCompletionHandler: 
-              ^(TemperatureTargetGet output, NSError* error) {
+[apiInstance temperatureEconomWith:jwt
+              completionHandler: ^(TemperatureTargetGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -1599,6 +1992,8 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
+var jwt = jwt_example; // {{String}} JWT token for authorization
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1606,7 +2001,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.temperatureEconom(callback);
+api.temperatureEconom(jwt, callback);
 </code></pre>
                             </div>
 
@@ -1628,10 +2023,11 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
+            var jwt = jwt_example;  // String | JWT token for authorization
 
             try
             {
-                TemperatureTargetGet result = apiInstance.temperatureEconom();
+                TemperatureTargetGet result = apiInstance.temperatureEconom(jwt);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -1649,9 +2045,10 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
+$jwt = jwt_example; // String | JWT token for authorization
 
 try {
-    $result = $api_instance->temperatureEconom();
+    $result = $api_instance->temperatureEconom($jwt);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->temperatureEconom: ', $e->getMessage(), PHP_EOL;
@@ -1665,9 +2062,10 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
+my $jwt = jwt_example; # String | JWT token for authorization
 
 eval { 
-    my $result = $api_instance->temperatureEconom();
+    my $result = $api_instance->temperatureEconom(jwt => $jwt);
     print Dumper($result);
 };
 if ($@) {
@@ -1684,9 +2082,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
+jwt = jwt_example # String | JWT token for authorization
 
 try: 
-    api_response = api_instance.temperature_econom()
+    api_response = api_instance.temperature_econom(jwt)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->temperatureEconom: %s\n" % e)</code></pre>
@@ -1699,6 +2098,35 @@ except ApiException as e:
 
 
 
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">jwt*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_temperatureEconom_jwt">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        JWT token for authorization
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - ok </h3>
@@ -1812,7 +2240,7 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureRoom/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureRoom</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1834,7 +2262,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Environment-temperatureRoom-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/temperatureRoom/"</code></pre>
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7/temperatureRoom?jwt="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-temperatureRoom-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1850,8 +2278,9 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureSensorGet result = apiInstance.temperatureRoom();
+            TemperatureSensorGet result = apiInstance.temperatureRoom(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureRoom");
@@ -1868,8 +2297,9 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureSensorGet result = apiInstance.temperatureRoom();
+            TemperatureSensorGet result = apiInstance.temperatureRoom(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureRoom");
@@ -1883,11 +2313,12 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-temperatureRoom-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
+                              <pre class="prettyprint"><code class="language-cpp">String *jwt = jwt_example; // JWT token for authorization
+
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
-[apiInstance temperatureRoomWithCompletionHandler: 
-              ^(TemperatureSensorGet output, NSError* error) {
+[apiInstance temperatureRoomWith:jwt
+              completionHandler: ^(TemperatureSensorGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -1902,6 +2333,8 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
+var jwt = jwt_example; // {{String}} JWT token for authorization
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1909,7 +2342,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.temperatureRoom(callback);
+api.temperatureRoom(jwt, callback);
 </code></pre>
                             </div>
 
@@ -1931,10 +2364,11 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
+            var jwt = jwt_example;  // String | JWT token for authorization
 
             try
             {
-                TemperatureSensorGet result = apiInstance.temperatureRoom();
+                TemperatureSensorGet result = apiInstance.temperatureRoom(jwt);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -1952,9 +2386,10 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
+$jwt = jwt_example; // String | JWT token for authorization
 
 try {
-    $result = $api_instance->temperatureRoom();
+    $result = $api_instance->temperatureRoom($jwt);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->temperatureRoom: ', $e->getMessage(), PHP_EOL;
@@ -1968,9 +2403,10 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
+my $jwt = jwt_example; # String | JWT token for authorization
 
 eval { 
-    my $result = $api_instance->temperatureRoom();
+    my $result = $api_instance->temperatureRoom(jwt => $jwt);
     print Dumper($result);
 };
 if ($@) {
@@ -1987,9 +2423,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
+jwt = jwt_example # String | JWT token for authorization
 
 try: 
-    api_response = api_instance.temperature_room()
+    api_response = api_instance.temperature_room(jwt)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->temperatureRoom: %s\n" % e)</code></pre>
@@ -2002,6 +2439,35 @@ except ApiException as e:
 
 
 
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">jwt*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_temperatureRoom_jwt">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        JWT token for authorization
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - ok </h3>
@@ -2115,7 +2581,7 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureWater/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/temperatureWater</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2137,7 +2603,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Environment-temperatureWater-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/temperatureWater/"</code></pre>
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7/temperatureWater?jwt="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-temperatureWater-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2153,8 +2619,9 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureSensorGet result = apiInstance.temperatureWater();
+            TemperatureSensorGet result = apiInstance.temperatureWater(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureWater");
@@ -2171,8 +2638,9 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureSensorGet result = apiInstance.temperatureWater();
+            TemperatureSensorGet result = apiInstance.temperatureWater(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureWater");
@@ -2186,11 +2654,12 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-temperatureWater-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
+                              <pre class="prettyprint"><code class="language-cpp">String *jwt = jwt_example; // JWT token for authorization
+
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
-[apiInstance temperatureWaterWithCompletionHandler: 
-              ^(TemperatureSensorGet output, NSError* error) {
+[apiInstance temperatureWaterWith:jwt
+              completionHandler: ^(TemperatureSensorGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2205,6 +2674,8 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
+var jwt = jwt_example; // {{String}} JWT token for authorization
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -2212,7 +2683,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.temperatureWater(callback);
+api.temperatureWater(jwt, callback);
 </code></pre>
                             </div>
 
@@ -2234,10 +2705,11 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
+            var jwt = jwt_example;  // String | JWT token for authorization
 
             try
             {
-                TemperatureSensorGet result = apiInstance.temperatureWater();
+                TemperatureSensorGet result = apiInstance.temperatureWater(jwt);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2255,9 +2727,10 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
+$jwt = jwt_example; // String | JWT token for authorization
 
 try {
-    $result = $api_instance->temperatureWater();
+    $result = $api_instance->temperatureWater($jwt);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->temperatureWater: ', $e->getMessage(), PHP_EOL;
@@ -2271,9 +2744,10 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
+my $jwt = jwt_example; # String | JWT token for authorization
 
 eval { 
-    my $result = $api_instance->temperatureWater();
+    my $result = $api_instance->temperatureWater(jwt => $jwt);
     print Dumper($result);
 };
 if ($@) {
@@ -2290,9 +2764,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
+jwt = jwt_example # String | JWT token for authorization
 
 try: 
-    api_response = api_instance.temperature_water()
+    api_response = api_instance.temperature_water(jwt)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->temperatureWater: %s\n" % e)</code></pre>
@@ -2305,6 +2780,35 @@ except ApiException as e:
 
 
 
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">jwt*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_temperatureWater_jwt">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        JWT token for authorization
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - ok </h3>
@@ -2392,7 +2896,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Environment-temperatureWeather-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/temperatureWeather"</code></pre>
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7/temperatureWeather?jwt="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-temperatureWeather-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2408,8 +2912,9 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureSensorGet result = apiInstance.temperatureWeather();
+            TemperatureSensorGet result = apiInstance.temperatureWeather(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureWeather");
@@ -2426,8 +2931,9 @@ public class EnvironmentApiExample {
 
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            TemperatureSensorGet result = apiInstance.temperatureWeather();
+            TemperatureSensorGet result = apiInstance.temperatureWeather(jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#temperatureWeather");
@@ -2441,12 +2947,13 @@ public class EnvironmentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Environment-temperatureWeather-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
+                              <pre class="prettyprint"><code class="language-cpp">String *jwt = jwt_example; // JWT token for authorization
+
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 // Call current weather data for one location
-[apiInstance temperatureWeatherWithCompletionHandler: 
-              ^(TemperatureSensorGet output, NSError* error) {
+[apiInstance temperatureWeatherWith:jwt
+              completionHandler: ^(TemperatureSensorGet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2461,6 +2968,8 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var HomeIotApi = require('home_iot_api');
 
 var api = new HomeIotApi.EnvironmentApi()
+var jwt = jwt_example; // {{String}} JWT token for authorization
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -2468,7 +2977,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.temperatureWeather(callback);
+api.temperatureWeather(jwt, callback);
 </code></pre>
                             </div>
 
@@ -2490,11 +2999,12 @@ namespace Example
         {
 
             var apiInstance = new EnvironmentApi();
+            var jwt = jwt_example;  // String | JWT token for authorization
 
             try
             {
                 // Call current weather data for one location
-                TemperatureSensorGet result = apiInstance.temperatureWeather();
+                TemperatureSensorGet result = apiInstance.temperatureWeather(jwt);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2512,9 +3022,10 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
+$jwt = jwt_example; // String | JWT token for authorization
 
 try {
-    $result = $api_instance->temperatureWeather();
+    $result = $api_instance->temperatureWeather($jwt);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->temperatureWeather: ', $e->getMessage(), PHP_EOL;
@@ -2528,9 +3039,10 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
+my $jwt = jwt_example; # String | JWT token for authorization
 
 eval { 
-    my $result = $api_instance->temperatureWeather();
+    my $result = $api_instance->temperatureWeather(jwt => $jwt);
     print Dumper($result);
 };
 if ($@) {
@@ -2547,10 +3059,11 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
+jwt = jwt_example # String | JWT token for authorization
 
 try: 
     # Call current weather data for one location
-    api_response = api_instance.temperature_weather()
+    api_response = api_instance.temperature_weather(jwt)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->temperatureWeather: %s\n" % e)</code></pre>
@@ -2563,6 +3076,35 @@ except ApiException as e:
 
 
 
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">jwt*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_temperatureWeather_jwt">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        JWT token for authorization
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - ok </h3>
@@ -2699,7 +3241,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/updateComfortTemperature"</code></pre>
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7/updateComfortTemperature?jwt="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-updateComfortTemperature-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2716,8 +3258,9 @@ public class EnvironmentApiExample {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | Comfort t
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            ApiResponse result = apiInstance.updateComfortTemperature(body);
+            ApiResponse result = apiInstance.updateComfortTemperature(body, jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateComfortTemperature");
@@ -2735,8 +3278,9 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | Comfort t
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            ApiResponse result = apiInstance.updateComfortTemperature(body);
+            ApiResponse result = apiInstance.updateComfortTemperature(body, jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateComfortTemperature");
@@ -2751,10 +3295,12 @@ public class EnvironmentApiExample {
   </div> -->
                             <div class="tab-pane" id="examples-Environment-updateComfortTemperature-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">TemperaturePost *body = ; // Comfort t
+String *jwt = jwt_example; // JWT token for authorization
 
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 [apiInstance updateComfortTemperatureWith:body
+    jwt:jwt
               completionHandler: ^(ApiResponse output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -2771,6 +3317,7 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 var api = new HomeIotApi.EnvironmentApi()
 var body = ; // {{TemperaturePost}} Comfort t
+var jwt = jwt_example; // {{String}} JWT token for authorization
 
 var callback = function(error, data, response) {
   if (error) {
@@ -2779,7 +3326,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.updateComfortTemperature(body, callback);
+api.updateComfortTemperature(bodyjwt, callback);
 </code></pre>
                             </div>
 
@@ -2802,10 +3349,11 @@ namespace Example
 
             var apiInstance = new EnvironmentApi();
             var body = new TemperaturePost(); // TemperaturePost | Comfort t
+            var jwt = jwt_example;  // String | JWT token for authorization
 
             try
             {
-                ApiResponse result = apiInstance.updateComfortTemperature(body);
+                ApiResponse result = apiInstance.updateComfortTemperature(body, jwt);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2824,9 +3372,10 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
 $body = ; // TemperaturePost | Comfort t
+$jwt = jwt_example; // String | JWT token for authorization
 
 try {
-    $result = $api_instance->updateComfortTemperature($body);
+    $result = $api_instance->updateComfortTemperature($body, $jwt);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->updateComfortTemperature: ', $e->getMessage(), PHP_EOL;
@@ -2841,9 +3390,10 @@ use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
 my $body = WWW::SwaggerClient::Object::TemperaturePost->new(); # TemperaturePost | Comfort t
+my $jwt = jwt_example; # String | JWT token for authorization
 
 eval { 
-    my $result = $api_instance->updateComfortTemperature(body => $body);
+    my $result = $api_instance->updateComfortTemperature(body => $body, jwt => $jwt);
     print Dumper($result);
 };
 if ($@) {
@@ -2861,9 +3411,10 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
 body =  # TemperaturePost | Comfort t
+jwt = jwt_example # String | JWT token for authorization
 
 try: 
-    api_response = api_instance.update_comfort_temperature(body)
+    api_response = api_instance.update_comfort_temperature(body, jwt)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->updateComfortTemperature: %s\n" % e)</code></pre>
@@ -2920,6 +3471,35 @@ except ApiException as e:
                             </table>
 
 
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">jwt*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_updateComfortTemperature_jwt">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        JWT token for authorization
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - Status of the operation </h3>
@@ -3056,7 +3636,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/updateEconomTemperature"</code></pre>
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7/updateEconomTemperature?jwt="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-updateEconomTemperature-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3073,8 +3653,9 @@ public class EnvironmentApiExample {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | Econom t
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            ApiResponse result = apiInstance.updateEconomTemperature(body);
+            ApiResponse result = apiInstance.updateEconomTemperature(body, jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateEconomTemperature");
@@ -3092,8 +3673,9 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | Econom t
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            ApiResponse result = apiInstance.updateEconomTemperature(body);
+            ApiResponse result = apiInstance.updateEconomTemperature(body, jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateEconomTemperature");
@@ -3108,10 +3690,12 @@ public class EnvironmentApiExample {
   </div> -->
                             <div class="tab-pane" id="examples-Environment-updateEconomTemperature-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">TemperaturePost *body = ; // Econom t
+String *jwt = jwt_example; // JWT token for authorization
 
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 [apiInstance updateEconomTemperatureWith:body
+    jwt:jwt
               completionHandler: ^(ApiResponse output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -3128,6 +3712,7 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 var api = new HomeIotApi.EnvironmentApi()
 var body = ; // {{TemperaturePost}} Econom t
+var jwt = jwt_example; // {{String}} JWT token for authorization
 
 var callback = function(error, data, response) {
   if (error) {
@@ -3136,7 +3721,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.updateEconomTemperature(body, callback);
+api.updateEconomTemperature(bodyjwt, callback);
 </code></pre>
                             </div>
 
@@ -3159,10 +3744,11 @@ namespace Example
 
             var apiInstance = new EnvironmentApi();
             var body = new TemperaturePost(); // TemperaturePost | Econom t
+            var jwt = jwt_example;  // String | JWT token for authorization
 
             try
             {
-                ApiResponse result = apiInstance.updateEconomTemperature(body);
+                ApiResponse result = apiInstance.updateEconomTemperature(body, jwt);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3181,9 +3767,10 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
 $body = ; // TemperaturePost | Econom t
+$jwt = jwt_example; // String | JWT token for authorization
 
 try {
-    $result = $api_instance->updateEconomTemperature($body);
+    $result = $api_instance->updateEconomTemperature($body, $jwt);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->updateEconomTemperature: ', $e->getMessage(), PHP_EOL;
@@ -3198,9 +3785,10 @@ use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
 my $body = WWW::SwaggerClient::Object::TemperaturePost->new(); # TemperaturePost | Econom t
+my $jwt = jwt_example; # String | JWT token for authorization
 
 eval { 
-    my $result = $api_instance->updateEconomTemperature(body => $body);
+    my $result = $api_instance->updateEconomTemperature(body => $body, jwt => $jwt);
     print Dumper($result);
 };
 if ($@) {
@@ -3218,9 +3806,10 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
 body =  # TemperaturePost | Econom t
+jwt = jwt_example # String | JWT token for authorization
 
 try: 
-    api_response = api_instance.update_econom_temperature(body)
+    api_response = api_instance.update_econom_temperature(body, jwt)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->updateEconomTemperature: %s\n" % e)</code></pre>
@@ -3277,6 +3866,35 @@ except ApiException as e:
                             </table>
 
 
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">jwt*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_updateEconomTemperature_jwt">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        JWT token for authorization
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - Status of the operation </h3>
@@ -3365,7 +3983,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
-"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.6/updateTargetTemperature"</code></pre>
+"https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7/updateTargetTemperature?jwt="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Environment-updateTargetTemperature-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3382,8 +4000,9 @@ public class EnvironmentApiExample {
         
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | target t
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            ApiResponse result = apiInstance.updateTargetTemperature(body);
+            ApiResponse result = apiInstance.updateTargetTemperature(body, jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateTargetTemperature");
@@ -3401,8 +4020,9 @@ public class EnvironmentApiExample {
     public static void main(String[] args) {
         EnvironmentApi apiInstance = new EnvironmentApi();
         TemperaturePost body = ; // TemperaturePost | target t
+        String jwt = jwt_example; // String | JWT token for authorization
         try {
-            ApiResponse result = apiInstance.updateTargetTemperature(body);
+            ApiResponse result = apiInstance.updateTargetTemperature(body, jwt);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling EnvironmentApi#updateTargetTemperature");
@@ -3417,10 +4037,12 @@ public class EnvironmentApiExample {
   </div> -->
                             <div class="tab-pane" id="examples-Environment-updateTargetTemperature-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">TemperaturePost *body = ; // target t
+String *jwt = jwt_example; // JWT token for authorization
 
 EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 [apiInstance updateTargetTemperatureWith:body
+    jwt:jwt
               completionHandler: ^(ApiResponse output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -3437,6 +4059,7 @@ EnvironmentApi *apiInstance = [[EnvironmentApi alloc] init];
 
 var api = new HomeIotApi.EnvironmentApi()
 var body = ; // {{TemperaturePost}} target t
+var jwt = jwt_example; // {{String}} JWT token for authorization
 
 var callback = function(error, data, response) {
   if (error) {
@@ -3445,7 +4068,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.updateTargetTemperature(body, callback);
+api.updateTargetTemperature(bodyjwt, callback);
 </code></pre>
                             </div>
 
@@ -3468,10 +4091,11 @@ namespace Example
 
             var apiInstance = new EnvironmentApi();
             var body = new TemperaturePost(); // TemperaturePost | target t
+            var jwt = jwt_example;  // String | JWT token for authorization
 
             try
             {
-                ApiResponse result = apiInstance.updateTargetTemperature(body);
+                ApiResponse result = apiInstance.updateTargetTemperature(body, jwt);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3490,9 +4114,10 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiEnvironmentApi();
 $body = ; // TemperaturePost | target t
+$jwt = jwt_example; // String | JWT token for authorization
 
 try {
-    $result = $api_instance->updateTargetTemperature($body);
+    $result = $api_instance->updateTargetTemperature($body, $jwt);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling EnvironmentApi->updateTargetTemperature: ', $e->getMessage(), PHP_EOL;
@@ -3507,9 +4132,10 @@ use WWW::SwaggerClient::EnvironmentApi;
 
 my $api_instance = WWW::SwaggerClient::EnvironmentApi->new();
 my $body = WWW::SwaggerClient::Object::TemperaturePost->new(); # TemperaturePost | target t
+my $jwt = jwt_example; # String | JWT token for authorization
 
 eval { 
-    my $result = $api_instance->updateTargetTemperature(body => $body);
+    my $result = $api_instance->updateTargetTemperature(body => $body, jwt => $jwt);
     print Dumper($result);
 };
 if ($@) {
@@ -3527,9 +4153,10 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.EnvironmentApi()
 body =  # TemperaturePost | target t
+jwt = jwt_example # String | JWT token for authorization
 
 try: 
-    api_response = api_instance.update_target_temperature(body)
+    api_response = api_instance.update_target_temperature(body, jwt)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling EnvironmentApi->updateTargetTemperature: %s\n" % e)</code></pre>
@@ -3586,6 +4213,35 @@ except ApiException as e:
                             </table>
 
 
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">jwt*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_updateTargetTemperature_jwt">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        JWT token for authorization
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
 
                           <h2>Responses</h2>
                             <h3> Status: 200 - Status of the operation </h3>

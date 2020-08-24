@@ -7,6 +7,7 @@ from six import BytesIO
 
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
 from swagger_server.models.errors import Errors  # noqa: E501
+from swagger_server.models.server_status_get import ServerStatusGet  # noqa: E501
 from swagger_server.models.temperature_post import TemperaturePost  # noqa: E501
 from swagger_server.models.temperature_sensor_get import TemperatureSensorGet  # noqa: E501
 from swagger_server.models.temperature_target_get import TemperatureTargetGet  # noqa: E501
@@ -16,14 +17,29 @@ from swagger_server.test import BaseTestCase
 class TestEnvironmentController(BaseTestCase):
     """EnvironmentController integration test stubs"""
 
+    def test_servers_status(self):
+        """Test case for servers_status
+
+        
+        """
+        query_string = [('jwt', 'jwt_example')]
+        response = self.client.open(
+            '/OVK/OVK_mob1/1.0.7/serversStatus',
+            method='GET',
+            query_string=query_string)
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
     def test_target_temperature(self):
         """Test case for target_temperature
 
         
         """
+        query_string = [('jwt', 'jwt_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.6/targetTemperature',
-            method='GET')
+            '/OVK/OVK_mob1/1.0.7/targetTemperature',
+            method='GET',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -32,9 +48,11 @@ class TestEnvironmentController(BaseTestCase):
 
         
         """
+        query_string = [('jwt', 'jwt_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.6/temperatureComfort',
-            method='GET')
+            '/OVK/OVK_mob1/1.0.7/temperatureComfort',
+            method='GET',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -43,9 +61,11 @@ class TestEnvironmentController(BaseTestCase):
 
         
         """
+        query_string = [('jwt', 'jwt_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.6/temperatureEconom',
-            method='GET')
+            '/OVK/OVK_mob1/1.0.7/temperatureEconom',
+            method='GET',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -54,9 +74,11 @@ class TestEnvironmentController(BaseTestCase):
 
         
         """
+        query_string = [('jwt', 'jwt_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.6/temperatureRoom/',
-            method='GET')
+            '/OVK/OVK_mob1/1.0.7/temperatureRoom',
+            method='GET',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -65,9 +87,11 @@ class TestEnvironmentController(BaseTestCase):
 
         
         """
+        query_string = [('jwt', 'jwt_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.6/temperatureWater/',
-            method='GET')
+            '/OVK/OVK_mob1/1.0.7/temperatureWater',
+            method='GET',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -76,9 +100,11 @@ class TestEnvironmentController(BaseTestCase):
 
         Call current weather data for one location
         """
+        query_string = [('jwt', 'jwt_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.6/temperatureWeather',
-            method='GET')
+            '/OVK/OVK_mob1/1.0.7/temperatureWeather',
+            method='GET',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -88,11 +114,13 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         body = TemperaturePost()
+        query_string = [('jwt', 'jwt_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.6/updateComfortTemperature',
+            '/OVK/OVK_mob1/1.0.7/updateComfortTemperature',
             method='POST',
             data=json.dumps(body),
-            content_type='application/json')
+            content_type='application/json',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -102,11 +130,13 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         body = TemperaturePost()
+        query_string = [('jwt', 'jwt_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.6/updateEconomTemperature',
+            '/OVK/OVK_mob1/1.0.7/updateEconomTemperature',
             method='POST',
             data=json.dumps(body),
-            content_type='application/json')
+            content_type='application/json',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -116,11 +146,13 @@ class TestEnvironmentController(BaseTestCase):
         
         """
         body = TemperaturePost()
+        query_string = [('jwt', 'jwt_example')]
         response = self.client.open(
-            '/OVK/OVK_mob1/1.0.6/updateTargetTemperature',
+            '/OVK/OVK_mob1/1.0.7/updateTargetTemperature',
             method='POST',
             data=json.dumps(body),
-            content_type='application/json')
+            content_type='application/json',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

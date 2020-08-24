@@ -21,13 +21,13 @@ python3 -m swagger_server
 and open your browser to here:
 
 ```
-http://localhost:8080/OVK/OVK_mob1/1.0.6/ui/
+http://localhost:8080/OVK/OVK_mob1/1.0.7/ui/
 ```
 
 Your Swagger definition lives here:
 
 ```
-http://localhost:8080/OVK/OVK_mob1/1.0.6/swagger.json
+http://localhost:8080/OVK/OVK_mob1/1.0.7/swagger.json
 ```
 
 To launch the integration tests, use tox:
