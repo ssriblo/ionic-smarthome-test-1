@@ -8,7 +8,7 @@ export const environment = {
   forceDeleteJwt: false, // Force delete JWT from Local Store - for test only !!
   mobileBuild: false, // setup FALSE for Chrome and TRUE for Android
   serverLocal: true, // setup TRUE if local server and FALSE if Google Server
-  SERVER_URL_LOCAL: 'http://localhost:8080/OVK/OVK_mob1/1.0.6/',
+  SERVER_URL_LOCAL: 'http://localhost:8080/OVK/OVK_mob1/1.0.7/',
   SERVER_URL_GOOGLE: 'https://web-serv13802.nw.r.appspot.com/api/post_data',
 };
 
