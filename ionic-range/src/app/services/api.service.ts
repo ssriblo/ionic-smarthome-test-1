@@ -89,6 +89,8 @@ export class ApiService {
     );
   }
 
-
+  public removeJwt() {
+    return this.storage.remove('jwtString').then(val => { console.log('[removeJwt]: remove jwtString from Local Store', val)});
+  }
 
 }

@@ -16,7 +16,8 @@ const routes: Routes = [
   },
   {
     path: 'setup',
-    loadChildren: () => import('./setup/setup.module').then( m => m.SetupPageModule)
+    loadChildren: () => import('./setup/setup.module').then( m => m.SetupPageModule),
+//    canActivate: [AuthGuardService]
   },
   {
     path: 'introduction',

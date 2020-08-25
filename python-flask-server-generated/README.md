@@ -13,10 +13,23 @@ Python 3.5.2+
 ## Usage
 To run the server, please execute the following from the root directory:
 
+virtualenv env (только первый раз!)
+ 
+
+source env/bin/activate
+
+После того, как все настроено, надо заморозить виртуальное окружение и сохранить его описание командами:
+Сохранить:
+pip freeze > requirements.txt
+Восстановить в следующий раз:
+pip install -r requirements.txt
+
 ```
-pip3 install -r requirements.txt
 python3 -m swagger_server
 ```
+
+Link for Client:
+http://localhost:8080/OVK/OVK_mob1/1.0.7
 
 and open your browser to here:
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { ApiService } from '../services/api.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-setup',
@@ -10,7 +12,13 @@ import { Storage } from '@ionic/storage';
 export class SetupPage implements OnInit {
   comfortInpVal: number = 22.5;
   economInpVal: number = 18;
-  constructor( public router: Router, private storage: Storage) { }
+  private alertController = new AlertController()
+
+  constructor( 
+    public router: Router, 
+    private storage: Storage,
+    private apiService: ApiService,
+    ) { }
 
   ngOnInit() {
     this.getComfortT();
@@ -48,4 +56,13 @@ export class SetupPage implements OnInit {
       this.economInpVal = val;
     });  
   }
+  deregistered() {
+    this.apiService.removeJwt().then(val => {
+//    this.storage.remove('jwtString').then(val => { 
+      console.log('[deregistered]: remove jwtString from Local Store', val)
+      this.apiService.isJWT = false;
+      this.router.navigate(['introduction']) 
+    });
+  }
+
 }
