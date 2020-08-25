@@ -19,16 +19,18 @@ class Token():
         elif __platform == "Linux":
             self.__jwt_secret = config.get('JWT_SECRET', 'LINUX')
             print("linux")
-        print(">>>>>>>>> 14 __jwt_secret: ",  self.__jwt_secret)
 ######################################
     def __parserJwt(self, jwtString):
-        print(">>>>>>>>> 12 jwtString: ", jwtString, type(jwtString), self.__jwt_secret)
-        __decoded = jwt.decode(jwtString, self.__jwt_secret, algorithms=['HS256'])
-        print(__decoded)
+        try:
+            __decoded = jwt.decode(jwtString, self.__jwt_secret, algorithms=['HS256'])
+            print(">>>>>>>>>> 15 _decoded JWT: ", __decoded)
+            return __decoded
+        except Exception as e:
+            print("Exception (jwtString):", e)
+            return None
 
-        pass
-
-    def __getApartID(self, jwtString):
+    def __getApartID(self, jsonJwt, key):
+        return jsonJwt[key]
         pass
 
     def getName(self, jwtString):
@@ -41,9 +43,11 @@ class Token():
         pass
 
     def isJwtToken(self, jwtString):
-        self.__parserJwt(jwtString)
-        # TODO: check jwtString format
-        return self.__getApartID(jwtString)
+        _d = self.__parserJwt(jwtString)
+        if (_d != None):
+            return self.__getApartID(_d, "apartID")
+        else:
+            return None
 
 
 

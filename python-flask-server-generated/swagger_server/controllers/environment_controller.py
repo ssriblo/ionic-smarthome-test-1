@@ -51,7 +51,7 @@ def temperature_weather(jwt):  # noqa: E501
     t = TemperatureTargetGet()
 #    if (isJwtToken() != None)
     print("\n>>>>>>>>>>>>>>> 11", t, jwt,"\n")
-    print(token.isJwtToken(jwt))
+    print("[temperature_weather] apartID: ", token.isJwtToken(jwt))
     t.value = TV.weatherT
     return t
 
