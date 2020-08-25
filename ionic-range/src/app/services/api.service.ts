@@ -84,8 +84,8 @@ export class ApiService {
         console.log('[postApi] - Something went wrong!   ',  urlSurf, err);
         return null;
       },
-      () => {
-        console.log("[postApi]: The POST observable is now completed.")}
+      // () => {
+      //   console.log("[postApi]: The POST observable is now completed.")}
     );
   }
 

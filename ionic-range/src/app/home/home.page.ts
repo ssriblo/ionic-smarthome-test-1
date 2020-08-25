@@ -106,7 +106,7 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
       this.isFillComfort, this.isFillEconom)
     this.storage.set('targetT', this.rangeVal);
 
-    this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":22})
+    this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
   }
 
   isDisabledTimetable = true
@@ -117,7 +117,7 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
     this.isFillEconom = "outline"
     this.storage.get('comfortT').then((val) => {
       console.log('[clickComfort]: comfortT is', val)
-      this.rangeVal = val;
+      this.rangeVal = val * 10;
     });
   }
 
@@ -127,7 +127,7 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
     this.isFillEconom = "solid"
     this.storage.get('economT').then((val) => {
       console.log('[clickEconom]: economT is', val)
-      this.rangeVal = val;
+      this.rangeVal = val * 10;
     });
   }
 
