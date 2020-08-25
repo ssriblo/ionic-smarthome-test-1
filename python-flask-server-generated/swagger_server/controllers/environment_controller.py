@@ -9,8 +9,10 @@ from swagger_server.models.temperature_sensor_get import TemperatureSensorGet  #
 from swagger_server.models.temperature_target_get import TemperatureTargetGet  # noqa: E501
 from swagger_server import util
 from swagger_server.controllers.temperatures_firestore import TempVal
+from swagger_server.controllers.token import Token
 
 TV = TempVal()
+token = Token()
 
 def servers_status(jwt):  # noqa: E501
     return 'do some magic!'
@@ -47,8 +49,9 @@ def temperature_water(jwt):  # noqa: E501
 
 def temperature_weather(jwt):  # noqa: E501
     t = TemperatureTargetGet()
-    if (isJwtToken() != None)
+#    if (isJwtToken() != None)
     print("\n>>>>>>>>>>>>>>> 11", t, jwt,"\n")
+    print(token.isJwtToken(jwt))
     t.value = TV.weatherT
     return t
 
