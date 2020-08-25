@@ -33,29 +33,29 @@ export class ApiService {
       // One Time write down JWT Token to Store. Next time it will be reading well
       this.storage.set(
         'jwtString', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk'
-        ).then(val => {console.log('Forse store default JWT Token at Local Store')})
+        ).then(val => {console.log('[initApi]: Forse store default JWT Token at Local Store')})
     }
 
     if ( environment.forceDeleteJwt == true) {
-      this.storage.remove('jwtString').then(val => { console.log('remove jwtString from Local Store', val)});
+      this.storage.remove('jwtString').then(val => { console.log('[initApi]: remove jwtString from Local Store', val)});
     }
 
     this.storage.get('jwtString').then((val) => {
         this.jwtString = val;
-        console.log('get jwtString from storage: ', this.jwtString );  
+        console.log('[initApi]: get jwtString from storage: ', this.jwtString );  
         if (val) {
-            this.httpParams =  this.initHttpParams(this.jwtString);
-            this.getApiCB('temperatureWeather', (result) => {
-              if(result != null) {
-                this.isJWT = true;
-              }
-             });
-          }else{
-            console.log("[initApi] jwtString not exist yet !! ")
-          }
+          this.httpParams =  this.initHttpParams(this.jwtString);
+          this.getApiCB('temperatureWeather', (result) => {
+            if(result != null) {
+              this.isJWT = true;
+            }
+          });
+          this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":21})
+        }else{
+          console.log("[initApi] jwtString not exist yet !! ")
+        }
       });
       
-      this.postApi('updateTargetTemperature', {"id":"target_room_t", "value":21})
   }
 
   initHttpParams(term: string) {
@@ -92,11 +92,11 @@ export class ApiService {
     this.http.post(url, postData, this.httpParams )
     .subscribe(
       data => { 
-        console.log('POST Result:   '.concat(urlSurf), data['value']); 
+        console.log('[postApi]:   '.concat(urlSurf), data['value']); 
         return data['value'];
       },
       err => {
-        console.log('POST - Something went wrong!   '.concat(urlSurf), err);
+        console.log('[postApi] - Something went wrong!   '.concat(urlSurf), err);
         return null;
       }
     );

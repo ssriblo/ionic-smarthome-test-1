@@ -55,12 +55,12 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
           this.storage.get('economT').then((val) => {
             this.economT = val;
           });
-          console.log('(constructor)HOME-targetT is', val, 'Comfort:', this.comfortT, 'Econom:', this.economT)      
+          console.log('[ngOnInit home.page.js]: targetT is', val, 'Comfort:', this.comfortT, 'Econom:', this.economT)      
         }else{
           val = 22;
           this.rangeVal = val;
           this.storage.set('targetT', val);
-          console.log('(constructor init val)HOME-targetT is', val)
+          console.log('[ngOnInit home.page.js]: targetT is', val)
         }
       });
   
@@ -71,14 +71,17 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
       }
     });
 
-  this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
-  this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
+  setTimeout(()=> {
+    console.log("[setTimeout]: after 5s");
+    this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
+    this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
+  }, 5000);
 
   setInterval(()=> {
-      console.log("every 60s");
+      console.log("[setInterval]: every 60s");
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
-    },600000);       
+    },60000);       
 }
 
   toSetupPage() {
@@ -109,27 +112,27 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
   isDisabledTimetable = true
 
   clickComfort() {
-    console.log('click Comfort')
+    console.log('[clickComfort]')
     this.isFillComfort = "solid"
     this.isFillEconom = "outline"
     this.storage.get('comfortT').then((val) => {
-      console.log('(click)HOME-comfortT is', val)
+      console.log('[clickComfort]: comfortT is', val)
       this.rangeVal = val;
     });
   }
 
   clickEconom() {
-    console.log('click Econom')
+    console.log('[clickEconom]:')
     this.isFillComfort = "outline"
     this.isFillEconom = "solid"
     this.storage.get('economT').then((val) => {
-      console.log('(click)HOME-economT is', val)
+      console.log('[clickEconom]: economT is', val)
       this.rangeVal = val;
     });
   }
 
   clickTimetable() {
-    console.log('click Timetable')
+    console.log('[clickTimetable]')
   }
 }
 
