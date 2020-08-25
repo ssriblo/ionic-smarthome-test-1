@@ -64,21 +64,6 @@ export class ApiService {
     return options;
   }
 
-  // not used more, save just for case...
-  public getApi(urlSurf: string) {
-    const body = {jwtKey: this.jwtString};
-    const url = this.SERVER_URL.concat(urlSurf)
-    this.http.get(url, this.httpParams)
-    .subscribe(
-      data => { 
-        console.log('GET Result: '.concat(urlSurf), data['value']); 
-      },
-      err => {
-        console.log('GET - Something went wrong!'.concat(urlSurf), err);
-      }
-    );
-  }
-
   public getApiCB(urlSurf: string, onSuccess) {
     const body = {jwtKey: this.jwtString};
     const url = this.SERVER_URL.concat(urlSurf)
@@ -91,14 +76,16 @@ export class ApiService {
     const url = this.SERVER_URL.concat(urlSurf)
     this.http.post(url, postData, this.httpParams )
     .subscribe(
-      data => { 
-        console.log('[postApi]:   '.concat(urlSurf), data['value']); 
+      (data) => { 
+        console.log('[postApi]:   ',  urlSurf, data); 
         return data['value'];
       },
       err => {
-        console.log('[postApi] - Something went wrong!   '.concat(urlSurf), err);
+        console.log('[postApi] - Something went wrong!   ',  urlSurf, err);
         return null;
-      }
+      },
+      () => {
+        console.log("[postApi]: The POST observable is now completed.")}
     );
   }
 

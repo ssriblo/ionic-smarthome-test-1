@@ -47,7 +47,8 @@ def temperature_water(jwt):  # noqa: E501
 
 def temperature_weather(jwt):  # noqa: E501
     t = TemperatureTargetGet()
-#    t.value = TempVal.weatherT
+    if (isJwtToken() != None)
+    print("\n>>>>>>>>>>>>>>> 11", t, jwt,"\n")
     t.value = TV.weatherT
     return t
 
@@ -76,6 +77,6 @@ def update_target_temperature(body, jwt):  # noqa: E501
 #        print(type(js))
 #        print(js["id"], js["value"])
         body = TemperaturePost.from_dict(connexion.request.get_json())  # noqa: E501
-        print(body.to_dict()["id"], body.to_dict()["value"])
+#        print(body.to_dict()["id"], body.to_dict()["value"])
         TV.targetT = body.value
     return 'update_target_temperature:' + str(TV.targetT)
