@@ -13,60 +13,72 @@ from swagger_server.controllers.token import Token
 
 TV = TempVal()
 token = Token()
+err = Errors()
 
 def servers_status(jwt):  # noqa: E501
-    return 'do some magic!'
+    _tk = token.getToken(jwt)
+    t = ServerStatusGet()
+    # TODO: Need add serversStatus  !!!
+#    t.value = TV.serversStatus if (_tk != None) else None
+    return t
 
 def target_temperature(jwt):  # noqa: E501
     t = TemperatureTargetGet()
-    t.value = TV.targetT
+    _tk = token.getToken(jwt)
+    t.value = TV.targetT if (_tk != None) else None
     return t
 
 
 def temperature_comfort(jwt):  # noqa: E501
     t = TemperatureTargetGet()
-    t.value = TV.comfortT
+    _tk = token.getToken(jwt)
+    t.value = TV.comfortT if (_tk != None) else None
     return t
 
 
 def temperature_econom(jwt):  # noqa: E501
     t = TemperatureTargetGet()
-    t.value = TV.economT
+    _tk = token.getToken(jwt)
+    t.value = TV.economT if (_tk != None) else None
     return t
 
 
 def temperature_room(jwt):  # noqa: E501
     t = TemperatureTargetGet()
-    t.value = TV.airT
+    _tk = token.getToken(jwt)
+    t.value = TV.airT if (_tk != None) else None
     return t
 
 
 def temperature_water(jwt):  # noqa: E501
     t = TemperatureTargetGet()
-    t.value = TV.waterT
+    _tk = token.getToken(jwt)
+    t.value = TV.waterT if (_tk != None) else None
     return t
 
 
 def temperature_weather(jwt):  # noqa: E501
     t = TemperatureTargetGet()
-#    if (isJwtToken() != None)
-    print("\n>>>>>>>>>>>>>>> 11", t, jwt,"\n")
-    print("[temperature_weather] apartID: ", token.isJwtToken(jwt))
-    t.value = TV.weatherT
+    _tk = token.getToken(jwt)
+    t.value = TV.weatherT if (_tk != None) else None
     return t
 
 
 def update_comfort_temperature(body, jwt):  # noqa: E501
     if connexion.request.is_json:
         body = TemperaturePost.from_dict(connexion.request.get_json())  # noqa: E501
-        TV.comfortT = body.value
+        _tk = token.getToken(jwt)
+        if (_tk != None):
+            TV.comfortT = body.value
     return 'update_comfort_temperature:' + str(TV.comfortT)
 
 
 def update_econom_temperature(body, jwt):  # noqa: E501
     if connexion.request.is_json:
         body = TemperaturePost.from_dict(connexion.request.get_json())  # noqa: E501
-        TV.economT = body.value
+        _tk = token.getToken(jwt)
+        if (_tk != None):
+            TV.economT = body.value
     return 'update_econom_temperature:' + str(TV.economT)
 
 
@@ -80,6 +92,7 @@ def update_target_temperature(body, jwt):  # noqa: E501
 #        print(type(js))
 #        print(js["id"], js["value"])
         body = TemperaturePost.from_dict(connexion.request.get_json())  # noqa: E501
-#        print(body.to_dict()["id"], body.to_dict()["value"])
-        TV.targetT = body.value
+        _tk = token.getToken(jwt)
+        if (_tk != None):
+            TV.targetT = body.value
     return 'update_target_temperature:' + str(TV.targetT)

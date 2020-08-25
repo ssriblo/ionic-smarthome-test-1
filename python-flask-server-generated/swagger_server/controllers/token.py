@@ -20,34 +20,22 @@ class Token():
             self.__jwt_secret = config.get('JWT_SECRET', 'LINUX')
             print("linux")
 ######################################
-    def __parserJwt(self, jwtString):
+    def getToken(self, jwtString):
         try:
             __decoded = jwt.decode(jwtString, self.__jwt_secret, algorithms=['HS256'])
-            print(">>>>>>>>>> 15 _decoded JWT: ", __decoded)
-            return __decoded
+#            __decoded = jwt.decode(jwtString, "12345", algorithms=['HS256'])
+            return __decoded 
         except Exception as e:
             print("Exception (jwtString):", e)
             return None
 
-    def __getApartID(self, jsonJwt, key):
-        return jsonJwt[key]
-        pass
+    def getApartID(self, jwtString):
+        return self.getTokenAttribute(jwtString, "apartID")
 
-    def getName(self, jwtString):
-        pass
-    
-    def getTokenNumber(self, jwtString):
-        pass
+    def getTokenAttribute(self, jwtString, attribute):
+        _d = self.getToken(jwtString)
+        return _d[attribute] if ( (_d != None ) and (attribute in _d) ) else None
 
-    def getProject(self, jwtString):
-        pass
-
-    def isJwtToken(self, jwtString):
-        _d = self.__parserJwt(jwtString)
-        if (_d != None):
-            return self.__getApartID(_d, "apartID")
-        else:
-            return None
 
 
 
