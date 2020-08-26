@@ -15,7 +15,8 @@ export class SetupPage implements OnInit {
   economInpVal: number = 18;
   private alertController = new AlertController()
   
-  @ViewChild('radioGroup') radioGroup: IonRadioGroup
+//  @ViewChild('radioGroup') radioGroup: IonRadioGroup
+   radioGroup: IonRadioGroup
 
   private selectedRadioGroup:any;
   private selectedRadioItem:any;

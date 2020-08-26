@@ -85,7 +85,7 @@
           <ion-item *ngFor="let item of radio_list" (ionFocus)="radioFocus()" (ionSelect)="radioSelect($event)"
             (ionBlur)="radioBlur()">
             <ion-label>{{item.text}}</ion-label>
-            <ion-radio slot="start" name="{{item.name}}" value="{{item.value}}" checked="{{item.checked}}"
+            <ion-radio slot="start" name="{{item.name}}" value="{{item.value}}" 
               color="{{item.color}}" disabled="{{item.disabled}}"></ion-radio>
           </ion-item>
         </ion-radio-group>
