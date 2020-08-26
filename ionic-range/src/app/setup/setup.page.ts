@@ -13,6 +13,29 @@ export class SetupPage implements OnInit {
   comfortInpVal: number = 22.5;
   economInpVal: number = 18;
   private alertController = new AlertController()
+  
+  private selectedRadioGroup:any;
+  private selectedRadioItem:any;
+
+  radio_list = [
+    {
+      id: '1',
+      name: 'radio_list',
+      value: 'radio_1',
+      text: 'Локальный-1',
+      disabled: false,
+      checked: false,
+      color: 'primary'
+    }, {
+      id: '2',
+      name: 'radio_list',
+      value: 'radio_2',
+      text: 'Облачный-2',
+      disabled: false,
+      checked: true,
+      color: 'secondary'
+    }
+  ];
 
   constructor( 
     public router: Router, 

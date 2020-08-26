@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar  color="secondary">
     <ion-buttons slot="start"  (click)="toHomePage()">
-      <ion-icon size="large" name="arrow-back-outline"></ion-icon><h2>Назад</h2></ion-buttons>
-    <ion-title slot=""><h2>Настройки</h2></ion-title>
+      <ion-icon size="large" name="arrow-back-outline"></ion-icon><h4>Назад</h4></ion-buttons>
+    <ion-title slot=""><h1>Настройки</h1></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -76,16 +76,22 @@
   </ion-item-divider>
   <ion-row>
     <ion-col>
-      <ion-button 
-        strong="true" 
-        shape="round" 
-        size="large" 
-        expand="full" 
-        color="primary"
-        disabled=true>Цветовая тема</ion-button>
+      <ion-list  class="radioarea">
+        <ion-radio-group value="local">
+          <ion-list-header>
+            <ion-label><h1>Выбор сервера</h1></ion-label>
+          </ion-list-header>
+          <ion-item  class="radioarea">
+            <ion-label><h2>Локальный</h2></ion-label>
+            <ion-radio slot="start" color="success" value="local"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label><h2>Облачный</h2></ion-label>
+            <ion-radio slot="start" color="tertiary" value="cloud"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>         
     </ion-col>
   </ion-row>
   </ion-grid>
-
-
 </ion-content>
