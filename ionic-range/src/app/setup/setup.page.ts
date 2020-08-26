@@ -14,28 +14,21 @@ export class SetupPage implements OnInit {
   economInpVal: number = 18;
   private alertController = new AlertController()
   
-  private selectedRadioGroup:any;
-  private selectedRadioItem:any;
+  public data: any = {
+    server: 'local',
+    display: "локальный"
+  };
 
-  radio_list = [
-    {
-      id: '1',
-      name: 'radio_list',
-      value: 'radio_1',
-      text: 'Локальный-1',
-      disabled: false,
-      checked: false,
-      color: 'primary'
-    }, {
-      id: '2',
-      name: 'radio_list',
-      value: 'radio_2',
-      text: 'Облачный-2',
-      disabled: false,
-      checked: true,
-      color: 'secondary'
+
+  onChangeHandler($event) {
+    this.data.server = $event.target.value;
+    if (this.data.server == 'local') {
+      this.data.display = "локальный"
+    }else {
+      this.data.display = "облачный"
     }
-  ];
+    console.log("[onChangeHandler]", this.data.server)
+  }
 
   constructor( 
     public router: Router, 

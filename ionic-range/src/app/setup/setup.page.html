@@ -77,19 +77,17 @@
   <ion-row>
     <ion-col>
       <ion-list  class="radioarea">
-        <ion-radio-group value="local">
-          <ion-list-header>
-            <ion-label><h1>Выбор сервера</h1></ion-label>
-          </ion-list-header>
-          <ion-item  class="radioarea">
-            <ion-label><h2>Локальный</h2></ion-label>
-            <ion-radio slot="start" color="success" value="local"></ion-radio>
+        <ion-radio-group (ionChange)="onChangeHandler($event)">
+          <ion-item>
+            <ion-label><h1>Локальный</h1></ion-label>
+            <ion-radio  slot="start" color="success" value="local" ></ion-radio>
           </ion-item>
           <ion-item>
-            <ion-label><h2>Облачный</h2></ion-label>
-            <ion-radio slot="start" color="tertiary" value="cloud"></ion-radio>
+            <ion-label><h1>Облачный</h1></ion-label>
+            <ion-radio  slot="start" color="tertiary" value="cloud" ></ion-radio>
           </ion-item>
         </ion-radio-group>
+        <h1><p>{{this.data.display}}</p></h1>
       </ion-list>         
     </ion-col>
   </ion-row>
