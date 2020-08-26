@@ -10,8 +10,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./setup.page.scss'],
 })
 export class SetupPage implements OnInit {
-  comfortInpVal: number = 22.5;
-  economInpVal: number = 18;
+  private comfortInpVal: number = 22.5;
+  private economInpVal: number = 18;
   private alertController = new AlertController()
   
   public data: any = {
@@ -19,6 +19,16 @@ export class SetupPage implements OnInit {
     display: "локальный"
   };
 
+  constructor( 
+    public router: Router, 
+    private storage: Storage,
+    private apiService: ApiService,
+    ) { }
+
+  ngOnInit() {
+    this.getComfortT();
+    this.getEconomT();
+  }
 
   onChangeHandler($event) {
     this.data.server = $event.target.value;
@@ -39,16 +49,7 @@ export class SetupPage implements OnInit {
       this.data.display = "облачный"
     }
   }
-  constructor( 
-    public router: Router, 
-    private storage: Storage,
-    private apiService: ApiService,
-    ) { }
 
-  ngOnInit() {
-    this.getComfortT();
-    this.getEconomT();
-  }
   toHomePage() {
     this.router.navigate(['home']);  
   }
@@ -67,7 +68,8 @@ export class SetupPage implements OnInit {
   getComfortT() {
     this.storage.get('comfortT').then((val) => {
       console.log('comfortT is', val);
-      this.comfortInpVal = val;
+      this.comfortInpVal = (val == null)? 22.5 : val
+      return this.comfortInpVal;
     });  
   }
 
@@ -77,8 +79,9 @@ export class SetupPage implements OnInit {
 
   getEconomT() {
     this.storage.get('economT').then((val) => {
-      console.log('economT is', val);
-      this.economInpVal = val;
+      this.economInpVal = (val == null)? 18.5 : val
+      console.log('economT is', val, this.economInpVal);
+      return this.economInpVal
     });  
   }
 

@@ -113,22 +113,20 @@ export class HomePage  implements OnInit  {
   isDisabledTimetable = true
 
   clickComfort() {
-    console.log('[clickComfort]')
     this.isFillComfort = "solid"
     this.isFillEconom = "outline"
     this.storage.get('comfortT').then((val) => {
       console.log('[clickComfort]: comfortT is', val)
-      this.rangeVal = val * 10;
+      this.rangeVal = (val == null)? 22.5 * 10 : val * 10
     });
   }
 
   clickEconom() {
-    console.log('[clickEconom]:')
     this.isFillComfort = "outline"
     this.isFillEconom = "solid"
     this.storage.get('economT').then((val) => {
       console.log('[clickEconom]: economT is', val)
-      this.rangeVal = val * 10;
+      this.rangeVal = (val == null)? 18.5 * 10 : val * 10
     });
   }
 
