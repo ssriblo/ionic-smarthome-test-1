@@ -6,8 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
-//import { templateJitUrl } from '@angular/compiler';
 import { ApiService } from '../services/api.service';
+import { LocalstorageService } from '../services/localstorage.service';
+
 
 const { App } = Plugins;
 
@@ -26,9 +27,6 @@ export class HomePage  implements OnInit  {
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
-//  url_post = 'http://127.0.0.1:8080/api/post_data'
-url_serv = 'http://localhost:8080/OVK/OVK_mob1/1.0.6/'
-url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
 
   constructor(
     public platform:Platform, 
@@ -37,6 +35,7 @@ url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
     public router: Router,
     private storage: Storage,
     private apiService: ApiService,
+    private localstore: LocalstorageService,
     ) {}
 
   ngOnInit() {

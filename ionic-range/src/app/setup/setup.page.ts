@@ -93,13 +93,7 @@ export class SetupPage implements OnInit {
   }
 
   deregistered() {
-    this.apiService.removeJwt().then(val => {
-//    this.storage.remove('jwtString').then(val => { 
-      console.log('[deregistered]: remove jwtString from Local Store', val)
-      this.presentAlert();
-      // this.apiService.isJWT = false;
-      // this.router.navigate(['introduction']) 
-    });
+    this.presentAlert();
   }
 
   private async presentAlert() {
@@ -120,9 +114,11 @@ export class SetupPage implements OnInit {
         {
           text: 'Новая регистрация',
           handler: () => {
-            console.log('New Registration clicked');
-            this.apiService.isJWT = false;
-            this.router.navigate(['introduction'])       
+            this.apiService.removeJwt().then(val => {
+              console.log('[deregistered]: remove jwtString from Local Store', val)
+              this.apiService.isJWT = false;
+              this.router.navigate(['introduction'])       
+            });
           }
         }
       ]
