@@ -76,21 +76,20 @@
   </ion-item-divider>
   <ion-row>
     <ion-col>
-      <ion-list  class="radioarea">
-        <ion-radio-group value="local">
+      <ion-list>
+        <ion-radio-group allow-empty-selection="false" name="radio-group" (ionChange)="radioGroupChange($event)" #radioGroup>
           <ion-list-header>
             <ion-label><h1>Выбор сервера</h1></ion-label>
           </ion-list-header>
-          <ion-item  class="radioarea">
-            <ion-label><h2>Локальный</h2></ion-label>
-            <ion-radio slot="start" color="success" value="local"></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label><h2>Облачный</h2></ion-label>
-            <ion-radio slot="start" color="tertiary" value="cloud"></ion-radio>
+    
+          <ion-item *ngFor="let item of radio_list" (ionFocus)="radioFocus()" (ionSelect)="radioSelect($event)"
+            (ionBlur)="radioBlur()">
+            <ion-label>{{item.text}}</ion-label>
+            <ion-radio slot="start" name="{{item.name}}" value="{{item.value}}" checked="{{item.checked}}"
+              color="{{item.color}}" disabled="{{item.disabled}}"></ion-radio>
           </ion-item>
         </ion-radio-group>
-      </ion-list>         
+      </ion-list>
     </ion-col>
   </ion-row>
   </ion-grid>

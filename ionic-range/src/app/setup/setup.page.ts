@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { AlertController } from '@ionic/angular';
+import { IonRadioGroup } from '@ionic/angular';
 
 @Component({
   selector: 'app-setup',
@@ -14,28 +15,46 @@ export class SetupPage implements OnInit {
   economInpVal: number = 18;
   private alertController = new AlertController()
   
+  @ViewChild('radioGroup') radioGroup: IonRadioGroup
+
   private selectedRadioGroup:any;
   private selectedRadioItem:any;
-
+  
   radio_list = [
     {
       id: '1',
       name: 'radio_list',
-      value: 'radio_1',
-      text: 'Локальный-1',
+      value: 'local',
+      text: 'Локальный',
       disabled: false,
       checked: false,
       color: 'primary'
     }, {
       id: '2',
       name: 'radio_list',
-      value: 'radio_2',
-      text: 'Облачный-2',
+      value: 'cloud',
+      text: 'Облачный',
       disabled: false,
       checked: true,
       color: 'secondary'
     }
   ];
+
+  radioGroupChange(event) {
+    console.log("radioGroupChange",event.detail);
+    this.selectedRadioGroup = event.detail;
+  }
+
+  radioFocus() {
+    console.log("radioFocus");
+  }
+  radioSelect(event) {
+    console.log("radioSelect",event.detail);
+    this.selectedRadioItem = event.detail;
+  }
+  radioBlur() {
+    console.log("radioBlur");
+  }
 
   constructor( 
     public router: Router, 
@@ -46,7 +65,9 @@ export class SetupPage implements OnInit {
   ngOnInit() {
     this.getComfortT();
     this.getEconomT();
+//    this.radioGroup.value = 'local' // cause of error...
   }
+
   toHomePage() {
     this.router.navigate(['home']);  
   }
