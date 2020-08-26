@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
-
+//import { StorageService, Item } from '../services/storage.service'
 
 const { App } = Plugins;
 
@@ -27,6 +27,9 @@ export class HomePage  implements OnInit  {
   isFillEconom = "outline";
   isFillTimetable = "outline";
 
+//  item: Item;
+//  newItem: Item = <Item>{}
+
   constructor(
     public platform:Platform, 
     private routerOutlet: IonRouterOutlet,  
@@ -34,14 +37,15 @@ export class HomePage  implements OnInit  {
     public router: Router,
     private storage: Storage,
     private apiService: ApiService,
+//    private storageService: StorageService,
     ) {}
 
   ngOnInit() {
-    this.storage.get('targetT').then((val) => {
-      console.log('[ngOnInit] HOME-targetT is', val)
-    });
-
     this.platform.ready().then(()=>{
+      this.storage.get('targetT').then((val) => {
+        console.log('[ngOnInit] HOME-targetT is', val)
+      });
+
       this.room_t_s  = "20.5"
       this.storage.get('targetT').then((val) => {
         if(val){
