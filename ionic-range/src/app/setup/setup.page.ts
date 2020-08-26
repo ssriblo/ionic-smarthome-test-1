@@ -30,6 +30,15 @@ export class SetupPage implements OnInit {
     console.log("[onChangeHandler]", this.data.server)
   }
 
+  public setServerOption(optLocal: boolean) {
+    if (optLocal == true) {
+      this.data.server = 'local'
+      this.data.display = "локальный"
+    }else {
+      this.data.server = 'cloud'
+      this.data.display = "облачный"
+    }
+  }
   constructor( 
     public router: Router, 
     private storage: Storage,
@@ -72,6 +81,17 @@ export class SetupPage implements OnInit {
       this.economInpVal = val;
     });  
   }
+
+  timetableSetup() {
+    // if (this.data.server == 'cloud') {
+    //   this.data.server = 'local'
+    //   this.data.display = "локальный"
+    // }else {
+    //   this.data.server = 'cloud'
+    //   this.data.display = "облачный"
+    // }
+  }
+
   deregistered() {
     this.apiService.removeJwt().then(val => {
 //    this.storage.remove('jwtString').then(val => { 
