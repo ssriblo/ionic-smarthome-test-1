@@ -1,0 +1,18 @@
+To start:
+py -m pip install --user virtualenv  (for Windows one time only)
+
+py -m venv env (Windows)
+virtualenv env (Linux)
+
+.\env\Scripts\activate (Windows)
+source env/bin/activate (Linus)
+
+pip install --upgrade google-cloud-firestore
+pip install connexion
+pip install connexion[swagger-ui]
+pip install opcua
+
+pip freeze > requirements.txt
+Восстановить в следующий раз:
+pip install -r requirements.txt
+

@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+//import { templateJitUrl } from '@angular/compiler';
+import { ApiService } from '../services/api.service';
 
 const { App } = Plugins;
 
@@ -25,15 +27,23 @@ export class HomePage  implements OnInit  {
   isFillEconom = "outline";
   isFillTimetable = "outline";
 //  url_post = 'http://127.0.0.1:8080/api/post_data'
-  url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
+url_serv = 'http://localhost:8080/OVK/OVK_mob1/1.0.6/'
+url_post = 'https://web-serv13802.nw.r.appspot.com/api/post_data'
 
   constructor(
     public platform:Platform, 
     private routerOutlet: IonRouterOutlet,  
     private http: HttpClient, 
     public router: Router,
-    private storage: Storage
-    ) {
+    private storage: Storage,
+    private apiService: ApiService,
+    ) {}
+
+  ngOnInit() {
+    this.storage.get('targetT').then((val) => {
+      console.log('[ngOnInit] HOME-targetT is', val)
+    });
+
     this.platform.ready().then(()=>{
       this.room_t_s  = "20.5"
       this.storage.get('targetT').then((val) => {
@@ -45,72 +55,40 @@ export class HomePage  implements OnInit  {
           this.storage.get('economT').then((val) => {
             this.economT = val;
           });
-          console.log('(constructor)HOME-targetT is', val, 'Comfort:', this.comfortT, 'Econom:', this.economT)      
+          console.log('[ngOnInit home.page.js]: targetT is', val, 'Comfort:', this.comfortT, 'Econom:', this.economT)      
         }else{
           val = 22;
           this.rangeVal = val;
           this.storage.set('targetT', val);
-          console.log('(constructor init val)HOME-targetT is', val)
+          console.log('[ngOnInit home.page.js]: targetT is', val)
         }
       });
   
-    })
+    }) // this.platform.ready().then()
     this.platform.backButton.subscribeWithPriority(-1, () => {
       if (!this.routerOutlet.canGoBack()) {
         App.exitApp();
       }
     });
-    setInterval(()=> {
-      console.log("every 60s");
-//    this.postDataWrap();
-    this.ngPostData();
-    },600000);       
-//    this.postDataWrap();
-    this.ngPostData();
-    
-    this.storage.get('targetT').then((val) => {
-      console.log('(constructor)HOME-targetT is', val)
-    });
-  }
 
+  setTimeout(()=> {
+    console.log("[setTimeout]: after 5s");
+    this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
+    this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
+  }, 5000);
 
-  ngOnInit() {
-  }
+  setInterval(()=> {
+      console.log("[setInterval]: every 60s");
+      this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
+      this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
+    },60000);       
+}
 
   toSetupPage() {
     this.router.navigate(['setup']);  
   }
 
-  async postData(url = '', data = {}) {
-    // Default options are marked with *
-    const response = await fetch(url, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, *same-origin, omit
-      headers: {
-        'Content-Type': 'application/json'
-//        'Content-Type': 'text/html'
-      },
-      redirect: 'follow', // manual, *follow, error
-      referrerPolicy: 'no-referrer', // no-referrer, *client
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
-//      body: {data} // body data type must match "Content-Type" header
-});
-    return await response.json(); // parses JSON response into native JavaScript objects
-  }
-  ngPostData(url = this.url_post, data = { target_t: this.rangeVal }) {
-    const body = data // body data type must match "Content-Type" header
-    return this.http.post(url, body).subscribe(
-      out => {
-        console.log('FROM SERVER: ', out); 
-        console.log("ROOM t=", out['room_temp'], "WEATHER t=", out["weather_temp"])
-        this.room_t_s = out['room_temp']
-        this.weather_t_s = out['weather_temp']
-      }
-    );
-  }
- 
+ //////////////
   updateRange() {
     if ((this.rangeVal != this.comfortT) && (this.rangeVal != this.economT)) {
       this.isFillComfort = "outline"
@@ -126,44 +104,35 @@ export class HomePage  implements OnInit  {
       'Comfort', this.comfortT,
       'Econom', this.economT,
       this.isFillComfort, this.isFillEconom)
-    // this.postData(this.url_post, { target_t: this.rangeVal })
-    //   .then((data) => {
-    //       console.log('FROM SERVER: ', data); 
-    //       console.log("ROOM t=", data['room_temp'], "WEATHER t=", data["weather_temp"])
-    //       this.room_t_s = data['room_temp']
-    //       this.weather_t_s = data['weather_temp']
-    // });
-//    this.postDataWrap();
-    this.ngPostData();
     this.storage.set('targetT', this.rangeVal);
 
-
+    this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
   }
 
   isDisabledTimetable = true
 
   clickComfort() {
-    console.log('click Comfort')
+    console.log('[clickComfort]')
     this.isFillComfort = "solid"
     this.isFillEconom = "outline"
     this.storage.get('comfortT').then((val) => {
-      console.log('(click)HOME-comfortT is', val)
-      this.rangeVal = val;
+      console.log('[clickComfort]: comfortT is', val)
+      this.rangeVal = val * 10;
     });
   }
 
   clickEconom() {
-    console.log('click Econom')
+    console.log('[clickEconom]:')
     this.isFillComfort = "outline"
     this.isFillEconom = "solid"
     this.storage.get('economT').then((val) => {
-      console.log('(click)HOME-economT is', val)
-      this.rangeVal = val;
+      console.log('[clickEconom]: economT is', val)
+      this.rangeVal = val * 10;
     });
   }
 
   clickTimetable() {
-    console.log('click Timetable')
+    console.log('[clickTimetable]')
   }
 }
 

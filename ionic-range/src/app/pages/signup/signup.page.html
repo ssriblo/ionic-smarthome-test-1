@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()" color="primary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Регистрация</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <img src="assets/imgs/qr-sample.png" />
+    <ion-card-content>
+      <ion-text>
+        <h1>Для регистрации у Вас должен быть QR код, примерно как на картинке выше.</h1>
+      </ion-text>
+      <ion-text>
+          <h1>Надо нажать кнопку "Сканирование" и навести камеру на QR код</h1>
+      </ion-text>
+      <ion-button color="success" expand="full" (click)="scan_qr()">Сканирование</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

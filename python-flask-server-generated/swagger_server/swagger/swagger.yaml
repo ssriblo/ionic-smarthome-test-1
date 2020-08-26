@@ -1,0 +1,430 @@
+openapi: 3.0.0
+info:
+  title: home-iot-api
+  description: The API for the OVK-1 IOT project
+  version: 1.0.7
+servers:
+- url: https://virtserver.swaggerhub.com/OVK/OVK_mob1/1.0.7
+  description: SwaggerHub API Auto Mocking
+paths:
+  /temperatureRoom:
+    get:
+      tags:
+      - Environment
+      operationId: temperature_room
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureSensorGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /temperatureWater:
+    get:
+      tags:
+      - Environment
+      operationId: temperature_water
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureSensorGet'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /temperatureWeather:
+    get:
+      tags:
+      - Environment
+      summary: Call current weather data for one location
+      operationId: temperature_weather
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureSensorGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /targetTemperature:
+    get:
+      tags:
+      - Environment
+      operationId: target_temperature
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureTargetGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /temperatureComfort:
+    get:
+      tags:
+      - Environment
+      operationId: temperature_comfort
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureTargetGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /temperatureEconom:
+    get:
+      tags:
+      - Environment
+      operationId: temperature_econom
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureTargetGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /serversStatus:
+    get:
+      tags:
+      - Environment
+      operationId: servers_status
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerStatusGet'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /updateTargetTemperature:
+    post:
+      tags:
+      - Environment
+      description: target room temperature
+      operationId: update_target_temperature
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      requestBody:
+        description: target t
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemperaturePost'
+        required: true
+      responses:
+        "200":
+          description: Status of the operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /updateComfortTemperature:
+    post:
+      tags:
+      - Environment
+      description: target room temperature
+      operationId: update_comfort_temperature
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      requestBody:
+        description: Comfort t
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemperaturePost'
+        required: true
+      responses:
+        "200":
+          description: Status of the operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        "404":
+          description: some errors...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+  /updateEconomTemperature:
+    post:
+      tags:
+      - Environment
+      description: target room temperature
+      operationId: update_econom_temperature
+      parameters:
+      - name: jwt
+        in: query
+        description: JWT token for authorization
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      requestBody:
+        description: Econom t
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemperaturePost'
+        required: true
+      responses:
+        "200":
+          description: Status of the operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      x-swagger-router-controller: Environment
+      x-openapi-router-controller: swagger_server.controllers.environment_controller
+components:
+  schemas:
+    TemperatureTargetGet:
+      required:
+      - id
+      - value
+      type: object
+      properties:
+        id:
+          type: string
+          description: the unique identifier for the zone
+        name:
+          type: string
+        value:
+          type: integer
+          description: the temperature in "Kelvin", step=0.1K
+          format: int16
+      description: temperature target value
+      example:
+        name: name
+        id: id
+        value: 0
+    TemperatureSensorGet:
+      required:
+      - id
+      - status
+      - timestamp
+      - value
+      type: object
+      properties:
+        id:
+          type: string
+          description: the unique identifier for the zone
+        name:
+          type: string
+        value:
+          type: integer
+          description: the temperature in "Kelvin", step=0.1K
+          format: int16
+        timestamp:
+          type: string
+          description: the timestamp when the temperature was measured
+          format: date-time
+        status:
+          type: string
+      description: temperature sensor value and status (normal, failed and so on)
+      example:
+        name: name
+        id: id
+        value: 0
+        timestamp: 2000-01-23T04:56:07.000+00:00
+        status: status
+    ServerStatusGet:
+      required:
+      - status
+      - timestamp
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+          description: The servers status
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: string
+      description: TBD
+      example:
+        value: value
+        timestamp: 2000-01-23T04:56:07.000+00:00
+        status: status
+    TemperaturePost:
+      required:
+      - id
+      - value
+      type: object
+      properties:
+        id:
+          type: string
+          description: the unique identifier for the zone
+        value:
+          type: integer
+          description: the temperature in "Kelvin", step=0.1K
+          format: int16
+      description: Target temperature from user
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+          example: everything is ok
+      example:
+        code: 0
+        message: everything is ok
+    Errors:
+      type: object
+      properties:
+        status:
+          type: integer
+        type:
+          type: string
+        message:
+          type: string
+  parameters:
+    jwtToken:
+      name: jwt
+      in: query
+      description: JWT token for authorization
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: string
+

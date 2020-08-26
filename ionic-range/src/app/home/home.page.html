@@ -11,7 +11,7 @@
         </ion-button>
       </div>
       <div id="headertext">
-        <ion-title>Умный дом (v.03)</ion-title>
+        <ion-title>Умный дом (v.04)</ion-title>
       </div>
       </ion-toolbar>
     </ion-header>
@@ -41,9 +41,9 @@
         <ion-col class="width-100">
         <ion-toolbar color="secondary">
           <div class="ion-padding">
-            <h1  align="center" style=font-size:600%><b> {{rangeVal}}</b></h1>
+            <h1  align="center" style=font-size:600%><b> {{rangeVal/10}}</b></h1>
             <ion-item>
-              <ion-range (ionChange)="updateRange()" [(ngModel)]="rangeVal" pin="false" min="10" max="35" step="1" snaps="true" color="secondary" ticks="false">
+              <ion-range (ionChange)="updateRange()" [(ngModel)]="rangeVal" pin="false" min="100" max="350" step="5" snaps="true" color="secondary" ticks="false">
                   <ion-icon slot="end" color="danger" name="thermometer"></ion-icon>
               </ion-range>
             </ion-item>
