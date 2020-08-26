@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
-import { LocalstorageService } from '../services/localstorage.service';
 
 
 const { App } = Plugins;
@@ -35,7 +34,6 @@ export class HomePage  implements OnInit  {
     public router: Router,
     private storage: Storage,
     private apiService: ApiService,
-    private localstore: LocalstorageService,
     ) {}
 
   ngOnInit() {

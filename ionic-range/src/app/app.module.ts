@@ -12,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ApiService } from './services/api.service';
-import { LocalstorageService } from './services/localstorage.service';
 import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
@@ -28,7 +27,6 @@ import { AuthGuardService } from './services/auth-guard.service';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ApiService,
     AuthGuardService,
-    LocalstorageService,
   ],
   bootstrap: [AppComponent]
 })
