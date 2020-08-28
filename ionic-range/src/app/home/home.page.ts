@@ -101,26 +101,25 @@ export class HomePage  implements OnInit  {
   }
 
  //////////////
-  updateRange() {
-    if ((this.rangeVal != this.comfortT) && (this.rangeVal != this.economT)) {
+  private  updateRangeDisplay() {
+    console.log('[updateRange] rangeVal, Comfort Econom', this.rangeVal, this.comfortT, this.economT)
+    if ((this.rangeVal != this.comfortT * 10) && (this.rangeVal != this.economT * 10)) {
       this.isFillComfort = "outline"
       this.isFillEconom = "outline"
     }
-    if (this.rangeVal == this.comfortT ) {
+    if (this.rangeVal == this.comfortT * 10 ) {
       this.isFillComfort = "solid"
     }
-    if (this.rangeVal == this.economT ) {
+    if (this.rangeVal == this.economT * 10) {
       this.isFillEconom = "solid"
     }
-    // console.log('update rangeVal', this.rangeVal, 
-    //   'Comfort', this.comfortT,
-    //   'Econom', this.economT,
-    //   this.isFillComfort, this.isFillEconom)
-    this.storage.set('targetT', this.rangeVal);
-
-    this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
   }
 
+  updateRange() {
+    this.updateRangeDisplay()
+    this.storage.set('targetT', this.rangeVal);
+    this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
+  }
   isDisabledTimetable = true
 
   clickComfort() {
