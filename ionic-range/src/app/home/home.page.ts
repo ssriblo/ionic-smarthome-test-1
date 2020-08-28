@@ -43,7 +43,7 @@ export class HomePage  implements OnInit  {
   ngOnInit() {
     this.platform.ready().then(()=>{
       this.storage.get('targetT').then((val) => {
-        console.log('[ngOnInit] HOME-targetT is', val)
+//        console.log('[ngOnInit] HOME-targetT is', val)
       });
 
       this.room_t_s  = "20.5"
@@ -56,34 +56,45 @@ export class HomePage  implements OnInit  {
           this.storage.get('economT').then((val) => {
             this.economT = val;
           });
-          console.log('[ngOnInit home.page.js]: targetT is', val, 'Comfort:', this.comfortT, 'Econom:', this.economT)      
+//          console.log('[ngOnInit home.page.js]: targetT is', val, 'Comfort:', this.comfortT, 'Econom:', this.economT)      
         }else{
           val = 22;
           this.rangeVal = val;
           this.storage.set('targetT', val);
           console.log('[ngOnInit home.page.js]: targetT is', val)
         }
+
+        // let res = this.apiService.testJwtViaGetRequest('temperatureWeather')
+        // if (res != null) {
+        //   console.log('[home.ngOnInit()] JWT test passed well', res);
+        // }
+        // else {
+        //   console.log('[home.ngOnInit()] JWT test failed');
+        // }
+  
       });
   
     }) // this.platform.ready().then()
+
+    // this is for Android Back Button. Shoudl works at Android only:
     this.platform.backButton.subscribeWithPriority(-1, () => {
       if (!this.routerOutlet.canGoBack()) {
         App.exitApp();
       }
     });
 
-  setTimeout(()=> {
-    console.log("[setTimeout]: after 5s");
-    this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
-    this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
-  }, 5000);
-
-  setInterval(()=> {
-      console.log("[setInterval]: every 60s");
+    setTimeout(()=> {
+      console.log("[setTimeout]: after 5s");
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
-    },60000);       
-}
+    }, 5000);
+
+    setInterval(()=> {
+        console.log("[setInterval]: every 60s");
+        this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
+        this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
+      },60000);       
+  } // ngOnInit() finished
 
   toSetupPage() {
     this.router.navigate(['setup']);  
@@ -101,10 +112,10 @@ export class HomePage  implements OnInit  {
     if (this.rangeVal == this.economT ) {
       this.isFillEconom = "solid"
     }
-    console.log('update rangeVal', this.rangeVal, 
-      'Comfort', this.comfortT,
-      'Econom', this.economT,
-      this.isFillComfort, this.isFillEconom)
+    // console.log('update rangeVal', this.rangeVal, 
+    //   'Comfort', this.comfortT,
+    //   'Econom', this.economT,
+    //   this.isFillComfort, this.isFillEconom)
     this.storage.set('targetT', this.rangeVal);
 
     this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})

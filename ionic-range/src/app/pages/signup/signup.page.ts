@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Storage } from '@ionic/storage';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-signup',
@@ -25,7 +26,8 @@ export class SignupPage implements OnInit {
       private alertController: AlertController,
       private router: Router,
       private barcodeScanner: BarcodeScanner,
-      private storage: Storage
+      private storage: Storage,
+      private apiService: ApiService,
       ) {}
 
   ngOnInit() {}
@@ -84,11 +86,20 @@ export class SignupPage implements OnInit {
     ).then(barcodeData => {
 //      console.log('Barcode data', barcodeData);
 //      this.data = barcodeData;
-      this.storage.set('jwtString', barcodeData.text);
       // TODO: crate api.servises and call GET request to check obtained QR code - JWT Token
-      
+      // Let setn API GET request - let it be weater. If response will be 200 - it's ok, then this QR code is good
+      let res = this.apiService.testJwtViaGetRequest('temperatureWeather')
+      if (res != null) {
+        this.storage.set('jwtString', barcodeData.text);
+        console.log('[SignupPage.scan_qr()] JWT test passed well');
+      }
+    
     }).catch(err => {
-      console.log('Error', err);
+      console.log('[SignupPage.scan_qr] Error', err);
     });
+
   }
+
+  
+
 }
