@@ -3,14 +3,16 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { environment } from '../../environments/environment';
 import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
-import { catchError, map, tap} from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   public isJWT: boolean = false;
+  public serverLocation = {
+    server: 'local',
+    display: "локальный"
+  };
   private SERVER_URL: string = "";
   private jwtString: string;
   private httpParams: { params: HttpParams; } | { params?: undefined; };
@@ -22,14 +24,18 @@ export class ApiService {
   ) { 
       this.initApi();       
     }
-
-  initApi() {
-    if ( environment.serverLocal == true ) {
-      this.SERVER_URL = environment.SERVER_URL_LOCAL
+    
+  private updateServer() {
+    //    if ( environment.serverLocal == true ) {
+      if ( this.serverLocation.server == 'local' ) {
+        this.SERVER_URL = environment.SERVER_URL_LOCAL
     }else {
       this.SERVER_URL = environment.SERVER_URL_GOOGLE
     }
+  }
 
+  public initApi() {
+    this.updateServer();
     if( (environment.forceWriteJwt == true) && (environment.mobileBuild == false)) {
       // One Time write down JWT Token to Store. Next time it will be reading well
       this.storage.set(
@@ -63,7 +69,7 @@ export class ApiService {
     
 
         }else{
-          console.log("[initApi] jwtString not exist yet !! ")
+          console.log("[ApiService.initApi] jwtString not exist yet !! ")
         }
       });
 
@@ -71,6 +77,7 @@ export class ApiService {
   }
   
 public getApiAsync(urlSurf: string): Promise<any>{
+  this.updateServer();
   const url = this.SERVER_URL.concat(urlSurf)
   this.http.get(url, this.httpParams)
   return new Promise((resolve, reject) =>
@@ -102,40 +109,6 @@ public getApiAsync(urlSurf: string): Promise<any>{
     }
     return res;
   }
-
-  // // ported from https://www.freakyjolly.com/angular-7-8-httpclient-service-tutorial-to-consume-restfull-api-from-server/#.X0iMxnYzb0o
-  // public getApiAsync2(urlSurf: string): Promise<any>{
-  //   const url = this.SERVER_URL.concat(urlSurf)
-  //   return new Promise((resolve, reject) =>
-  //     {
-  //       return this.http.get(url, this.httpParams)
-  //       .pipe(
-  //         catchError(this.handleError)
-  //       )
-  //     })
-  //   }
-
-  // // ported from https://www.freakyjolly.com/angular-7-8-httpclient-service-tutorial-to-consume-restfull-api-from-server/#.X0iMxnYzb0o
-  // handleError(error: HttpErrorResponse) {
-  //   if (error.error instanceof ErrorEvent) {
-  //     // A client-side or network error occurred. Handle it accordingly.
-  //     console.error('[ApiService.getApiAsync2] An error occurred:', error.error.message);
-  //   } else {
-  //     // The backend returned an unsuccessful response code.
-  //     // The response body may contain clues as to what went wrong,
-  //     console.error(
-  //       `Backend returned code ${error.status}, ` +
-  //       `body was: ${error.error}`);
-  //   }
-  //   // return an observable with a user-facing error message
-  //   return throwError(
-  //     '[ApiService.getApiAsync2] Something bad happened; please try again later.');
-  // };
-  
-  // public async testJwtViaGetRequest2(url: string) {
-  //   const result = await this.getApiAsync2(url);
-  //   return result !=null;
-  // }
   
   initHttpParams(term: string) {
     const options = term ?
@@ -144,12 +117,14 @@ public getApiAsync(urlSurf: string): Promise<any>{
   }
 
   public getApiCB(urlSurf: string, onSuccess) {
+    this.updateServer();
     const url = this.SERVER_URL.concat(urlSurf)
     this.http.get(url, this.httpParams)
     .subscribe(onSuccess);
   }
 
   public postApi(urlSurf: string, postData: {}) {
+    this.updateServer();
     const url = this.SERVER_URL.concat(urlSurf)
     this.http.post(url, postData, this.httpParams )
     .subscribe(

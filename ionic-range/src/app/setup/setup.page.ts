@@ -14,41 +14,38 @@ export class SetupPage implements OnInit {
   private economInpVal: number = 18;
   private alertController = new AlertController()
   
-  public data: any = {
-    server: 'local',
-    display: "локальный"
-  };
-
   constructor( 
     public router: Router, 
     private storage: Storage,
-    private apiService: ApiService,
+    public apiService: ApiService,
     ) { }
 
   ngOnInit() {
     this.getComfortT();
     this.getEconomT();
+//    this.setServerOption(true);
   }
 
   onChangeHandler($event) {
-    this.data.server = $event.target.value;
-    if (this.data.server == 'local') {
-      this.data.display = "локальный"
+    let loc = $event.target.value;
+    this.apiService.serverLocation.server = loc;
+    if (loc == 'local') {
+      this.apiService.serverLocation.display = "локальный"
     }else {
-      this.data.display = "облачный"
+      this.apiService.serverLocation.display = "облачный"
     }
-    console.log("[onChangeHandler]", this.data.server)
+    console.log("[SetupPage.onChangeHandler]", this.apiService.serverLocation.server)
   }
 
-  public setServerOption(optLocal: boolean) {
-    if (optLocal == true) {
-      this.data.server = 'local'
-      this.data.display = "локальный"
-    }else {
-      this.data.server = 'cloud'
-      this.data.display = "облачный"
-    }
-  }
+  // public setServerOption(optLocal: boolean) {
+  //   if (optLocal == true) {
+  //     this.data.server = 'local'
+  //     this.data.display = "локальный"
+  //   }else {
+  //     this.data.server = 'cloud'
+  //     this.data.display = "облачный"
+  //   }
+  // }
 
   toHomePage() {
     this.router.navigate(['home']);  

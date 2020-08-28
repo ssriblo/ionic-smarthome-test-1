@@ -99,7 +99,9 @@ export class SignupPage implements OnInit {
     });
 
   }
-
+  public jwtWithoutScan() {
+    // for TEST only - load JWT test setup from hardcode without QR scanning
+  }
   
 
 }

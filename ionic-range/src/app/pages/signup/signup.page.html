@@ -14,12 +14,19 @@
     <img src="assets/imgs/qr-sample.png" />
     <ion-card-content>
       <ion-text>
-        <h1>Для регистрации у Вас должен быть QR код, примерно как на картинке выше.</h1>
+        <h2>Для регистрации у Вас должен быть QR код, примерно как на картинке выше.</h2>
       </ion-text>
       <ion-text>
-          <h1>Надо нажать кнопку "Сканирование" и навести камеру на QR код</h1>
+          <h2>Надо нажать кнопку "Сканирование" и навести камеру на QR код</h2>
       </ion-text>
       <ion-button color="success" expand="full" (click)="scan_qr()">Сканирование</ion-button>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-button color="success" expand="full" (click)="jwtWithoutScan()">Тестовый режим регистрации</ion-button>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
