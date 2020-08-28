@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../../services/api.service';
+import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-signup',
@@ -83,25 +85,37 @@ export class SignupPage implements OnInit {
         disableAnimations : true, // iOS
         disableSuccessBeep: false // iOS and Android
     }
-    ).then(barcodeData => {
+    ).then(async barcodeData => { 
 //      console.log('Barcode data', barcodeData);
 //      this.data = barcodeData;
-      // TODO: crate api.servises and call GET request to check obtained QR code - JWT Token
-      // Let setn API GET request - let it be weater. If response will be 200 - it's ok, then this QR code is good
-      let res = this.apiService.testJwtViaGetRequest('temperatureWeather')
-      if (res != null) {
-        this.storage.set('jwtString', barcodeData.text);
-        console.log('[SignupPage.scan_qr()] JWT test passed well');
+      // Let setn API GET request - let it be weather. If response will be 200 - it's ok, then this QR code is good
+      let res =  await this.apiService.testJwtViaGetRequest('temperatureWeather')
+      if (res == true) {
+        console.log('[SignupPage.scan_qr()] JWT test passed well', res);
       }
-    
+      else {
+        console.log('[SignupPage.scan_qr()] JWT test failed');
+      }    
     }).catch(err => {
       console.log('[SignupPage.scan_qr] Error', err);
     });
-
   }
+
   public jwtWithoutScan() {
     // for TEST only - load JWT test setup from hardcode without QR scanning
-  }
-  
+    this.storage.set( 'jwtString', environment.JWT_DEFAULT )
+      .then(async val => {
+        console.log('[signup.jwtWithoutScan]: Forse store default JWT Token at Local Store')
+        let res =  await this.apiService.testJwtViaGetRequest('temperatureWeather')
+        if (res == true) {
+          console.log('[SignupPage.jwtWithoutScan()] JWT test passed well', res);
+          this.close();
+          this.router.navigateByUrl('/home');
+}
+        else {
+          console.log('[SignupPage.jwtWithoutScan()] JWT test failed');
+        }    
+      })
 
+  }  
 }
