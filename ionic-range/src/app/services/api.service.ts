@@ -26,11 +26,14 @@ export class ApiService {
     }
     
   private updateServer() {
-    //    if ( environment.serverLocal == true ) {
-      if ( this.serverLocation.server == 'local' ) {
+    if ( environment.serverLoc == "local" ) {
+        this.serverLocation.server = 'local'
+        this.serverLocation.display = 'локальный'
         this.SERVER_URL = environment.SERVER_URL_LOCAL
     }else {
-      this.SERVER_URL = environment.SERVER_URL_GOOGLE
+      this.serverLocation.server = 'cloud'
+      this.serverLocation.display = 'облачный'
+    this.SERVER_URL = environment.SERVER_URL_GOOGLE
     }
   }
 

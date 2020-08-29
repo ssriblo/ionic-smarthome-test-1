@@ -106,15 +106,8 @@ export class SignupPage implements OnInit {
     this.storage.set( 'jwtString', environment.JWT_DEFAULT )
       .then(async val => {
         console.log('[signup.jwtWithoutScan]: Forse store default JWT Token at Local Store')
-        let res =  await this.apiService.testJwtViaGetRequest('temperatureWeather')
-        if (res == true) {
-          console.log('[SignupPage.jwtWithoutScan()] JWT test passed well', res);
-          this.close();
-          this.router.navigateByUrl('/home');
-}
-        else {
-          console.log('[SignupPage.jwtWithoutScan()] JWT test failed');
-        }    
+        // Let reload app from scratch. It cause to re-read JWT and rout to home page and so on...
+        document.location.href = 'index.html';
       })
 
   }  

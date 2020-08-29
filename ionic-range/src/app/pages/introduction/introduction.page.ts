@@ -6,6 +6,7 @@ import {
 import { SignupPage } from '../signup/signup.page';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-introduction',
@@ -20,7 +21,10 @@ export class IntroductionPage implements OnInit {
     private router: Router,
   ) {}
 
-  async ngOnInit() {}
+  async ngOnInit() {
+    document.getElementById("version-intro").innerHTML = environment.version;
+    document.getElementById("server-option-intro").innerHTML = environment.serverLoc;
+  }
 
   async openSignup() {
     const modal = await this.modalCtrl.create({

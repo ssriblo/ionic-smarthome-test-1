@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 //import { StorageService, Item } from '../services/storage.service'
+import { environment } from '../../environments/environment';
+
 
 const { App } = Plugins;
 
@@ -73,7 +75,8 @@ export class HomePage  implements OnInit  {
         // }
   
       });
-  
+      document.getElementById("version").innerHTML = environment.version;
+      document.getElementById("server-option").innerHTML = environment.serverLoc
     }) // this.platform.ready().then()
 
     // this is for Android Back Button. Shoudl works at Android only:

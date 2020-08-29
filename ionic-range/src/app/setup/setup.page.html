@@ -74,22 +74,5 @@
   <ion-item-divider color=#0000>
     <div style="width: 100%; height: 35px;"></div>
   </ion-item-divider>
-  <ion-row>
-    <ion-col>
-      <ion-list  class="radioarea">
-        <ion-radio-group (ionChange)="onChangeHandler($event)">
-          <ion-item>
-            <ion-label><h1>Локальный</h1></ion-label>
-            <ion-radio  slot="start" color="success" value="local" ></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label><h1>Облачный</h1></ion-label>
-            <ion-radio  slot="start" color="tertiary" value="cloud" ></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-        <h1><p>{{this.apiService.serverLocation.display}}</p></h1>
-      </ion-list>         
-    </ion-col>
-  </ion-row>
   </ion-grid>
 </ion-content>
