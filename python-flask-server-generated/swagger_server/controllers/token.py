@@ -9,7 +9,7 @@ class Token():
 
     def __init__(self):
         config = configparser.ConfigParser()                                     
-        config.read('../config.ini')
+        config.read('./config.ini')
         __platform = platform.system()
         print("platform", platform)
         if __platform == "Windows":

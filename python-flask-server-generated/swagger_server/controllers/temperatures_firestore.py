@@ -3,7 +3,7 @@ import configparser
 import platform
 
 config = configparser.ConfigParser()                                     
-config.read('../config.ini')
+config.read('./config.ini')
 platform = platform.system()
 print("platform", platform)
 if platform == "Windows":
