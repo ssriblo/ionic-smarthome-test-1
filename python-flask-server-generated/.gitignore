@@ -23,6 +23,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+private_keys_store/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -62,3 +63,4 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+/.gitignore

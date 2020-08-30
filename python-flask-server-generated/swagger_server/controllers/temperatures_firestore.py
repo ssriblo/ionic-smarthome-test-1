@@ -5,7 +5,7 @@ import platform
 config = configparser.ConfigParser()                                     
 config.read('./config.ini')
 platform = platform.system()
-print("platform", platform)
+print("[temperature_firestore] platform: ", platform)
 if platform == "Windows":
     credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'WINDOWS')
     credential_path = credential_path.strip('\"')
@@ -14,6 +14,7 @@ elif platform == "Linux":
     credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'LINUX')
 #    credential_path = credential_path.strip('\"') # ???QUESTION??? Did not check at Linux yet. BUT, it need for Windows !!!!!!!!!!!!!!!!!!!!!!!!!
     print("linux")
+    print("[temperature_firestore] credential_path: ", credential_path)
 
 # Project ID is determined by the GCLOUD_PROJECT environment variable
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path

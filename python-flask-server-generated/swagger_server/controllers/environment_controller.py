@@ -11,6 +11,17 @@ from swagger_server import util
 from swagger_server.controllers.temperatures_firestore import TempVal
 from swagger_server.controllers.token import Token
 
+# for Google Cloud Debugging
+# https://cloud.google.com/debugger/docs/setup/python?_ga=2.136753904.-1954855752.1595907501
+try:
+  import googleclouddebugger
+  googleclouddebugger.enable(
+    breakpoint_enable_canary=True
+  )
+except ImportError:
+  pass
+
+
 TV = TempVal()
 token = Token()
 err = Errors()
@@ -59,8 +70,11 @@ def temperature_water(jwt):  # noqa: E501
 
 def temperature_weather(jwt):  # noqa: E501
     t = TemperatureTargetGet()
+    print("[temperature_weather] jwt:  t:", jwt, t)
     _tk = token.getToken(jwt)
+    print("[temperature_weather] _tk:  ", _tk)
     t.value = TV.weatherT if (_tk != None) else None
+    print("[temperature_weather] t.value:  ", t.value)
     return t
 
 
@@ -92,7 +106,10 @@ def update_target_temperature(body, jwt):  # noqa: E501
 #        print(type(js))
 #        print(js["id"], js["value"])
         body = TemperaturePost.from_dict(connexion.request.get_json())  # noqa: E501
+        print("[update_target_temperature] body: ", body)
         _tk = token.getToken(jwt)
+        print("[update_target_temperature] _tk : ", _tk)
         if (_tk != None):
             TV.targetT = body.value
+            print("[update_target_temperature] RETURN OK  body.value: ", body.value)
     return 'update_target_temperature:' + str(TV.targetT)

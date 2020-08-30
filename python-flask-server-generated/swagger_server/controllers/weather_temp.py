@@ -37,7 +37,7 @@ class Weather():
                 params={'id': city_id, 'units': 'metric', 'lang': 'ru', 'APPID': self.appid})
             data = res.json()
     #        print("conditions:", data['weather'][0]['description'])
-    #        print("temp:", data['main']['temp'])
+            print("[request_current_weather]:", data['main']['temp'])
     #        print("temp_min:", data['main']['temp_min'])
     #        print("temp_max:", data['main']['temp_max'])
     #        print("data:", data)
