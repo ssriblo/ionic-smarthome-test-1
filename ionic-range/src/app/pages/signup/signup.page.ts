@@ -86,18 +86,12 @@ export class SignupPage implements OnInit {
         disableSuccessBeep: false // iOS and Android
     }
     ).then(async barcodeData => { 
-//      console.log('Barcode data', barcodeData);
-//      this.data = barcodeData;
-      // Let setn API GET request - let it be weather. If response will be 200 - it's ok, then this QR code is good
-      let res =  await this.apiService.testJwtViaGetRequest('temperatureWeather')
-      if (res == true) {
-        console.log('[SignupPage.scan_qr()] JWT test passed well', res);
-      }
-      else {
-        console.log('[SignupPage.scan_qr()] JWT test failed');
-      }    
-    }).catch(err => {
-      console.log('[SignupPage.scan_qr] Error', err);
+      this.storage.set('jwtString', barcodeData.text)
+      .then(async val => {
+        console.log('[signup.scan_qr] Barcode data stored at LocalStorage', barcodeData);
+        // Let reload app from scratch. It cause to re-read JWT and rout to home page and so on...
+        document.location.href = 'index.html';
+      })
     });
   }
 
