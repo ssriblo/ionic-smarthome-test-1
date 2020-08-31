@@ -8,17 +8,24 @@ class Token():
     __jwt_secret = ""
 
     def __init__(self):
-        config = configparser.ConfigParser()                                     
+        config = configparser.ConfigParser()                           
         config.read('./config.ini')
-        __platform = platform.system()
-        print("platform", platform)
-        if __platform == "Windows":
-            self.__jwt_secret = config.get('JWT_SECRET', 'WINDOWS')
-            self.__jwt_secret = self.__jwt_secret.strip('\"')
-            print("windows")
-        elif __platform == "Linux":
+        location = config.get('MODE', 'LOCATION')
+        print ("[Token] location", location)
+        if location == "local":
+            __platform = platform.system()
+            print("[Token] platform", platform)
+            if __platform == "Windows":
+                self.__jwt_secret = config.get('JWT_SECRET', 'WINDOWS')
+                self.__jwt_secret = self.__jwt_secret.strip('\"')
+                print("[Token] windows")
+            elif __platform == "Linux":
+                self.__jwt_secret = config.get('JWT_SECRET', 'LINUX')
+                print("[Token] linux")
+        else:
             self.__jwt_secret = config.get('JWT_SECRET', 'LINUX')
-            print("linux")
+            print("[Token] cloud-linux")
+        
 ######################################
     def getToken(self, jwtString):
         try:

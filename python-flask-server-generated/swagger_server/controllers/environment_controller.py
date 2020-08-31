@@ -13,13 +13,13 @@ from swagger_server.controllers.token import Token
 
 # for Google Cloud Debugging
 # https://cloud.google.com/debugger/docs/setup/python?_ga=2.136753904.-1954855752.1595907501
-try:
-  import googleclouddebugger
-  googleclouddebugger.enable(
-    breakpoint_enable_canary=True
-  )
-except ImportError:
-  pass
+#try:
+#  import googleclouddebugger
+#  googleclouddebugger.enable(
+#    breakpoint_enable_canary=True
+#  )
+#except ImportError:
+#  pass
 
 
 TV = TempVal()

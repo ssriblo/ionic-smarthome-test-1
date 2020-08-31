@@ -5,7 +5,7 @@ import platform
 config = configparser.ConfigParser()                                     
 config.read('./config.ini')
 platform = platform.system()
-print("platform", platform)
+print("[temperature_firestore] platform", platform)
 if platform == "Windows":
     credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'WINDOWS')
     credential_path = credential_path.strip('\"')
@@ -13,7 +13,7 @@ if platform == "Windows":
 elif platform == "Linux":
     credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'LINUX')
 #    credential_path = credential_path.strip('\"') # ???QUESTION??? Did not check at Linux yet. BUT, it need for Windows !!!!!!!!!!!!!!!!!!!!!!!!!
-    print("linux")
+    print("[temperature_firestore] linux")
 
 # Project ID is determined by the GCLOUD_PROJECT environment variable
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
@@ -34,7 +34,7 @@ class TempVal():
         doc_ref = self.db.collection(u'smarthome').document(self.apartment) # Let apartment=133 for test only
         doc = doc_ref.get()
         if doc.exists:
-            print(f'Document data: {doc.to_dict()}', self.apartment)
+            print(f'[temperature_firestore] Document data: {doc.to_dict()}', self.apartment)
         else:
             print(u'No such apartment:', self.apartment)
             doc_ref.set({

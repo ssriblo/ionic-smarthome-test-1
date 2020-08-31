@@ -13,16 +13,22 @@ class Weather():
     def __init__(self):
         config = configparser.ConfigParser()                                     
         config.read('./config.ini')
-        __platform = platform.system()
-        print("platform", platform)
-        if __platform == "Windows":
-            credential_path = config.get('OPENWEATHERMAP_KEY_FILE', 'WINDOWS')
-            credential_path = credential_path.strip('\"')
-            print("windows")
-        elif __platform == "Linux":
-            credential_path = config.get('OPENWEATHERMAP_KEY_FILE', 'LINUX')
-        #    credential_path = credential_path.strip('\"') # ???QUESTION??? Did not check at Linux yet. BUT, it need for Windows !!!!!!!!!!!!!!!!!!!!!!!!!
-            print("linux")
+        location = config.get('MODE', 'LOCATION')
+        print ("[Weather] location", location)
+        if location == "local":
+            __platform = platform.system()
+            print("[Weather] platform", platform)
+            if __platform == "Windows":
+                credential_path = config.get('OPENWEATHERMAP_KEY_FILE', 'WINDOWS')
+                credential_path = credential_path.strip('\"')
+                print("[Weather] windows")
+            elif __platform == "Linux":
+                credential_path = config.get('OPENWEATHERMAP_KEY_FILE', 'LINUX')
+            #    credential_path = credential_path.strip('\"') # ???QUESTION??? Did not check at Linux yet. BUT, it need for Windows !!!!!!!!!!!!!!!!!!!!!!!!!
+                print("[Weather] linux")
+        else:
+                credential_path = config.get('OPENWEATHERMAP_KEY_FILE', 'LINUX')
+                print("[Weather] linux-cloud")
 
 #        with open('/home/me/Working/Angular/Angular_20h_course/private_keys_store_dont_delete/openweathermap.json') as f:
         with open(credential_path) as f:
