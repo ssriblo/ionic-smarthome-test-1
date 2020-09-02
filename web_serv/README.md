@@ -17,3 +17,18 @@ or
 
 To check if server started:
 ./check_app_status.sh
+
+--------------
+## Autostart:
+sskriblo@smart-home:/etc/systemd/system$ cat apiserver.service 
+[Unit]
+Decription=API Server Autostart script
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/home/sskriblo/Work/ionic-smarthome-test-1/web_serv/start.sh
+
+[Install]
+WantedBy=multi-user.target
+--------------

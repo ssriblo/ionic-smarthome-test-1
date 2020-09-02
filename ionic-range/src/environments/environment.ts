@@ -5,9 +5,10 @@
 export const environment = {
   production: false,
   mobileBuild: false, // setup FALSE for Chrome and TRUE for Android
-  version: "(v8.cloud) ",
-  serverLoc: "cloud", // options: ["local", "cloud"]
-  SERVER_URL_LOCAL: 'http://localhost:8080/OVK/OVK_mob1/1.0.7/',
+  version: "(v8.local) ",
+  serverLoc: "local", // options: ["local", "cloud"]
+//  SERVER_URL_LOCAL: 'http://localhost:8080/OVK/OVK_mob1/1.0.7/',
+  SERVER_URL_LOCAL: 'http://localhost:8080/',
 // this project banned and disabled SERVER_URL_GOOGLE: 'https://web-serv13802.nw.r.appspot.com:8080/OVK/OVK_mob1/1.0.7/',
 // SERVER_URL_GOOGLE: 'https://smart-home-288104.ew.r.appspot.com:8080/OVK/OVK_mob1/1.0.7/',
   SERVER_URL_GOOGLE: 'http://84.201.154.208:8080/OVK/OVK_mob1/1.0.7/',

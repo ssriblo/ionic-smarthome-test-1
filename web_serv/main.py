@@ -119,7 +119,7 @@ def updateTargetTemperature():
     if (_tk != None):
         TV.targetT = body['value']
         print("[update_target_temperature] RETURN OK  body.value: ", body,  body['value'])
-    return 'update_target_temperature:' + str(TV.targetT)
+    return {'value': str(TV.targetT)}
 
 ###############################################################################
 @app.route('/updateComfortTemperature', methods=['POST']) 
@@ -132,7 +132,8 @@ def updateComfortTemperature():
     if (_tk != None):
         TV.comfortT = body['value']
         print("[updateComfortTemperature] RETURN OK  body.value: ", body,  body['value'])
-    return 'updateComfortTemperature:' + str(TV.comfortT)
+    return {'value': str(TV.comfortT)}
+
 ###############################################################################
 @app.route('/updateEconomTemperature', methods=['POST']) 
 def updateEconomTemperature():
@@ -144,7 +145,8 @@ def updateEconomTemperature():
     if (_tk != None):
         TV.economT = body['value']
         print("[updateEconomTemperature] RETURN OK  body.value: ", body,  body['value'])
-    return 'updateEconomTemperature:' + str(TV.economT)
+    return {'value': str(TV.economT)}
+
 ###############################################################################
 
 # curl -i -H "Content-Type: application/json" -X POST -d '{"userId":"1", "username": "fizz bizz"}' http://127.0.0.1:8080/foo?jwt=123
