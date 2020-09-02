@@ -1,8 +1,11 @@
 ## Usage
 To run the server, please execute the following from the root directory:
 
-virtualenv env (только первый раз!)
- 
+
+virtualenv --python=python3 env  (только первый раз!)
+source env/bin/activate
+pip install -r requirements.txt
+
 После того, как все настроено, надо заморозить виртуальное окружение и сохранить его описание командами:
 Сохранить:
 pip freeze > requirements.txt
