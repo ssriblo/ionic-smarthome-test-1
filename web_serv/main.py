@@ -130,9 +130,9 @@ def updateComfortTemperature():
     _tk = token.getToken(jwt)
 #    print("[updateComfortTemperature] _tk : ", _tk)
     if (_tk != None):
-        TV.targetT = body['value']
+        TV.comfortT = body['value']
         print("[updateComfortTemperature] RETURN OK  body.value: ", body,  body['value'])
-    return 'updateComfortTemperature:' + str(TV.targetT)
+    return 'updateComfortTemperature:' + str(TV.comfortT)
 ###############################################################################
 @app.route('/updateEconomTemperature', methods=['POST']) 
 def updateEconomTemperature():
@@ -142,9 +142,9 @@ def updateEconomTemperature():
     _tk = token.getToken(jwt)
 #    print("[updateEconomTemperature] _tk : ", _tk)
     if (_tk != None):
-        TV.targetT = body['value']
+        TV.economT = body['value']
         print("[updateEconomTemperature] RETURN OK  body.value: ", body,  body['value'])
-    return 'updateEconomTemperature:' + str(TV.targetT)
+    return 'updateEconomTemperature:' + str(TV.economT)
 ###############################################################################
 
 # curl -i -H "Content-Type: application/json" -X POST -d '{"userId":"1", "username": "fizz bizz"}' http://127.0.0.1:8080/foo?jwt=123

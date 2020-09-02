@@ -42,16 +42,16 @@ echo "    <<<<< $REQUEST"
 echo "*************************************************************************"
 
 REQUEST=updateTargetTemperature
-curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "12"}' http://localhost:8080/$REQUEST?jwt=$TOKEN
+curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "11"}' http://localhost:8080/$REQUEST?jwt=$TOKEN
 echo "    <<<<< $REQUEST"
 echo "*************************************************************************"
 
 REQUEST=updateComfortTemperature
-curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "12"}' http://localhost:8080/$REQUEST?jwt=$TOKEN
+curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "13"}' http://localhost:8080/$REQUEST?jwt=$TOKEN
 echo "    <<<<< $REQUEST"
 echo "*************************************************************************"
 
 REQUEST=updateEconomTemperature
-curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "12"}' http://localhost:8080/$REQUEST?jwt=$TOKEN
+curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "15"}' http://localhost:8080/$REQUEST?jwt=$TOKEN
 echo "    <<<<< $REQUEST"
 echo "*************************************************************************"
