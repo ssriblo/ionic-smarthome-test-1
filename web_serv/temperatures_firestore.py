@@ -24,7 +24,6 @@ if location == "local":
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
 from google.cloud import firestore
-
 from weather_temp import Weather
 
 class TempVal():
@@ -35,7 +34,7 @@ class TempVal():
     _comfortT: int
     _economT: int
     _waterT: int
-    _serverStatus=""
+    _serversStatus: str
     apartment = u'test-apartment-135'
     db = None
     WT = None
@@ -129,14 +128,14 @@ class TempVal():
         self.fs_ref().set({'waterT': val}, merge=True)
 ######################################
     @property
-    def serverStatus(self):
-        self._serverStatus = self.fs_ref().get().to_dict()['serverStatus']
-        return self._serverStatus
+    def serversStatus(self):
+        self._serversStatus = self.fs_ref().get().to_dict()['serversStatus']
+        return self._serversStatus
 
-    @waterT.setter
+    @serversStatus.setter
     def serverStatus(self, val):
-        self._serverStatus = val
-        self.fs_ref().set({'serverStatus': val}, merge=True)
+        self._serversStatus = val
+        self.fs_ref().set({'serversStatus': val}, merge=True)
 ######################################
 
 

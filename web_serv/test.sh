@@ -41,17 +41,17 @@ curl -S  -H "Content-Type: application/json" -X POST -d '{"userId":"1", "usernam
 echo "    <<<<< $REQUEST"
 echo "*************************************************************************"
 
-REQEST=updateTargetTemperature
-curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "12"}' http://localhost:8080/$REQEST?jwt=$TOKEN
+REQUEST=updateTargetTemperature
+curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "12"}' http://localhost:8080/$REQUEST?jwt=$TOKEN
 echo "    <<<<< $REQUEST"
 echo "*************************************************************************"
 
-REQEST=updateComfortTemperature
-curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "12"}' http://localhost:8080/$REQEST?jwt=$TOKEN
+REQUEST=updateComfortTemperature
+curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "12"}' http://localhost:8080/$REQUEST?jwt=$TOKEN
 echo "    <<<<< $REQUEST"
 echo "*************************************************************************"
 
-REQEST=updateEconomTemperature
-curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "12"}' http://localhost:8080/$REQEST?jwt=$TOKEN
+REQUEST=updateEconomTemperature
+curl -S -H "Content-Type: application/json" -X POST -d '{"id":"1", "value": "12"}' http://localhost:8080/$REQUEST?jwt=$TOKEN
 echo "    <<<<< $REQUEST"
 echo "*************************************************************************"
