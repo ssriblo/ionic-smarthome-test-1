@@ -12,7 +12,8 @@ export const environment = {
 // this project banned and disabled SERVER_URL_GOOGLE: 'https://web-serv13802.nw.r.appspot.com:8080/OVK/OVK_mob1/1.0.7/',
 // SERVER_URL_GOOGLE: 'https://smart-home-288104.ew.r.appspot.com:8080/OVK/OVK_mob1/1.0.7/',
 //  SERVER_URL_GOOGLE: 'http://84.201.154.208:8080/OVK/OVK_mob1/1.0.7/',
-  SERVER_URL_GOOGLE: 'http://84.201.154.208:8080/', 
+//  SERVER_URL_GOOGLE: 'http://84.201.154.208:8080/', 
+  SERVER_URL_GOOGLE: 'https://84.201.154.208:8080/', 
   
   JWT_DEFAULT: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk'
 
