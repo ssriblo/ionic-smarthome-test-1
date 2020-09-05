@@ -16,6 +16,13 @@ log = config.get('MODE', 'LOGLEVEL')
 app = Flask(__name__)
 CORS(app)
 
+import ssl 
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER) 
+context.load_cert_chain(
+    '/etc/letsencrypt/live/otoplenok.ru/fullchain.pem', 
+    '/etc/letsencrypt/live/otoplenok.ru/privkey.pem'
+    )
+
 ###############################################################################
 # API GET:
 # temperatureWeather/
@@ -170,6 +177,6 @@ if __name__ == '__main__':
     # the "static" directory. See:
     # http://flask.pocoo.org/docs/1.0/quickstart/#static-files. Once deployed,
     # App Engine itself will serve those files as configured in app.yaml.
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    app.run(host='0.0.0.0', port=8080, debug=False, ssl_context=context)
 #    app.run(port=8080, debug=False)
 
