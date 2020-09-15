@@ -25,7 +25,7 @@ from opcua import Client
 from opcua import ua
 from temperatures_firestore import TempVal
 
-TV = TempVal()
+#TV = TempVal()
 
 class SubHandler(object):
 
@@ -127,17 +127,37 @@ if __name__ == "__main__":
 #YA1002d00213437471231373739
         print(root.get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[1].get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[2].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[1].get_children()[0].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[2].get_children()[0].get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[0].get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[1].get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[2].get_browse_name())
+        node =              root.get_children()[0].get_children()[2].get_children()[0]
+        node_temperature = node.get_children()[0]
+        node_alarm = node.get_children()[1]
+        node_counter = node.get_children()[2]
 
+        targetT = node_temperature.get_children()[2]
+        roomT = node_temperature.get_children()[1]
+        waterT = node_temperature.get_children()[0]
+        alarm = node_alarm.get_children()[0]
+        counter = node_counter.get_children()[0]
+
+        print(targetT.get_browse_name(), roomT.get_browse_name(), waterT.get_browse_name(), alarm.get_browse_name(), counter.get_browse_name())
+        print(targetT.get_value(), roomT.get_value(), waterT.get_value(), alarm.get_value(), counter.get_value())
+        exit(0)
         while True:
-            airT = root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_value()
-            print("airT is:", airT)
-            TV.airT = airT
-            time.sleep(3)
+            print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[0].get_value())
+            print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[1].get_value())
+            print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[2].get_value())
+            print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[1].get_children()[0].get_value())
+            print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[2].get_children()[0].get_value())
+            time.sleep(2)
+#        while True:
+#            airT = root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_value()
+#            print("airT is:", airT)
+#            TV.airT = airT
+#            time.sleep(3)
 #        QualifiedName(0:Root)
 #        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:f1)
 #        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:Счетчики)
