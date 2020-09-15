@@ -55,7 +55,10 @@ def browse_recursive(node):
                     bn=ch.get_browse_name(),
                     val=str(ch.get_value()))
                 )
-            except ua.uaerrors._auto.BadWaitingForInitialData:
+#            except ua.uaerrors._auto.BadWaitingForInitialData:
+            except:
+                pass
+
                 pass
 ################################################################################################
 
@@ -67,7 +70,7 @@ if __name__ == "__main__":
 #    client = Client("opc.tcp://localhost:4840/freeopcua/server/")
     # client = Client("opc.tcp://admin@localhost:4840/freeopcua/server/") #connect using a user
     # GWSerebrum local test:
-    client = Client("opc.tcp://ua_client:ua_password@192.168.1.36:16664")
+    client = Client("opc.tcp://ua_client:ua_password@192.168.1.38:16664")
     try:
         client.connect()
         client.load_type_definitions()  # load definition of server specific structures/extension objects
@@ -99,6 +102,22 @@ if __name__ == "__main__":
         uri = "urn:telemetry:gateway"
         idx = client.get_namespace_index(uri)
         print(idx)
+#        browse_recursive(root)
+#NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]
+#NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok))]
+#NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok:TemperaturesControl) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl))]
+#NODE is: NodeClass.Variable QualifiedName(0:YA1002d00213437471231373739:Otoplenok:TemperaturesControl:RoomT) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl:RoomT))]
+#QualifiedName(0:YA1002d00213437471231373739:Otoplenok:TemperaturesControl:RoomT) has value 25.00678253173828
+#NODE is: NodeClass.Variable QualifiedName(0:YA1002d00213437471231373739:Otoplenok:TemperaturesControl:WaterT) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl:WaterT))]
+#QualifiedName(0:YA1002d00213437471231373739:Otoplenok:TemperaturesControl:WaterT) has value 50.02370834350586
+#NODE is: NodeClass.Variable QualifiedName(0:YA1002d00213437471231373739:Otoplenok:TemperaturesControl:TargetT) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl:TargetT))]
+#QualifiedName(0:YA1002d00213437471231373739:Otoplenok:TemperaturesControl:TargetT) has value 0.0
+#NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok:Alarms) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:Alarms))]
+#NODE is: NodeClass.Variable QualifiedName(0:YA1002d00213437471231373739:Otoplenok:Alarms:Alarm1) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:Alarms)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:Alarms:Alarm1))]
+#QualifiedName(0:YA1002d00213437471231373739:Otoplenok:Alarms:Alarm1) has value True
+#NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok:Counters) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:Counters))]
+#NODE is: NodeClass.Variable QualifiedName(0:YA1002d00213437471231373739:Otoplenok:Counters:Counter1) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:Counters)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:Counters:Counter1))]
+#QualifiedName(0:YA1002d00213437471231373739:Otoplenok:Counters:Counter1) has value 1
 
         # Now getting a variable node using its browse path
 #        myvar = root.get_child(["0:Objects", "{}:MyObject".format(idx), "{}:MyVariable".format(idx)])
@@ -110,8 +129,10 @@ if __name__ == "__main__":
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[1].get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[2].get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_value())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[0].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[1].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[2].get_browse_name())
+
         while True:
             airT = root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_value()
             print("airT is:", airT)
@@ -152,7 +173,6 @@ if __name__ == "__main__":
         print(tobj.get_variables())
 
       
-#        browse_recursive(root)
 #       QualifiedName(0:YA1002d00213437471231373739:vars:temperature) has value 20.225364685058594
 
         
