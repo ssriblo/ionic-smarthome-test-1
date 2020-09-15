@@ -132,6 +132,7 @@ if __name__ == "__main__":
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[0].get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[1].get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[2].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[2].get_display_name().Text)
         node =              root.get_children()[0].get_children()[2].get_children()[0]
         node_temperature = node.get_children()[0]
         node_alarm = node.get_children()[1]
@@ -143,7 +144,7 @@ if __name__ == "__main__":
         alarm = node_alarm.get_children()[0]
         counter = node_counter.get_children()[0]
 
-        print(targetT.get_browse_name(), roomT.get_browse_name(), waterT.get_browse_name(), alarm.get_browse_name(), counter.get_browse_name())
+        print(targetT.get_display_name().Text, roomT.get_display_name().Text, waterT.get_display_name().Text, alarm.get_display_name().Text, counter.get_display_name().Text)
         print(targetT.get_value(), roomT.get_value(), waterT.get_value(), alarm.get_value(), counter.get_value())
         exit(0)
         while True:
