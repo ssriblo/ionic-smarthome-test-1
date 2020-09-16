@@ -4,28 +4,36 @@ import platform
 
 config = configparser.ConfigParser()                                     
 config.read('./config.ini')
-platform = platform.system()
-print("[temperature_firestore] platform", platform)
-if platform == "Windows":
-    credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'WINDOWS')
-    credential_path = credential_path.strip('\"')
-    print("windows")
-elif platform == "Linux":
-    credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'LINUX')
-#    credential_path = credential_path.strip('\"') # ???QUESTION??? Did not check at Linux yet. BUT, it need for Windows !!!!!!!!!!!!!!!!!!!!!!!!!
-    print("[temperature_firestore] linux")
 
-# Project ID is determined by the GCLOUD_PROJECT environment variable
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
+location = config.get('MODE', 'LOCATION')
+print ("[temperature_firestore] location", location)
+if location == "local":
+    platform = platform.system()
+    print("[temperature_firestore] platform: ", platform)
+    if platform == "Windows":
+        credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'WINDOWS')
+        credential_path = credential_path.strip('\"')
+        print("[temperature_firestore] windows")
+    elif platform == "Linux":
+        credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'LINUX')
+    #    credential_path = credential_path.strip('\"') # ???QUESTION??? Did not check at Linux yet. BUT, it need for Windows !!!!!!!!!!!!!!!!!!!!!!!!!
+        print("[temperature_firestore] linux")
+        print("[temperature_firestore] credential_path: ", credential_path)
+
+    # Project ID is determined by the GCLOUD_PROJECT environment variable
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
+
 from google.cloud import firestore
 
 class TempVal():
     # This is set for temperatures
     _targetT: int
-    _airT: int
+    _weatherT: int
+    _roomT: int
     _comfortT: int
     _economT: int
     _waterT: int
+    _serversStatus: str
     apartment = u'test-apartment-135'
     db = None
 
@@ -40,7 +48,7 @@ class TempVal():
             doc_ref.set({
             'targetT': 21,
             'weatherT': 12,
-            'airT': 23,
+            'roomT': 23,
             'comfortT': 24,
             'economT': 14,
             'waterT': 35,
@@ -63,14 +71,14 @@ class TempVal():
 ######################################
 ######################################
     @property
-    def airT(self):
-        self._airT = self.fs_ref().get().to_dict()['airT']
-        return self._airT
+    def roomT(self):
+        self._roomT = self.fs_ref().get().to_dict()['roomT']
+        return self._roomT
 
-    @airT.setter
-    def airT(self, val):
-        self._airT = val
-        self.fs_ref().set({'airT': val}, merge=True)
+    @roomT.setter
+    def roomT(self, val):
+        self._roomT = val
+        self.fs_ref().set({'roomT': val}, merge=True)
 ######################################
     @property
     def comfortT(self):
@@ -101,6 +109,16 @@ class TempVal():
     def waterT(self, val):
         self._waterT = val
         self.fs_ref().set({'waterT': val}, merge=True)
+######################################
+    @property
+    def serversStatus(self):
+        self._serversStatus = self.fs_ref().get().to_dict()['serversStatus']
+        return self._serversStatus
+
+    @serversStatus.setter
+    def serverStatus(self, val):
+        self._serversStatus = val
+        self.fs_ref().set({'serversStatus': val}, merge=True)
 ######################################
 
 

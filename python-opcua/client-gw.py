@@ -25,7 +25,7 @@ from opcua import Client
 from opcua import ua
 from temperatures_firestore import TempVal
 
-#TV = TempVal()
+TV = TempVal()
 
 class SubHandler(object):
 
@@ -146,7 +146,15 @@ if __name__ == "__main__":
 
         print(targetT.get_display_name().Text, roomT.get_display_name().Text, waterT.get_display_name().Text, alarm.get_display_name().Text, counter.get_display_name().Text)
         print(targetT.get_value(), roomT.get_value(), waterT.get_value(), alarm.get_value(), counter.get_value())
-        exit(0)
+
+        while True:
+            TV.roomT = roomT.get_value()
+            TV.waterT = waterT.get_value()
+            datavalue = ua.DataValue(ua.Variant(TV.targetT, ua.VariantType.Float)) 
+            targetT.set_value(datavalue)
+            print("roomT", roomT.get_value(), "waterT", waterT.get_value(), "tartetT", targetT.get_value())
+            time.sleep(10)
+
         while True:
             print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[0].get_value())
             print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[1].get_value())
@@ -154,18 +162,7 @@ if __name__ == "__main__":
             print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[1].get_children()[0].get_value())
             print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[2].get_children()[0].get_value())
             time.sleep(2)
-#        while True:
-#            airT = root.get_children()[0].get_children()[2].get_children()[0].get_children()[3].get_value()
-#            print("airT is:", airT)
-#            TV.airT = airT
-#            time.sleep(3)
-#        QualifiedName(0:Root)
-#        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:f1)
-#        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:Счетчики)
-#        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:f2)
-#        myvar is:  QualifiedName(0:YA1002d00213437471231373739:vars:temperature)
-#        myvar is:  20.225364685058594
-
+        """
         t1 = client.get_node("ns=0;i=85")
         print(t1, t1.get_children())
         v = client.get_node("ns=0;i=85")
@@ -192,13 +189,7 @@ if __name__ == "__main__":
         print(tobj.get_properties())
         print(tobj.get_type_definition())
         print(tobj.get_variables())
-
-      
-#       QualifiedName(0:YA1002d00213437471231373739:vars:temperature) has value 20.225364685058594
-
-        
-
-
+        """       
         # subscribing to a variable node
 #        handler = SubHandler()
 #        sub = client.create_subscription(500, handler)
