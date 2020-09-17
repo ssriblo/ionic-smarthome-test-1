@@ -1,25 +1,11 @@
-
-
-# Firestore using:
 import os    
+import socket
 
 #  Based on example/client-example.py
 import sys
 sys.path.insert(0, "..")
 import logging
 import time
-
-try:
-    from IPython import embed
-except ImportError:
-    import code
-
-    def embed():
-        vars = globals()
-        vars.update(locals())
-        shell = code.InteractiveConsole(vars)
-        shell.interact()
-
 
 from opcua import Client
 from opcua import ua
@@ -28,7 +14,7 @@ from temperatures_firestore import TempVal
 TV = TempVal()
 
 class SubHandler(object):
-
+    
     """
     Subscription Handler. To receive events from server for a subscription
     data_change and event methods are called directly from receiving thread.
@@ -63,14 +49,33 @@ def browse_recursive(node):
 ################################################################################################
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.WARN)
+#    logging.basicConfig(level=logging.WARN)
+    logging.basicConfig(filename='./client-gw.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
+
     #logger = logging.getLogger("KeepAlive")
-    #logger.setLevel(logging.DEBUG)
+    #logging.setLevel(logging.DEBUG)
+
+    print ('Number of arguments:', len(sys.argv), 'arguments.')
+    print ('Argument List:', str(sys.argv))
+    if(len(sys.argv) == 1 ):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        url_ip = s.getsockname()[0]
+        print("local IP found:", url_ip)
+        s.close()
+    else:
+        url_ip = sys.argv[1]
+
+    url = "opc.tcp://ua_client:ua_password@AAAA:16664"
+    url = url.replace("AAAA", url_ip)
+    print("url:", url)
+    logging.warning(f'URL: {url}')
 
 #    client = Client("opc.tcp://localhost:4840/freeopcua/server/")
     # client = Client("opc.tcp://admin@localhost:4840/freeopcua/server/") #connect using a user
     # GWSerebrum local test:
-    client = Client("opc.tcp://ua_client:ua_password@192.168.1.38:16664")
+#    client = Client("opc.tcp://ua_client:ua_password@192.168.1.38:16664")
+    client = Client(url)
     try:
         client.connect()
         client.load_type_definitions()  # load definition of server specific structures/extension objects
@@ -153,6 +158,7 @@ if __name__ == "__main__":
             datavalue = ua.DataValue(ua.Variant(TV.targetT, ua.VariantType.Float)) 
             targetT.set_value(datavalue)
             print("roomT", roomT.get_value(), "waterT", waterT.get_value(), "tartetT", targetT.get_value())
+            logging.warning(f'roomT={roomT.get_value()} waterT={waterT.get_value()} tartetT={targetT.get_value()}')
             time.sleep(10)
 
         while True:
@@ -204,7 +210,5 @@ if __name__ == "__main__":
         # calling a method on server
 #        res = obj.call_method("{}:multiply".format(idx), 3, "klk")
 #        print("method result is: ", res)
-
-#        embed()
     finally:
         client.disconnect()
