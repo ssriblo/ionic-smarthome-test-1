@@ -1,3 +1,3 @@
 set /P pr="TYPE: .\env\Scripts\activate  [anykey]"
-.\env\Scripts\activate
+REM .\env\Scripts\activate
 .\env\Scripts\python .\client-gw.py
