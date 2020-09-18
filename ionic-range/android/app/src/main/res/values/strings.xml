@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ionic-range</string>
-    <string name="title_activity_main">ionic-range</string>
-    <string name="package_name">com.ionicrange.app</string>
-    <string name="custom_url_scheme">com.ionicrange.app</string>
+    <string name="app_name">otoplenok</string>
+    <string name="title_activity_main">otoplenok</string>
+    <string name="package_name">com.otoplenok.app</string>
+    <string name="custom_url_scheme">com.otoplenok.app</string>
 </resources>
