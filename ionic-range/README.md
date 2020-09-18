@@ -86,11 +86,11 @@ Push notification uses OneSignal well and tested following well:
 curl --include \
      --request POST \
      --header "Content-Type: application/json; charset=utf-8" \
-     --header "Authorization: Basic Z..............................A0" \
+     --header "Authorization: Basic Z.....................................A0" \
      --data-binary "{\"app_id\": \"8a1db084-b465-4cf6-8e12-22d38f8c9a14\",
-\"contents\": {\"en\": \" Message\"},
-\"headings\": {\"en\": \"my notification Title\"},
-\"data\": {\"task\": \"Send via curl to API\"},
-\"included_segments\": [\"All\"]}" \
+\"contents\": {\"en\": \"АВАРИЯ - ПРОТЕЧКА!\"},
+\"headings\": {\"en\": \"Внимание !\"},
+\"data\": {\"task\": \"АВАРИЯ - ПРОТЕЧКА!\"},
+\"included_segments\": [\"Subscribed Users\"]}" \
      https://onesignal.com/api/v1/notifications
 
