@@ -8,13 +8,13 @@ web server at
 
 mobile app at 
 
-/ionic-smarthome-test-1/Otoplenok
+/ionic-smarthome-test-1/otoplenok
 
 ------------------------------
 
 For start:
 
-at /ionic-smarthome-test-1/Otoplenok
+at /ionic-smarthome-test-1/otoplenok
 
 ionic serve
 
@@ -64,7 +64,7 @@ For Android apk file:
 5) npx cap open android >> issue at Linux:
 
 npx cap open android
-[info] Opening Android project at /home/me/Working/Angular/Angular_20h_course/ionic-smarthome-test-1/Otoplenok/android
+[info] Opening Android project at /home/me/Working/Angular/Angular_20h_course/ionic-smarthome-test-1/otoplenok/android
 [error] Unable to launch Android Studio. You must configure "linuxAndroidStudioPath" in your capacitor.config.json to point to the location of studio.sh, using JavaScript-escaped paths:
 Example:
 {
@@ -73,7 +73,7 @@ Example:
 
 ------------------
 Строим мобильное приложение
-~/Working/Angular/Angular_20h_course/ionic-smarthome-test-1/Otoplenok/src$ npx cap init
+~/Working/Angular/Angular_20h_course/ionic-smarthome-test-1/otoplenok/src$ npx cap init
 
 Follow the Developer Workflow guide to get building: https://capacitor.ionicframework.com/docs/basics/workflow
 

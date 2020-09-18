@@ -1,4 +1,4 @@
-package com.ionicrange.app;
+package com.otoplenok.app;
 
 import android.os.Bundle;
 

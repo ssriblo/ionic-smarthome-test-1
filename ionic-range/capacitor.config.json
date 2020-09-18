@@ -1,6 +1,6 @@
 {
-  "appId": "com.ionicrange.app",
-  "appName": "Otoplenok",
+  "appId": "com.otoplenok.app",
+  "appName": "otoplenok",
   "webDir": "www",
   "npmClient": "npm",
   "cordova": {
