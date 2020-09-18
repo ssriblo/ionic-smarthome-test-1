@@ -6,7 +6,10 @@ import json
 from temperatures_firestore import TempVal 
 from tokenJwt import Token
 import configparser
+from push_onesignal import  Post2onesignal
 
+Push = Post2onesignal()
+Push.push("Пуш нотификация","Тревога")
 TV = TempVal()
 token = Token()
 config = configparser.ConfigParser()                           

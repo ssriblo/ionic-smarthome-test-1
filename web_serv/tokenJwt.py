@@ -2,14 +2,14 @@ import os
 import configparser
 import platform
 import jwt
-#from token import Token
 import tokenJwt
+import json
 
 class Token():
-    _token = ""
     __jwt_secret = ""
 
     def __init__(self):
+        credential_path = None
         config = configparser.ConfigParser()                           
         config.read('./config.ini')
         location = config.get('MODE', 'LOCATION')
@@ -18,16 +18,19 @@ class Token():
             __platform = platform.system()
             print("[TokenJwt] platform", platform)
             if __platform == "Windows":
-                self.__jwt_secret = config.get('JWT_SECRET', 'WINDOWS')
-                self.__jwt_secret = self.__jwt_secret.strip('\"')
+                credential_path = config.get('JWT_SECRET_FILE', 'WINDOWS')
+                credential_path = credential_path.strip('\"')
                 print("[TokenJwt] windows")
             elif __platform == "Linux":
-                self.__jwt_secret = config.get('JWT_SECRET', 'LINUX')
+                credential_path = config.get('JWT_SECRET_FILE', 'LINUX')
                 print("[TokenJwt] linux")
         else:
-            self.__jwt_secret = config.get('JWT_SECRET', 'LINUX')
+            credential_path = config.get('JWT_SECRET_FILE', 'LINUX')
             print("[TokenJwt] cloud-linux")
         
+        with open(credential_path) as f:
+            data = json.load(f)
+        self.__jwt_secret = data["key"]
 ######################################
     def getToken(self, jwtString):
         try:
