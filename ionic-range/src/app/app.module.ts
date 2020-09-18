@@ -14,7 +14,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ApiService } from './services/api.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { SetupPage } from './setup/setup.page'
-
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +30,7 @@ import { SetupPage } from './setup/setup.page'
     ApiService,
     AuthGuardService,
     SetupPage,
+    OneSignal,
   ],
   bootstrap: [AppComponent]
 })
