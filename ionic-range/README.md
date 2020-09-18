@@ -82,3 +82,15 @@ ionic cap add android
 Заработало построение apk файл на Linux!
 
 --------------------------
+Push notification uses OneSignal well and tested following well:
+curl --include \
+     --request POST \
+     --header "Content-Type: application/json; charset=utf-8" \
+     --header "Authorization: Basic Z..............................A0" \
+     --data-binary "{\"app_id\": \"8a1db084-b465-4cf6-8e12-22d38f8c9a14\",
+\"contents\": {\"en\": \" Message\"},
+\"headings\": {\"en\": \"my notification Title\"},
+\"data\": {\"task\": \"Send via curl to API\"},
+\"included_segments\": [\"All\"]}" \
+     https://onesignal.com/api/v1/notifications
+
