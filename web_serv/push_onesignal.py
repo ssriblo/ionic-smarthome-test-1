@@ -35,13 +35,14 @@ class Post2onesignal():
 
 
 
-    def push(self, cont_msg, alert_msg):
+    def push(self, heading, cont_msg, alert_msg):
         header = {"Content-Type": "application/json; charset=utf-8",
                 "Authorization": self.__api_key}
         payload = {"app_id": self.__app_id,
                 "included_segments": ["All"],
                 "contents": {"en": cont_msg},
                 "data": {"task": alert_msg},
+                "headings": {"en": heading},
                 }       
         req = requests.post(self.__url, headers=header, data=json.dumps(payload))
         print(f'[Post2onesignal.push] req.status_code={req.status_code}  req.reason={req.reason}')

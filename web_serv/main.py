@@ -10,15 +10,17 @@ from push_onesignal import  Post2onesignal
 import atexit
 from apscheduler.schedulers.background import BackgroundScheduler
 import os    
-import time;      # This is required to include time module.
+import time
+import logging
 
 Push = Post2onesignal()
 #Push.push("Пуш нотификация","Тревога") # for test only
 TV = TempVal()
 token = Token()
-__server_status = "NORM"
+__server_status = 0
 __pushN = 0
 
+logging.basicConfig(filename='./web-serv.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
 
 config = configparser.ConfigParser()                           
 config.read('./config.ini')
@@ -40,12 +42,25 @@ if location == "cloud":
 def checkAlert(): 
     global __server_status
     global __pushN
+    prompts = [
+        "Тестовое сообщение",
+        "Нет электропитания",
+        "Протечка в квартире",
+        "Протечка на этаже",
+        "",                
+        "",                
+        "",                
+        "",                
+        ]
 #    ticks = time.time()
 #    print ("Number of ticks since 12:00am, January 1, 1970:", ticks)
-    ss = TV.serversStatus
-    if ( ( ss != __server_status ) and (ss != "NORM") ):
-        Push.push("Пуш нотификация","Тревога " + ss + "_" + str(__pushN))
-        __pushN = __pushN + 1
+    ss = int(TV.serversStatus)
+    if ( ( ss != __server_status ) and (ss != 0) ):
+        if ( (ss >= 1) and (ss <= 8) ):
+            prompt = prompts[ss]
+            Push.push("ОТОПЛЕНОК", "Пуш нотификация", prompt + " " + str(__pushN))
+            logging.warning(f'PUSH: ss={ss} __pushN={__pushN}')
+            __pushN = __pushN + 1
     __server_status = ss
 
 # https://www.programcreek.com/python/example/94838/apscheduler.schedulers.background.BackgroundScheduler 
