@@ -7,11 +7,19 @@ from temperatures_firestore import TempVal
 from tokenJwt import Token
 import configparser
 from push_onesignal import  Post2onesignal
+import atexit
+from apscheduler.schedulers.background import BackgroundScheduler
+import os    
+import time;      # This is required to include time module.
 
 Push = Post2onesignal()
-Push.push("Пуш нотификация","Тревога")
+#Push.push("Пуш нотификация","Тревога") # for test only
 TV = TempVal()
 token = Token()
+__server_status = "NORM"
+__pushN = 0
+
+
 config = configparser.ConfigParser()                           
 config.read('./config.ini')
 log = config.get('MODE', 'LOGLEVEL')
@@ -19,12 +27,32 @@ log = config.get('MODE', 'LOGLEVEL')
 app = Flask(__name__)
 CORS(app)
 
-import ssl 
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER) 
-context.load_cert_chain(
-    '/etc/letsencrypt/live/otoplenok.ru/fullchain.pem', 
-    '/etc/letsencrypt/live/otoplenok.ru/privkey.pem'
-    )
+location = config.get('MODE', 'LOCATION')
+print ("[TokenJwt] location", location)
+if location == "cloud":
+    import ssl 
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER) 
+    context.load_cert_chain(
+        '/etc/letsencrypt/live/otoplenok.ru/fullchain.pem', 
+        '/etc/letsencrypt/live/otoplenok.ru/privkey.pem'
+        )
+
+def checkAlert(): 
+    global __server_status
+    global __pushN
+#    ticks = time.time()
+#    print ("Number of ticks since 12:00am, January 1, 1970:", ticks)
+    ss = TV.serversStatus
+    if ( ( ss != __server_status ) and (ss != "NORM") ):
+        Push.push("Пуш нотификация","Тревога " + ss + "_" + str(__pushN))
+        __pushN = __pushN + 1
+    __server_status = ss
+
+# https://www.programcreek.com/python/example/94838/apscheduler.schedulers.background.BackgroundScheduler 
+# Example 1
+scheduler = BackgroundScheduler()
+scheduler.add_job(checkAlert, 'interval', seconds=60)
+scheduler.start()
 
 ###############################################################################
 # API GET:
@@ -173,13 +201,13 @@ def foo():
 
 
 if __name__ == '__main__':
-    # This is used when running locally only. When deploying to Google App
-    # Engine, a webserver process such as Gunicorn will serve the app. This
-    # can be configured by adding an `entrypoint` to app.yaml.
-    # Flask's development server will automatically serve static files in
-    # the "static" directory. See:
-    # http://flask.pocoo.org/docs/1.0/quickstart/#static-files. Once deployed,
-    # App Engine itself will serve those files as configured in app.yaml.
-    app.run(host='0.0.0.0', port=8080, debug=False, ssl_context=context)
-#    app.run(port=8080, debug=False)
+    try:
+        if location == "cloud":
+            app.run(host='0.0.0.0', port=8080, debug=False, ssl_context=context)
+        else:
+            app.run(port=8080, debug=False)
+    except (KeyboardInterrupt, SystemExit):
+        # Not strictly necessary if daemonic mode is enabled but should be done if possible
+        scheduler.shutdown() 
+
 
