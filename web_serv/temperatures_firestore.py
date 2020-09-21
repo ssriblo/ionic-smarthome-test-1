@@ -19,9 +19,13 @@ if location == "local":
     #    credential_path = credential_path.strip('\"') # ???QUESTION??? Did not check at Linux yet. BUT, it need for Windows !!!!!!!!!!!!!!!!!!!!!!!!!
         print("[temperature_firestore] linux")
         print("[temperature_firestore] credential_path: ", credential_path)
+else:
+        credential_path = config.get('GOOGLE_APPLICATION_CREDENTIALS_FILE', 'LINUX')
+        print("[temperature_firestore] linux-cloud")
+        print("[temperature_firestore] credential_path: ", credential_path)
 
-    # Project ID is determined by the GCLOUD_PROJECT environment variable
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
+# Project ID is determined by the GCLOUD_PROJECT environment variable
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
 from google.cloud import firestore
 from weather_temp import Weather
