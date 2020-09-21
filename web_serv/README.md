@@ -22,6 +22,11 @@ To check if server started:
 ./check_app_status.sh
 
 --------------
+
+Deploy to Google Cloud:
+gcloud app deploy
+
+--------------
 ## Autostart:
 sskriblo@smart-home:/etc/systemd/system$ cat apiserver.service 
 [Unit]
