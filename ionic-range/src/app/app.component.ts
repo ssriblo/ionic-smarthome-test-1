@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ApiService } from './services/api.service';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AlertController } from '@ionic/angular';
+import { environment } from './../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -36,10 +37,10 @@ export class AppComponent {
   }
 
   setupPush() {
-    // I recommend to put these into your environment.ts
     //    this.oneSignal.startInit('YOUR ONESIGNAL APP ID', 'YOUR ANDROID ID');
     // Beginners tip: 'YOUR ANDROID ID' is called the "Sender ID" in Firebase and "Google Project Number" in some other documentation
-    this.oneSignal.startInit('8a1db084-b465-4cf6-8e12-22d38f8c9a14', '116945727421');
+    // this.oneSignal.startInit('8a1db084-b465-4cf6-8e12-22d38f8c9a14', '116945727421');
+    this.oneSignal.startInit(environment.ONESIGNAL_APP_ID, environment.ANDROID_ID);
  
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
  
@@ -56,7 +57,7 @@ export class AppComponent {
       // Just a note that the data is a different place here!
       let additionalData = data.notification.payload.additionalData;
  
-      this.showAlert('Notification opened', 'You already read this before', additionalData.task);
+      this.showAlert('ВНИМАНИЕ', 'Это сообщение уже видели:', additionalData.task);
     });
  
     this.oneSignal.endInit();
@@ -68,7 +69,7 @@ export class AppComponent {
       subHeader: msg,
       buttons: [
         {
-          text: `Action: ${task}`,
+          text: `${task}`,
           handler: () => {
             // E.g: Navigate to a specific screen
           }
