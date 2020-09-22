@@ -32,9 +32,14 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      if (this.platform.is('cordova')) {
-        this.setupPush();
-      }
+      setTimeout(()=> {
+//        console.log('>>>>>>>>>>>>>>> after 10s >>>>>>>>>>>>>>>>>>>>> ONESIGNAL_APP_ID ANDROID_ID', environment.ONESIGNAL_APP_ID, environment.ANDROID_ID);
+        if (this.platform.is('cordova')) {
+          this.setupPush();
+        }
+      }, 10000);
+
+
     });
   }
 
@@ -59,7 +64,7 @@ export class AppComponent {
       // Just a note that the data is a different place here!
       let additionalData = data.notification.payload.additionalData;
  
-      this.showAlert('ВНИМАНИЕ', 'Это сообщение уже видели:', additionalData.task);
+      this.showAlert('ВНИМАНИЕ', 'повтор:', additionalData.task);
     });
  
     this.oneSignal.endInit();

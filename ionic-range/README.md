@@ -82,6 +82,11 @@ ionic cap add android
 Заработало построение apk файл на Linux!
 
 --------------------------
+Если отлаживать на Android SDK с отладкой по USB, то каждый раз после изменения кода делать:
+ionic capacitor copy android
+затем в Android SDK - "rebuild"
+
+--------------------------
 Push notification uses OneSignal well and tested following well:
 curl --include \
      --request POST \
