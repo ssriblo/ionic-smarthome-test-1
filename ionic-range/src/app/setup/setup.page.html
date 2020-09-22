@@ -59,6 +59,18 @@
     <ion-item-divider color=#0000>
       <div style="width: 100%; height: 35px;"></div>
     </ion-item-divider>
+
+    <ion-item>
+      <ion-label>Выберите опции для теста</ion-label>
+      <ion-select  [(ngModel)]="testOption" (ionChange)='setTestOption()' multiple="true" [value]="testOption" interface="popover">
+        <ion-select-option value="opt-1">1</ion-select-option>
+        <ion-select-option value="opt-2">2</ion-select-option>
+        <ion-select-option value="opt-3">3</ion-select-option>
+        <ion-select-option value="opt-4">4</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
   <ion-row>
     <ion-col>
       <ion-button 

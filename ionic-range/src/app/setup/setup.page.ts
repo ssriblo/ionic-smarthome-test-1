@@ -13,7 +13,8 @@ export class SetupPage implements OnInit {
   private comfortInpVal: number = 22.5;
   private economInpVal: number = 18;
   private alertController = new AlertController()
-  
+  public testOption: any = "opt-1";
+
   constructor( 
     public router: Router, 
     private storage: Storage,
@@ -24,6 +25,11 @@ export class SetupPage implements OnInit {
     this.getComfortT();
     this.getEconomT();
 //    this.setServerOption(true);
+  }
+
+  setTestOption() {
+    let opt=this;
+    console.log('Test Option is:', opt.testOption);
   }
 
   toHomePage() {

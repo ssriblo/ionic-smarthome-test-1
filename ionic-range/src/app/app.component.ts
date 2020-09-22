@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -7,6 +6,7 @@ import { ApiService } from './services/api.service';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AlertController } from '@ionic/angular';
 import { environment } from './../environments/environment';
+import { SetupPage } from './setup/setup.page';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +21,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private oneSignal: OneSignal,
     private alertCtrl: AlertController,
+    private setupPage: SetupPage,
+
   ) {
     this.initializeApp();
   }

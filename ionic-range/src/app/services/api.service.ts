@@ -84,14 +84,14 @@ public getApiAsync(urlSurf: string): Promise<any>{
 
   public async testJwtViaGetRequest(url: string) {
     let res = false;
-    console.log('[ApiService.testJwtViaGetRequest-------1]')
+//    console.log('[ApiService.testJwtViaGetRequest-------1]')
     try {
       const result = await this.getApiAsync(url);
-      console.log('[ApiService.testJwtViaGetRequest-------2]')
+//      console.log('[ApiService.testJwtViaGetRequest-------2]')
       res = true
     }
     catch(e) {
-      console.log('[ApiService.testJwtViaGetRequest-------3]')
+      console.log('[ApiService.testJwtViaGetRequest ERROR]',e)
     }
     return res;
   }
