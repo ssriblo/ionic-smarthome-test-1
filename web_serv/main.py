@@ -157,7 +157,7 @@ def serversStatus():
 #    print("JWT: ", jwt)
     _tk = token.getToken(jwt)
 #    print("[serversStatus] _tk : ", _tk)
-    value = TV.serverStatus if (_tk != None) else None
+    value = TV.serversStatus if (_tk != None) else None
     print("[serversStatus] value:  ", value)
     return {"value": value}
 

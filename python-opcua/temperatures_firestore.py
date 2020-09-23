@@ -116,7 +116,7 @@ class TempVal():
         return self._serversStatus
 
     @serversStatus.setter
-    def serverStatus(self, val):
+    def serversStatus(self, val):
         self._serversStatus = val
         self.fs_ref().set({'serversStatus': val}, merge=True)
 ######################################

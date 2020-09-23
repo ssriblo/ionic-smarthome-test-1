@@ -139,26 +139,35 @@ if __name__ == "__main__":
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[2].get_browse_name())
         print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[2].get_display_name().Text)
         node =              root.get_children()[0].get_children()[2].get_children()[0]
-        node_temperature = node.get_children()[0]
-        node_alarm = node.get_children()[1]
-        node_counter = node.get_children()[2]
+        node_temperature =      node.get_children()[0]
+        node_alarm =            node.get_children()[1]
+        node_serversStatus =    node.get_children()[1]
+        node_counter =          node.get_children()[2]
 
-        targetT = node_temperature.get_children()[2]
-        roomT = node_temperature.get_children()[1]
-        waterT = node_temperature.get_children()[0]
-        alarm = node_alarm.get_children()[0]
-        counter = node_counter.get_children()[0]
+        targetT =       node_temperature.get_children()[2]
+        roomT =         node_temperature.get_children()[1]
+        waterT =        node_temperature.get_children()[0]
+        counter =       node_counter.get_children()[0]
+        alarm =         node_alarm.get_children()[0]
+        serversStatus = node_serversStatus.get_children()[1]
 
-        print(targetT.get_display_name().Text, roomT.get_display_name().Text, waterT.get_display_name().Text, alarm.get_display_name().Text, counter.get_display_name().Text)
-        print(targetT.get_value(), roomT.get_value(), waterT.get_value(), alarm.get_value(), counter.get_value())
+        print(
+            targetT.get_display_name().Text, 
+            roomT.get_display_name().Text, 
+            waterT.get_display_name().Text, 
+            counter.get_display_name().Text,
+            alarm.get_display_name().Text, 
+            serversStatus.get_display_name().Text, 
+            )
 
         while True:
             TV.roomT = roomT.get_value()
             TV.waterT = waterT.get_value()
+            TV.serversStatus = serversStatus.get_value()
             datavalue = ua.DataValue(ua.Variant(TV.targetT, ua.VariantType.Float)) 
             targetT.set_value(datavalue)
-            print("roomT", roomT.get_value(), "waterT", waterT.get_value(), "tartetT", targetT.get_value())
-            logging.warning(f'roomT={roomT.get_value()} waterT={waterT.get_value()} tartetT={targetT.get_value()}')
+            print("roomT", roomT.get_value(), "waterT", waterT.get_value(), "tartetT", targetT.get_value(), "serversStatus", serversStatus.get_value())
+            logging.warning(f'roomT={roomT.get_value()} waterT={waterT.get_value()} tartetT={targetT.get_value()} serversStatus={serversStatus.get_value()}')
             time.sleep(10)
 
         while True:

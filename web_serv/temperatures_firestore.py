@@ -38,7 +38,7 @@ class TempVal():
     _comfortT: int
     _economT: int
     _waterT: int
-    _serversStatus: str
+    _serversStatus: int
     apartment = u'test-apartment-135'
     db = None
     WT = None
@@ -137,7 +137,7 @@ class TempVal():
         return self._serversStatus
 
     @serversStatus.setter
-    def serverStatus(self, val):
+    def serversStatus(self, val):
         self._serversStatus = val
         self.fs_ref().set({'serversStatus': val}, merge=True)
 ######################################
