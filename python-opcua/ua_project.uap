@@ -1,6 +1,6 @@
 [Servers]
 0\Name=SerebrumGW_2.0.1_test
-0\Connected=true
+0\Connected=false
 0\ProjectServerId=0
 0\ServerUrl=opc.tcp://192.168.1.38:16664
 0\Server.ApplicationUri=
@@ -29,6 +29,36 @@
 0\PrivateKeyFile=
 0\Namespaces\0=http://opcfoundation.org/UA/
 0\Namespaces\1=urn:telemetry:gateway
+1\Name=GW VPS
+1\Connected=true
+1\ProjectServerId=1
+1\ServerUrl=opc.tcp://193.124.56.188:16664
+1\Server.ApplicationUri=
+1\Server.ProductUri=
+1\Server.ApplicationNameLocale=
+1\Server.ApplicationNameText=
+1\Server.ApplicationType=0
+1\Server.GatewayServerUri=
+1\Server.DiscoveryProfileUri=
+1\Server.NoOfDiscoveryUrls=0
+1\ServerCertificate=@ByteArray()
+1\MessageSecurityMode=1
+1\SecurityPolicy=http://opcfoundation.org/UA/SecurityPolicy#None
+1\NoOfUserIdentityTokens=0
+1\TransportProfileUri=
+1\SecurityLevel=0
+1\DisplayName=GW VPS
+1\ReverseConnect=false
+1\ClientEndpointUrl=
+1\UserTokenType=1
+1\SessionName=
+1\DiscoveryHost=
+1\UserName=ua_client
+1\StorePassword=true
+1\CertificateFile=
+1\PrivateKeyFile=
+1\Namespaces\0=http://opcfoundation.org/UA/
+1\Namespaces\1=urn:telemetry:gateway
 
 [Documents]
 Data%20Access%20View\DocumentType=Data Access View
