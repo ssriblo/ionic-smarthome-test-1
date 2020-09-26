@@ -2,7 +2,7 @@ To start:
 py -m pip install --user virtualenv  (for Windows one time only)
 
 py -m venv env (Windows)
-virtualenv env (Linux)
+virtualenv --python=python3 env (Linux)
 
 .\env\Scripts\activate (Windows)
 source env/bin/activate (Linus)
@@ -15,4 +15,6 @@ pip install opcua
 pip freeze > requirements.txt
 Восстановить в следующий раз:
 pip install -r requirements.txt
+
+python3 client-gw.py 193.124.56.188
 

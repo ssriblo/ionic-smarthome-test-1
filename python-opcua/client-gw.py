@@ -131,14 +131,14 @@ if __name__ == "__main__":
 
 #YA1002d00213437471231373739
         print(root.get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[1].get_children()[0].get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[2].get_children()[0].get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[0].get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[1].get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[2].get_browse_name())
-        print("myvar is: ", root.get_children()[0].get_children()[2].get_children()[0].get_children()[0].get_children()[2].get_display_name().Text)
-        node =              root.get_children()[0].get_children()[2].get_children()[0]
+        print("myvar is: ", root.get_children()[0].get_children()[1].get_children()[0].get_children()[0].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[1].get_children()[0].get_children()[1].get_children()[0].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[1].get_children()[0].get_children()[2].get_children()[0].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[1].get_children()[0].get_children()[0].get_children()[0].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[1].get_children()[0].get_children()[0].get_children()[1].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[1].get_children()[0].get_children()[0].get_children()[2].get_browse_name())
+        print("myvar is: ", root.get_children()[0].get_children()[1].get_children()[0].get_children()[0].get_children()[2].get_display_name().Text)
+        node =              root.get_children()[0].get_children()[1].get_children()[0]
         node_temperature =      node.get_children()[0]
         node_alarm =            node.get_children()[1]
         node_serversStatus =    node.get_children()[1]
