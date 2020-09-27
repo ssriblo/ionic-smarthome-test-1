@@ -165,3 +165,20 @@ coverage run tests.py
 coverage html
 firefox htmlcov/index.html
 ```
+########################################################
+# https://www.linode.com/docs/quick-answers/linux/start-service-at-boot/
+# https://sysadmin.ru/articles/avtozapusk-v-linux
+
+## Autostart:
+#cat apiserver.service 
+[Unit]
+Description=OPC UA Client Autostart script
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/root/Work/ionic-smarthome-test-1/python-opcua/start.sh
+
+
+[Install]
+WantedBy=multi-user.target
