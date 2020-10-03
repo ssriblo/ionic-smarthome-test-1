@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "01cdcc92-da34-4555-8a13-9152a0694c07",
+		"name": "Otoplenok",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetRoom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d430b81e-0956-48c7-a44d-ae947ac1c2c6",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Value test\", function () {",
+							"    pm.response.to.have.jsonBody()",
+							"});",
+							"console.log('ROOM', pm.response.json('value'))",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://otoplenok.ru:8080/temperatureRoom?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk",
+					"protocol": "https",
+					"host": [
+						"otoplenok",
+						"ru"
+					],
+					"port": "8080",
+					"path": [
+						"temperatureRoom"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetWeather",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "722b6ea9-f3ce-4907-90e1-d5e3f014b78b",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Value test\", function () {",
+							"    pm.response.to.have.jsonBody()",
+							"});",
+							"console.log('WEATHER', pm.response.json('value'))",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://otoplenok.ru:8080/temperatureWeather?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk",
+					"protocol": "https",
+					"host": [
+						"otoplenok",
+						"ru"
+					],
+					"port": "8080",
+					"path": [
+						"temperatureWeather"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "temperatureWater",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d54a3a9f-80db-4c4b-90f2-17e5cf434e2e",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Value test\", function () {",
+							"    pm.response.to.have.jsonBody()",
+							"});",
+							"console.log('temperatureWater', pm.response.json('value'))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://otoplenok.ru:8080/temperatureWater?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk",
+					"protocol": "https",
+					"host": [
+						"otoplenok",
+						"ru"
+					],
+					"port": "8080",
+					"path": [
+						"temperatureWater"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "temperatureComfort",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1d9e7785-c436-4a5f-a77a-c35625d156d2",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Value test\", function () {",
+							"    pm.response.to.have.jsonBody()",
+							"});",
+							"console.log('ComfortT', pm.response.json('value'))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://otoplenok.ru:8080/temperatureComfort?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk",
+					"protocol": "https",
+					"host": [
+						"otoplenok",
+						"ru"
+					],
+					"port": "8080",
+					"path": [
+						"temperatureComfort"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "temperatureEconom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d03818ca-d165-4719-ace1-f0ade14ae2a3",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Value test\", function () {",
+							"    pm.response.to.have.jsonBody()",
+							"});",
+							"console.log('EconomT', pm.response.json('value'))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://otoplenok.ru:8080/temperatureEconom?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk",
+					"protocol": "https",
+					"host": [
+						"otoplenok",
+						"ru"
+					],
+					"port": "8080",
+					"path": [
+						"temperatureEconom"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "serversStatus",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6da4b372-84ab-4a31-afa0-857aea7796ca",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Value test\", function () {",
+							"    pm.response.to.have.jsonBody()",
+							"});",
+							"console.log('ServerStatus', pm.response.json('value'))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://otoplenok.ru:8080/serversStatus?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk",
+					"protocol": "https",
+					"host": [
+						"otoplenok",
+						"ru"
+					],
+					"port": "8080",
+					"path": [
+						"serversStatus"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
