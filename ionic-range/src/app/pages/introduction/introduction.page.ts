@@ -23,7 +23,7 @@ export class IntroductionPage implements OnInit {
 
   async ngOnInit() {
     document.getElementById("version-intro").innerHTML = environment.version;
-    document.getElementById("server-option-intro").innerHTML = environment.serverLoc;
+//    document.getElementById("server-option-intro").innerHTML = environment.serverLoc;
   }
 
   async openSignup() {

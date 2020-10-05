@@ -1,5 +1,6 @@
 #menubutt {display:inline-block;margin-left:5px;} 
-#headertext {display:inline-block; vertical-align:text-middle;} 
+#alertbutt {display:inline-block; float:right; margin-right:5px;} 
+#headertext {display:inline-block; text-align:center; vertical-align:text-middle;} 
 
 #container {
   text-align: center;
@@ -40,9 +41,8 @@ ion-range{
   --knob-box-shadow: 0px 0px 0px 5px rgb(12, 53, 71);
 }
 
-//ion-button{
-//  --background-activated: #000;
-//  --color-activated: #fff;
-//}
+.alertbutton{
+  --background: rgb(226, 17, 17);
+}
 
 table { background-color: #36abe0; }
