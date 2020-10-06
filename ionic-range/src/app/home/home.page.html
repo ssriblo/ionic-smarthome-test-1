@@ -17,7 +17,7 @@
         </ion-title>
       </div>
       <div id="alertbutt">
-        <ion-button class="alertbutton" (click)="toAlertPage()">
+        <ion-button [color]="isAlert ? 'danger' : 'primary'"  (click)="toAlertPage()">
           <ion-icon name="alert-circle-outline"></ion-icon>
         </ion-button>
       </div>

@@ -28,7 +28,7 @@ export class HomePage  implements OnInit  {
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
-
+  isAlert = false;
 //  item: Item;
 //  newItem: Item = <Item>{}
 
@@ -95,6 +95,7 @@ export class HomePage  implements OnInit  {
   }
 
   toAlertPage() {
+    this.isAlert = true;
 //    this.router.navigate(['alert']);  // ToDo - add alert page
   }
 
