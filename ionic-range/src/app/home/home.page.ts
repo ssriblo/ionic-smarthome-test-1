@@ -96,7 +96,8 @@ export class HomePage  implements OnInit  {
 
   toAlertPage() {
     this.isAlert = true;
-//    this.router.navigate(['alert']);  // ToDo - add alert page
+    this.router.navigate(['alerts']);  
+
   }
 
   //////////////
