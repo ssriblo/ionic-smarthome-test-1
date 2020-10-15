@@ -28,7 +28,7 @@ export class HomePage  implements OnInit  {
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
-
+  isAlert = false;
 //  item: Item;
 //  newItem: Item = <Item>{}
 
@@ -65,18 +65,9 @@ export class HomePage  implements OnInit  {
           this.storage.set('targetT', val);
           console.log('[ngOnInit home.page.js]: targetT is', val)
         }
-
-        // let res = this.apiService.testJwtViaGetRequest('temperatureWeather')
-        // if (res != null) {
-        //   console.log('[home.ngOnInit()] JWT test passed well', res);
-        // }
-        // else {
-        //   console.log('[home.ngOnInit()] JWT test failed');
-        // }
-  
       });
       document.getElementById("version").innerHTML = environment.version;
-      document.getElementById("server-option").innerHTML = environment.serverLoc
+//      document.getElementById("server-option").innerHTML = environment.serverLoc
     }) // this.platform.ready().then()
 
     // this is for Android Back Button. Shoudl works at Android only:
@@ -103,7 +94,12 @@ export class HomePage  implements OnInit  {
     this.router.navigate(['setup']);  
   }
 
- //////////////
+  toAlertPage() {
+    this.isAlert = true;
+//    this.router.navigate(['alert']);  // ToDo - add alert page
+  }
+
+  //////////////
   private  updateRangeDisplay() {
     console.log('[updateRange] rangeVal, Comfort Econom', this.rangeVal, this.comfortT, this.economT)
     if ((this.rangeVal != this.comfortT * 10) && (this.rangeVal != this.economT * 10)) {

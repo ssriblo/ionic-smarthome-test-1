@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { AlertController } from '@ionic/angular';
+import { GlobalService } from "../services/global.service";
 
 @Component({
   selector: 'app-setup',
@@ -13,23 +14,26 @@ export class SetupPage implements OnInit {
   private comfortInpVal: number = 22.5;
   private economInpVal: number = 18;
   private alertController = new AlertController()
-  public testOption: any = "opt-1";
+  testOption: string [] = this.globalVar.GlobalTestOption;
 
   constructor( 
     public router: Router, 
     private storage: Storage,
     public apiService: ApiService,
+    public globalVar: GlobalService,
     ) { }
 
   ngOnInit() {
     this.getComfortT();
     this.getEconomT();
 //    this.setServerOption(true);
+    console.log('setup.page.ts - ngOnInit()', this.testOption)
   }
 
   setTestOption() {
     let opt=this;
     console.log('Test Option is:', opt.testOption);
+    this.globalVar.GlobalTestOption = opt.testOption;
   }
 
   toHomePage() {

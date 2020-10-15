@@ -3,18 +3,23 @@
 <body>
   <ion-app>
 
-    <ion-header [translucent]="true">
+    <ion-header >
       <ion-toolbar color="secondary">
       <div id="menubutt">
         <ion-button  color="primary" (click)="toSetupPage()">
-          <ion-icon name="menu"></ion-icon>
+          <ion-icon name="settings-outline"></ion-icon>
         </ion-button>
       </div>
       <div id="headertext">
         <ion-title>Отопленок 
           <span id="version"></span> 
-          <span id="server-option"></span> 
+          <!-- remove: too long string at header <span id="server-option"></span>  -->
         </ion-title>
+      </div>
+      <div id="alertbutt">
+        <ion-button [color]="isAlert ? 'danger' : 'primary'"  (click)="toAlertPage()">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+        </ion-button>
       </div>
       </ion-toolbar>
     </ion-header>
