@@ -14,7 +14,7 @@ export class SetupPage implements OnInit {
   private comfortInpVal: number = 22.5;
   private economInpVal: number = 18;
   private alertController = new AlertController()
-  testOption: string = this.globalVar.GlobalTestOption;
+  testOption: string [] = this.globalVar.GlobalTestOption;
 
   constructor( 
     public router: Router, 
