@@ -9,7 +9,7 @@
 <ion-content color="secondary">
 <!-- List of Text Items -->
 <ion-list inset="true" lines="full">
-  <ion-card *ngFor="let a of alertList" color="warning">
+  <ion-card *ngFor="let a of items" color="warning">
     <ion-grid>
       <ion-row  class="ion-justify-content-between">
         <ion-col size=5 >
@@ -21,7 +21,7 @@
       </ion-row>
       <ion-row  class="ion-justify-content-center">
         <ion-col offset=3 >
-          <ion-label>{{ a.text }}</ion-label>     
+          <ion-label>{{ a.value }}</ion-label>     
         </ion-col>
       </ion-row>
     </ion-grid>

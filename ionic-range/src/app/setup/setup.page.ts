@@ -75,6 +75,21 @@ export class SetupPage implements OnInit {
     });  
   }
 
+  addAlert(typeItem: number, val: string) {
+    const uuid = new UUID();
+    let id = uuid.getDashFreeUUID();
+    let currDate =new Date().toISOString();  
+//    console.log('CURRENT DATE', currDate, id);
+    let item: Item = {
+      value: val,
+      timestamp: currDate,
+      id: id,
+      level: 1,
+      type: typeItem,
+      }
+    this.storageService.addItem(this.globalVar.GlobalAlertKey, item );
+  }
+
   private async alertImitator() {
 
     // For TEST purpos only, need change to timetableSetup() for product!
@@ -87,54 +102,15 @@ export class SetupPage implements OnInit {
       buttons: [
         {
           text: 'ПРОТЕЧКА',
-          handler: () => {
-            const uuid = new UUID();
-            let id = uuid.getDashFreeUUID();
-            let currDate =new Date().toISOString();  
-            console.log('CURRENT DATE', currDate, id);
-            let item: Item = {
-              value: "ПРОТЕЧКА",
-              timestamp: currDate,
-              id: id,
-              level: 1,
-              type: 1
-              }
-            this.storageService.updateItem(this.globalVar.GlobalAlertKey, item );
-          }
+          handler: () => { this.addAlert(1, 'ПРОТЕЧКА'); }
         },
         {
           text: 'НЕТ ЭЛЕКТРОЭНЕРГИИ',
-          handler: () => {
-            const uuid = new UUID();
-            let id = uuid.getDashFreeUUID();
-            let currDate =new Date().toISOString();  
-            console.log('CURRENT DATE', currDate, id);
-            let item: Item = {
-              value: "НЕТ ЭЛЕКТРОЭНЕРГИИ",
-              timestamp: currDate,
-              id: id,
-              level: 1,
-              type: 1
-              }
-            this.storageService.updateItem(this.globalVar.GlobalAlertKey, item );
-          }
+          handler: () => { this.addAlert(2, 'НЕТ ЭЛЕКТРОЭНЕРГИИ'); }
         },
         {
           text: 'АВАРИЯ ДАТЧИКА',
-          handler: () => {
-            const uuid = new UUID();
-            let id = uuid.getDashFreeUUID();
-            let currDate =new Date().toISOString();  
-            console.log('CURRENT DATE', currDate, id);
-            let item: Item = {
-              value: "АВАРИЯ ДАТЧИКА'",
-              timestamp: currDate,
-              id: id,
-              level: 1,
-              type: 1
-              }
-            this.storageService.updateItem(this.globalVar.GlobalAlertKey, item );
-          }
+          handler: () => { this.addAlert(3, 'АВАРИЯ ДАТЧИКА'); }
         },
       ]
     });
