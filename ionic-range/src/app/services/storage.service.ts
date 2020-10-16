@@ -5,13 +5,12 @@ import { Storage } from '@ionic/storage';
 // from video How to Create Basic Ionic Storage CRUD Operations
 // Simon Grimm devdactic 
 // https://www.youtube.com/watch?v=h_IhS8QQjUA
-// CURRENTLY DOES NOT USE IT, BUT IT'S GREATE EXAMPLE  - HOW TO WORK WITH PROMISE AND LOCAL STORAGE
 ///////////////////////////////////////////////////////////////////////////////
 
 export interface Item {
   value: any,
-  timestamp: number,
-  id: number,
+  timestamp: string,
+  id: string,
   level: number,
   type: number
 }
@@ -40,21 +39,26 @@ export class StorageService {
   updateItem(key: string, item: Item) {
     return this.storage.get(key).then((items: Item[]) => {
       if (!items || items.length === 0) {
-        return null;
+//        return null; // was initially at the video
+        return this.storage.set(key, [item]) 
+        console.log('[storage.service.updateItem- set([item]) ----- 1]', item);
       }
       let newItem: Item[] = []
       for (let i of items) {
         if (i.id === item.id) {
           newItem.push(item)
+          console.log('[storage.service.updateItem- push ----- 3]', item);
         } else {
           newItem.push(i)
+          console.log('[storage.service.updateItem- push ----- 4]', i);
         }
       }
       return this.storage.set(key, newItem)
+      console.log('[storage.service.updateItem- set(newItem) ----- 2]', newItem);
     });
   }
 
-  deleteItem(key: string, id: number): Promise<Item> {
+  deleteItem(key: string, id: string): Promise<Item> {
     return this.storage.get(key).then((items: Item[]) => {
       if (!items || items.length === 0) {
         return null;

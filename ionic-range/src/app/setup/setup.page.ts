@@ -4,7 +4,9 @@ import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { AlertController } from '@ionic/angular';
 import { GlobalService } from "../services/global.service";
-import { StorageService } from "../services/storage.service";
+import { StorageService, Item } from "../services/storage.service";
+import {UUID} from 'uuid-generator-ts';
+
 
 @Component({
   selector: 'app-setup',
@@ -22,7 +24,7 @@ export class SetupPage implements OnInit {
     private storage: Storage,
     public apiService: ApiService,
     public globalVar: GlobalService,
-    storageService: StorageService,
+    private storageService: StorageService,
     ) { }
 
   ngOnInit() {
@@ -86,22 +88,52 @@ export class SetupPage implements OnInit {
         {
           text: 'ПРОТЕЧКА',
           handler: () => {
-            let currDate =new Date().toISOString();           
-            console.log('CURRENT DATE', currDate)
+            const uuid = new UUID();
+            let id = uuid.getDashFreeUUID();
+            let currDate =new Date().toISOString();  
+            console.log('CURRENT DATE', currDate, id);
+            let item: Item = {
+              value: "ПРОТЕЧКА",
+              timestamp: currDate,
+              id: id,
+              level: 1,
+              type: 1
+              }
+            this.storageService.updateItem(this.globalVar.GlobalAlertKey, item );
           }
         },
         {
           text: 'НЕТ ЭЛЕКТРОЭНЕРГИИ',
           handler: () => {
-            let currDate =new Date().toISOString();
-            console.log('CURRENT DATE', currDate)
+            const uuid = new UUID();
+            let id = uuid.getDashFreeUUID();
+            let currDate =new Date().toISOString();  
+            console.log('CURRENT DATE', currDate, id);
+            let item: Item = {
+              value: "НЕТ ЭЛЕКТРОЭНЕРГИИ",
+              timestamp: currDate,
+              id: id,
+              level: 1,
+              type: 1
+              }
+            this.storageService.updateItem(this.globalVar.GlobalAlertKey, item );
           }
         },
         {
           text: 'АВАРИЯ ДАТЧИКА',
           handler: () => {
-            let currDate =new Date().toISOString();
-            console.log('CURRENT DATE', currDate);
+            const uuid = new UUID();
+            let id = uuid.getDashFreeUUID();
+            let currDate =new Date().toISOString();  
+            console.log('CURRENT DATE', currDate, id);
+            let item: Item = {
+              value: "АВАРИЯ ДАТЧИКА'",
+              timestamp: currDate,
+              id: id,
+              level: 1,
+              type: 1
+              }
+            this.storageService.updateItem(this.globalVar.GlobalAlertKey, item );
           }
         },
       ]

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { StorageService, Item } from "../../services/storage.service";
+import { GlobalService } from "../../services/global.service";
 
 export interface Alert {
   timestamp: string;
@@ -40,9 +42,19 @@ export class AlertsPage implements OnInit {
 
   constructor(
     public router: Router,
+    private storageService: StorageService,
+    public globalVar: GlobalService,
   ) {}
 
   ngOnInit() {
+    let items: Item[];
+    this.storageService.getItem(this.globalVar.GlobalAlertKey ).then(i => {
+      items = i;
+      console.log('[aletrs.page.ngOnInit()]', items, items.length);
+    }
+
+    )
+
   }
 
 
