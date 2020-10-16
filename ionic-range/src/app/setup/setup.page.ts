@@ -4,10 +4,11 @@ import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { AlertController } from '@ionic/angular';
 import { GlobalService } from "../services/global.service";
+import { StorageService } from "../services/storage.service";
 
 @Component({
   selector: 'app-setup',
-  templateUrl: './setup.page.html',
+  templateUrl: './setup.page.html', 
   styleUrls: ['./setup.page.scss'],
 })
 export class SetupPage implements OnInit {
@@ -21,6 +22,7 @@ export class SetupPage implements OnInit {
     private storage: Storage,
     public apiService: ApiService,
     public globalVar: GlobalService,
+    storageService: StorageService,
     ) { }
 
   ngOnInit() {
@@ -71,6 +73,41 @@ export class SetupPage implements OnInit {
     });  
   }
 
+  private async alertImitator() {
+
+    // For TEST purpos only, need change to timetableSetup() for product!
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      animated: true,
+      backdropDismiss: true,
+      header: 'Выбери тип аварии:',
+      buttons: [
+        {
+          text: 'ПРОТЕЧКА',
+          handler: () => {
+            let currDate =new Date().toISOString();           
+            console.log('CURRENT DATE', currDate)
+          }
+        },
+        {
+          text: 'НЕТ ЭЛЕКТРОЭНЕРГИИ',
+          handler: () => {
+            let currDate =new Date().toISOString();
+            console.log('CURRENT DATE', currDate)
+          }
+        },
+        {
+          text: 'АВАРИЯ ДАТЧИКА',
+          handler: () => {
+            let currDate =new Date().toISOString();
+            console.log('CURRENT DATE', currDate);
+          }
+        },
+      ]
+    });
+    await alert.present();
+  }
   timetableSetup() {
     // if (this.data.server == 'cloud') {
     //   this.data.server = 'local'

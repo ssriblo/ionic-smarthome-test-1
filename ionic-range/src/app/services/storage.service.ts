@@ -12,6 +12,8 @@ export interface Item {
   value: any,
   timestamp: number,
   id: number,
+  level: number,
+  type: number
 }
  
 
@@ -22,34 +24,48 @@ export class StorageService {
   constructor(private storage: Storage) { }
 
   addItem(key: string, item: Item): Promise<any>  {
-    return this.storage.get(key).then((items: Item) => {
-      if(items) {  // original code from yuortube has difference - item[] - item list
+    return this.storage.get(key).then((items: Item[]) => {
+      if(items) {  
         return this.storage.set(key, items)
       }else {
-        return this.storage.set(key, items) // original was: [item]
+        return this.storage.set(key, [item]) 
       } 
     });
   }
 
-  getItem(key: string): Promise<Item>{
+  getItem(key: string): Promise<Item[]>{
     return this.storage.get(key);
   }
 
   updateItem(key: string, item: Item) {
-    return this.storage.get(key).then((items: Item) => {
-      if (!items || items) {
+    return this.storage.get(key).then((items: Item[]) => {
+      if (!items || items.length === 0) {
         return null;
       }
-      return this.storage.set(key, items)
+      let newItem: Item[] = []
+      for (let i of items) {
+        if (i.id === item.id) {
+          newItem.push(item)
+        } else {
+          newItem.push(i)
+        }
+      }
+      return this.storage.set(key, newItem)
     });
   }
 
-  deleteItem(key: string): Promise<Item> {
-    return this.storage.get(key).then((items: Item) => {
-      if (!items || items) {
+  deleteItem(key: string, id: number): Promise<Item> {
+    return this.storage.get(key).then((items: Item[]) => {
+      if (!items || items.length === 0) {
         return null;
       }
-      return this.storage.remove(key)      
+      let toKeep: Item[] = [];
+      for (let i of items) {
+        if (i.id != id) {
+          toKeep.push(i);
+        }
+      }
+      return this.storage.set(key, toKeep);
     });
   }
 
