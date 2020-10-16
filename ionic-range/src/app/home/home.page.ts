@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { IonRouterOutlet } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
-//import { StorageService, Item } from '../services/storage.service'
 import { environment } from '../../environments/environment';
+import { GlobalService } from "../services/global.service";
 
 
 const { App } = Plugins;
@@ -28,18 +27,17 @@ export class HomePage  implements OnInit  {
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
-  isAlert = false;
 //  item: Item;
 //  newItem: Item = <Item>{}
 
   constructor(
     public platform:Platform, 
     private routerOutlet: IonRouterOutlet,  
-    private http: HttpClient, 
     public router: Router,
     private storage: Storage,
     private apiService: ApiService,
-//    private storageService: StorageService,
+    public globalVar: GlobalService,
+
     ) {}
 
   ngOnInit() {
@@ -95,7 +93,6 @@ export class HomePage  implements OnInit  {
   }
 
   toAlertPage() {
-    this.isAlert = true;
     this.router.navigate(['alerts']);  
 
   }

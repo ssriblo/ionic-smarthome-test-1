@@ -88,6 +88,7 @@ export class SetupPage implements OnInit {
       type: typeItem,
       }
     this.storageService.addItem(this.globalVar.GlobalAlertKey, item );
+    this.globalVar.isAlert = true;
   }
 
   private async alertImitator() {

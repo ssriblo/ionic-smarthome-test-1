@@ -21,10 +21,8 @@ export class AlertsPage implements OnInit {
     this.storageService.getItem(this.globalVar.GlobalAlertKey ).then(i => {
       this.items = i;
 //      console.log('[aletrs.page.ngOnInit()]', this.items, this.items.length);
-    }
-
-    )
-
+    })
+    this.globalVar.isAlert = false;
   }
 
 
