@@ -9,17 +9,22 @@
 <ion-content color="secondary">
 <!-- List of Text Items -->
 <ion-list inset="true" lines="full">
-  <ion-item *ngFor="let a of alertList" color="warning">
-    <div id="elemnent1"> 
-      {{ a.title }} 
-    </div>
-    <div id="elemnent2">
-      <ion-datetime displayFormat="DD.MM.YYYY HH:mm" [(ngModel)]="a.timestamp" ></ion-datetime>
-    </div>
-    <ion-label>   </ion-label>
-    <div id="elemnent3">
-      <ion-label>{{ a.text }}</ion-label>
-    </div>
-  </ion-item>
+  <ion-card *ngFor="let a of alertList" color="warning">
+    <ion-grid>
+      <ion-row  class="ion-justify-content-between">
+        <ion-col size=5 >
+          <ion-datetime readonly=true  displayFormat=" DD.MM.YYYY" [(ngModel)]="a.timestamp" ></ion-datetime>
+        </ion-col>
+        <ion-col size=5 >
+          <ion-datetime  readonly=true displayFormat=" HH:mm" [(ngModel)]="a.timestamp" ></ion-datetime>
+        </ion-col>
+      </ion-row>
+      <ion-row  class="ion-justify-content-center">
+        <ion-col offset=3 >
+          <ion-label>{{ a.text }}</ion-label>     
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 </ion-list>
 </ion-content>
