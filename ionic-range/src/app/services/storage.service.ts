@@ -13,7 +13,8 @@ export interface Item {
   timestamp: string,
   id: string,
   level: number,
-  type: number
+  type: number,
+  color: string,
 }
  
 

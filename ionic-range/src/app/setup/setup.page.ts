@@ -75,7 +75,7 @@ export class SetupPage implements OnInit {
     });  
   }
 
-  addAlert(typeItem: number, val: string) {
+  addAlert(typeItem: number, val: string, col: string) {
     const uuid = new UUID();
     let id = uuid.getDashFreeUUID();
     let currDate =new Date().toISOString();  
@@ -86,6 +86,7 @@ export class SetupPage implements OnInit {
       id: id,
       level: 1,
       type: typeItem,
+      color: col,
       }
     this.storageService.addItem(this.globalVar.GlobalAlertKey, item );
     this.globalVar.isAlert = true;
@@ -103,15 +104,15 @@ export class SetupPage implements OnInit {
       buttons: [
         {
           text: 'ПРОТЕЧКА',
-          handler: () => { this.addAlert(1, 'ПРОТЕЧКА'); }
+          handler: () => { this.addAlert(1, 'ПРОТЕЧКА', "danger"); }
         },
         {
           text: 'НЕТ ЭЛЕКТРОЭНЕРГИИ',
-          handler: () => { this.addAlert(2, 'НЕТ ЭЛЕКТРОЭНЕРГИИ'); }
+          handler: () => { this.addAlert(2, 'НЕТ ЭЛЕКТРОЭНЕРГИИ', "warning"); }
         },
         {
           text: 'АВАРИЯ ДАТЧИКА',
-          handler: () => { this.addAlert(3, 'АВАРИЯ ДАТЧИКА'); }
+          handler: () => { this.addAlert(3, 'АВАРИЯ ДАТЧИКА', "tertiary"); }
         },
       ]
     });
