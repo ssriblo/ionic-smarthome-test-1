@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar  color="secondary">
+    <ion-buttons slot="start"  (click)="toHomePage()">
+      <ion-icon size="large" name="arrow-back-outline"></ion-icon><h4>Назад</h4></ion-buttons>
+    <ion-title slot=""><h1>События</h1></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="secondary">
+<!-- List of Text Items -->
+<ion-list inset="true" lines="full">
+  <div *ngFor="let a of items">
+    <ion-card [color]="a.color" >
+    <ion-grid>
+      <ion-row  class="ion-justify-content-between">
+        <ion-col size=5 >
+          <ion-datetime readonly=true  displayFormat=" DD.MM.YYYY" [(ngModel)]="a.timestamp" ></ion-datetime>
+        </ion-col>
+        <ion-col size=5 >
+          <ion-datetime  readonly=true displayFormat=" HH:mm" [(ngModel)]="a.timestamp" ></ion-datetime>
+        </ion-col>
+      </ion-row>
+      <ion-row  class="ion-justify-content-center">
+        <ion-col offset=3 >
+          <ion-label>{{ a.value }}</ion-label>     
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</div>
+</ion-list>
+</ion-content>

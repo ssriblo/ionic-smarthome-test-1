@@ -16,6 +16,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { SetupPage } from './setup/setup.page'
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { GlobalService } from "./services/global.service";
+import { AlertsPage } from './pages/alerts/alerts.page';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,7 @@ import { GlobalService } from "./services/global.service";
     SetupPage,
     OneSignal,
     GlobalService,
+    AlertsPage,
   ],
   bootstrap: [AppComponent]
 })

@@ -33,6 +33,7 @@
     "phonegap-plugin-barcodescanner": "^8.1.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
+    "uuid-generator-ts": "^1.0.4",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -45,7 +46,7 @@
     "@ionic/angular-toolkit": "^2.1.1",
     "@types/jasmine": "^3.5.11",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.12.67",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",

@@ -4,10 +4,13 @@ import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { AlertController } from '@ionic/angular';
 import { GlobalService } from "../services/global.service";
+import { StorageService, Item } from "../services/storage.service";
+import {UUID} from 'uuid-generator-ts';
+import { AlertsPage } from "../pages/alerts/alerts.page";
 
 @Component({
   selector: 'app-setup',
-  templateUrl: './setup.page.html',
+  templateUrl: './setup.page.html', 
   styleUrls: ['./setup.page.scss'],
 })
 export class SetupPage implements OnInit {
@@ -21,6 +24,8 @@ export class SetupPage implements OnInit {
     private storage: Storage,
     public apiService: ApiService,
     public globalVar: GlobalService,
+    private storageService: StorageService,
+    private alertsPage: AlertsPage,
     ) { }
 
   ngOnInit() {
@@ -71,6 +76,48 @@ export class SetupPage implements OnInit {
     });  
   }
 
+  addAlert(typeItem: number, val: string, col: string) {
+    this.alertsPage.addAlert(typeItem, val, col)
+  }
+
+  private async alertImitator() {
+
+    // For TEST purpos only, need change to timetableSetup() for product!
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      animated: true,
+      backdropDismiss: true,
+      header: 'Выбери тип аварии:',
+      buttons: [
+        {
+          text: 'ПРОТЕЧКА',
+          handler: () => { this.addAlert(1, 'ПРОТЕЧКА', "danger"); }
+        },
+        {
+          text: 'Протечки нет',
+          handler: () => { this.addAlert(1, 'Протечки нет', "success"); }
+        },
+        {
+          text: 'НЕТ ЭЛЕКТРОЭНЕРГИИ',
+          handler: () => { this.addAlert(2, 'НЕТ ЭЛЕКТРОЭНЕРГИИ', "warning"); }
+        },
+        {
+          text: 'Электроэнергия в норме',
+          handler: () => { this.addAlert(2, 'Электроэнергия в норме', "success"); }
+        },
+        {
+          text: 'ДАТЧИКА',
+          handler: () => { this.addAlert(3, 'АВАРИЯ ДАТЧИКА', "tertiary"); }
+        },
+        {
+          text: 'Датчик в норме',
+          handler: () => { this.addAlert(3, 'Датчик в норме', "success"); }
+        },
+      ]
+    });
+    await alert.present();
+  }
   timetableSetup() {
     // if (this.data.server == 'cloud') {
     //   this.data.server = 'local'

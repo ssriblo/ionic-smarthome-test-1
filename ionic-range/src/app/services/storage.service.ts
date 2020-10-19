@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { environment } from './../../environments/environment';
 
 ///////////////////////////////////////////////////////////////////////////////
 // from video How to Create Basic Ionic Storage CRUD Operations
 // Simon Grimm devdactic 
 // https://www.youtube.com/watch?v=h_IhS8QQjUA
-// CURRENTLY DOES NOT USE IT, BUT IT'S GREATE EXAMPLE  - HOW TO WORK WITH PROMISE AND LOCAL STORAGE
 ///////////////////////////////////////////////////////////////////////////////
 
 export interface Item {
   value: any,
-  timestamp: number,
-  id: number,
+  timestamp: string,
+  id: string,
+  level: number,
+  type: number,
+  color: string,
 }
  
 
@@ -21,35 +24,63 @@ export interface Item {
 export class StorageService {
   constructor(private storage: Storage) { }
 
-  addItem(key: string, item: Item): Promise<any>  {
-    return this.storage.get(key).then((items: Item) => {
-      if(items) {  // original code from yuortube has difference - item[] - item list
-        return this.storage.set(key, items)
-      }else {
-        return this.storage.set(key, items) // original was: [item]
-      } 
-    });
+  async addItem(key: string, item: Item): Promise<any>  {
+    const items = await this.storage.get(key);
+    //      if(items) {  
+    if (!items || items.length === 0 || items === undefined) {
+      return this.storage.set(key, [item]);
+    } else {
+      let newItem: Item[] = items;
+      //        for (let i of items) { newItem.push(i) }
+      if (newItem.length >= environment.ALERT_STORED_MAX) {
+        newItem.shift();
+      }
+      newItem.push(item);
+      //        console.log('[storage.service.addItem- ]) ----- 5]', newItem, newItem.length);
+      //      return this.storage.set(key, newItem);
+      await this.storage.set(key, newItem);
+      return;
+    }
   }
 
-  getItem(key: string): Promise<Item>{
+  getItem(key: string): Promise<Item[]>{
     return this.storage.get(key);
   }
 
   updateItem(key: string, item: Item) {
-    return this.storage.get(key).then((items: Item) => {
-      if (!items || items) {
-        return null;
+    return this.storage.get(key).then((items: Item[]) => {
+      if (!items || items.length === 0) {
+//        return null; // was initially at the video
+        console.log('[storage.service.updateItem- set([item]) ----- 1]', item, items.length);
+        return this.storage.set(key, [item]) 
       }
-      return this.storage.set(key, items)
+      let newItem: Item[] = []
+      for (let i of items) {
+        if (i.type === item.type) {
+          newItem.push(item)
+          console.log('[storage.service.updateItem- push ----- 3]', item,  items.length);
+        } else {
+          newItem.push(i)
+          console.log('[storage.service.updateItem- push ----- 4]', i,  items.length);
+        }
+      }
+      console.log('[storage.service.updateItem- set(newItem) ----- 2]', newItem,  newItem.length);
+      return this.storage.set(key, newItem)
     });
   }
 
-  deleteItem(key: string): Promise<Item> {
-    return this.storage.get(key).then((items: Item) => {
-      if (!items || items) {
+  deleteItem(key: string, id: string): Promise<Item> {
+    return this.storage.get(key).then((items: Item[]) => {
+      if (!items || items.length === 0) {
         return null;
       }
-      return this.storage.remove(key)      
+      let toKeep: Item[] = [];
+      for (let i of items) {
+        if (i.id != id) {
+          toKeep.push(i);
+        }
+      }
+      return this.storage.set(key, toKeep);
     });
   }
 
