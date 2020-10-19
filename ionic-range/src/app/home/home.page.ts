@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { ApiService } from '../services/api.service';
 import { environment } from '../../environments/environment';
 import { GlobalService } from "../services/global.service";
+import { AlertsPage } from "../pages/alerts/alerts.page";
 
 
 const { App } = Plugins;
@@ -27,8 +28,6 @@ export class HomePage  implements OnInit  {
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
-//  item: Item;
-//  newItem: Item = <Item>{}
 
   constructor(
     public platform:Platform, 
@@ -37,7 +36,7 @@ export class HomePage  implements OnInit  {
     private storage: Storage,
     private apiService: ApiService,
     public globalVar: GlobalService,
-
+    private alertsPage: AlertsPage,
     ) {}
 
   ngOnInit() {
@@ -93,6 +92,7 @@ export class HomePage  implements OnInit  {
   }
 
   toAlertPage() {
+    this.alertsPage.updateAlerts();
     this.router.navigate(['alerts']);  
 
   }

@@ -50,11 +50,20 @@ export class AlertsPage implements OnInit {
       this.items = i;
       console.log('[aletrs.page.addAlert()]', this.items, this.items.length);
     })
+    this.updateAlerts();
+  }
+
+  public updateAlerts() {
+    this.storageService.getItem(this.globalVar.GlobalAlertKey ).then(i => {
+      this.items = i;
+      if (this.items != null) {
+        console.log('[aletrs.page.updateAlerts()]', this.items, this.items.length);
+      }
+    })    
     this.ngZone.run(() => {
       this.globalVar.isAlert = false;
     }); 
   }
-
 
   toHomePage() {
     this.router.navigate(['home']);  
