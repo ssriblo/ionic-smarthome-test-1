@@ -7,6 +7,7 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AlertController } from '@ionic/angular';
 import { environment } from './../environments/environment';
 import { SetupPage } from './setup/setup.page';
+import { AlertsPage} from './pages/alerts/alerts.page';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent {
     private oneSignal: OneSignal,
     private alertCtrl: AlertController,
     private setupPage: SetupPage,
-
+    private alertsPage: AlertsPage,
   ) {
     this.initializeApp();
   }

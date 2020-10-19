@@ -6,7 +6,7 @@ import { AlertController } from '@ionic/angular';
 import { GlobalService } from "../services/global.service";
 import { StorageService, Item } from "../services/storage.service";
 import {UUID} from 'uuid-generator-ts';
-
+import { AlertsPage } from "../pages/alerts/alerts.page";
 
 @Component({
   selector: 'app-setup',
@@ -25,6 +25,7 @@ export class SetupPage implements OnInit {
     public apiService: ApiService,
     public globalVar: GlobalService,
     private storageService: StorageService,
+    private alertsPage: AlertsPage,
     ) { }
 
   ngOnInit() {
@@ -76,20 +77,7 @@ export class SetupPage implements OnInit {
   }
 
   addAlert(typeItem: number, val: string, col: string) {
-    const uuid = new UUID();
-    let id = uuid.getDashFreeUUID();
-    let currDate =new Date().toISOString();  
-//    console.log('CURRENT DATE', currDate, id);
-    let item: Item = {
-      value: val,
-      timestamp: currDate,
-      id: id,
-      level: 1,
-      type: typeItem,
-      color: col,
-      }
-    this.storageService.addItem(this.globalVar.GlobalAlertKey, item );
-    this.globalVar.isAlert = true;
+    this.alertsPage.addAlert(typeItem, val, col)
   }
 
   private async alertImitator() {
@@ -107,12 +95,24 @@ export class SetupPage implements OnInit {
           handler: () => { this.addAlert(1, 'ПРОТЕЧКА', "danger"); }
         },
         {
+          text: 'Протечки нет',
+          handler: () => { this.addAlert(1, 'Протечки нет', "success"); }
+        },
+        {
           text: 'НЕТ ЭЛЕКТРОЭНЕРГИИ',
           handler: () => { this.addAlert(2, 'НЕТ ЭЛЕКТРОЭНЕРГИИ', "warning"); }
         },
         {
-          text: 'АВАРИЯ ДАТЧИКА',
+          text: 'Электроэнергия в норме',
+          handler: () => { this.addAlert(2, 'Электроэнергия в норме', "success"); }
+        },
+        {
+          text: 'ДАТЧИКА',
           handler: () => { this.addAlert(3, 'АВАРИЯ ДАТЧИКА', "tertiary"); }
+        },
+        {
+          text: 'Датчик в норме',
+          handler: () => { this.addAlert(3, 'Датчик в норме', "success"); }
         },
       ]
     });

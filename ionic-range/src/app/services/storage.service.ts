@@ -24,22 +24,23 @@ export interface Item {
 export class StorageService {
   constructor(private storage: Storage) { }
 
-  addItem(key: string, item: Item): Promise<any>  {
-    return this.storage.get(key).then((items: Item[]) => {
-//      if(items) {  
-      if (!items || items.length === 0 || items === undefined) {
-        return this.storage.set(key, [item]) 
-      }else {
-        let newItem: Item[] = items;
-//        for (let i of items) { newItem.push(i) }
-        if ( newItem.length >= environment.ALERT_STORED_MAX ) {
-          newItem.shift()
-        }
-        newItem.push(item)
-//        console.log('[storage.service.addItem- ]) ----- 5]', newItem, newItem.length);
-        return this.storage.set(key, newItem)
-      } 
-    });
+  async addItem(key: string, item: Item): Promise<any>  {
+    const items = await this.storage.get(key);
+    //      if(items) {  
+    if (!items || items.length === 0 || items === undefined) {
+      return this.storage.set(key, [item]);
+    } else {
+      let newItem: Item[] = items;
+      //        for (let i of items) { newItem.push(i) }
+      if (newItem.length >= environment.ALERT_STORED_MAX) {
+        newItem.shift();
+      }
+      newItem.push(item);
+      //        console.log('[storage.service.addItem- ]) ----- 5]', newItem, newItem.length);
+      //      return this.storage.set(key, newItem);
+      await this.storage.set(key, newItem);
+      return;
+    }
   }
 
   getItem(key: string): Promise<Item[]>{
