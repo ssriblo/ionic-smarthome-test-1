@@ -69,19 +69,8 @@ export class StorageService {
     });
   }
 
-  deleteItem(key: string, id: string): Promise<Item> {
-    return this.storage.get(key).then((items: Item[]) => {
-      if (!items || items.length === 0) {
-        return null;
-      }
-      let toKeep: Item[] = [];
-      for (let i of items) {
-        if (i.id != id) {
-          toKeep.push(i);
-        }
-      }
-      return this.storage.set(key, toKeep);
-    });
+  async deleteItem(key: string): Promise<Item[]> {
+    let newItem: Item[];
+    return await this.storage.set(key, newItem);
   }
-
 }

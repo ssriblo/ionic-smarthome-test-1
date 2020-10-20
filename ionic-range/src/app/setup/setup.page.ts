@@ -80,6 +80,9 @@ export class SetupPage implements OnInit {
     this.alertsPage.addAlert(typeItem, val, col)
   }
 
+  deleteAllAlerts() {
+    this.alertsPage.deleteAllAlerts()
+  }
   private async alertImitator() {
 
     // For TEST purpos only, need change to timetableSetup() for product!
@@ -113,6 +116,10 @@ export class SetupPage implements OnInit {
         {
           text: 'Датчик в норме',
           handler: () => { this.addAlert(3, 'Датчик в норме', "success"); }
+        },
+        {
+          text: 'Удалить все сообщения',
+          handler: () => { this.deleteAllAlerts(); }
         },
       ]
     });

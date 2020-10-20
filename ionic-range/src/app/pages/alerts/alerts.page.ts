@@ -31,6 +31,12 @@ export class AlertsPage implements OnInit {
     })
   }
 
+  deleteAllAlerts() {
+    this.storageService.deleteItem(this.globalVar.GlobalAlertKey).then(i => {
+      this.items = i;
+      this.updateAlerts();
+    })
+  }
 
   public async addAlert(typeItem: number, val: string, col: string) {
     const uuid = new UUID();
