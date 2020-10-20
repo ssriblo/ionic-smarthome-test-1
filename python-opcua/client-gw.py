@@ -9,9 +9,9 @@ import time
 
 from opcua import Client
 from opcua import ua
-from temperatures_firestore import TempVal
+from temperatures_local_db import TempValLocal
 
-TV = TempVal()
+TV = TempValLocal()
 
 class SubHandler(object):
     

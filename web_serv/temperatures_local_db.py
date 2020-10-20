@@ -1,19 +1,14 @@
-from weather_temp import Weather
 from sqlitedict import SqliteDict
 
 class TempValLocal():
     mydict = None
-    WT = None
 
     def __init__(self):
-        self.WT = Weather()
         # https://pypi.org/project/sqlitedict/
         # If you don’t use autocommit (default is no autocommit for performance), then don’t forget to call mydict.commit() when done with a transaction:
         self.mydict = SqliteDict('./my_db.sqlite', autocommit=True)
         if 'targetT' not in self.mydict: 
             self.mydict['targetT'] = 21
-        if 'weatherT' not in self.mydict: 
-            self.mydict['weatherT'] = 12
         if 'roomT' not in self.mydict: 
             self.mydict['roomT'] = 23
         if 'comfortT' not in self.mydict: 
@@ -22,7 +17,6 @@ class TempValLocal():
             self.mydict['economT'] = 14
         if 'waterT' not in self.mydict: 
             self.mydict['waterT'] = 35
-
 ######################################
     @property
     def targetT(self):
@@ -31,12 +25,6 @@ class TempValLocal():
     @targetT.setter
     def targetT(self, val):
         self.mydict['targetT'] = val
-######################################
-    @property
-    def weatherT(self):
-        weather_temp = "%.1f" % (self.WT.request_current_weather(520555,) ) # 520555 - Nizhniy Novgorod
-        print("NN temp:", weather_temp)
-        return weather_temp    
 ######################################
     @property
     def roomT(self):

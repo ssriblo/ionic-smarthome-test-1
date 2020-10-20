@@ -3,7 +3,6 @@ from flask import Flask, render_template, request
 from flask_cors import CORS
 import requests
 import json
-from temperatures_firestore import TempVal 
 from tokenJwt import Token
 import configparser
 from push_onesignal import  Post2onesignal
@@ -12,10 +11,13 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import os    
 import time
 import logging
+from weather_temp import Weather
+from temperatures_local_db import TempValLocal
 
 Push = Post2onesignal()
 #Push.push("Пуш нотификация","Тревога") # for test only
-TV = TempVal()
+TV = TempValLocal()
+WT = Weather()
 token = Token()
 __server_status = 0
 __pushN = 0
@@ -91,8 +93,9 @@ def temperatureWeather():
 #    print("JWT: ", jwt)
     _tk = token.getToken(jwt)
 #    print("[temperatureWeather] _tk : ", _tk)
-    value = TV.weatherT if (_tk != None) else None
-    print("[temperature_weather] value:  ", value)
+    weather_temp = "%.1f" % (WT.request_current_weather(520555,) ) # 520555 - Nizhniy Novgorod
+    value = weather_temp if (_tk != None) else None
+    print("[temperature_weather] NN value:  ", value)
     return {"value": value}
 
 ###############################################################################
