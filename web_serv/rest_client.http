@@ -1,0 +1,22 @@
+# From: https://blog.bitsrc.io/vs-codes-rest-client-plugin-is-all-you-need-to-make-api-calls-e9e95fcfd85a
+
+@TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGFydElEIjoiMTExIiwibmFtZSI6ItCh0LXRgNCz0LXQuSDQoSIsInRva2VuTnVtYmVyIjoxLCJwcm9qZWN0IjoidGVzdFByb2plY3QtMSIsImlhdCI6MTU5NzczMjY3NiwiZXhwIjozODA2ODU2ODc5fQ.b9rTPTEiBTo-eexqA14TOPP66u0-nWOkjPEFc3047Gk
+GET  https://otoplenok.ru:8080/temperatureRoom?jwt={{TOKEN}}
+content-type: application/json
+###
+GET  https://otoplenok.ru:8080/temperatureWeather?jwt={{TOKEN}}
+content-type: application/json
+###
+GET https://otoplenok.ru:8080/serversStatus?jwt={{TOKEN}}
+content-type: application/json
+###
+POST https://otoplenok.ru:8080/updateTargetTemperature?jwt={{TOKEN}}
+content-type: application/json
+
+{
+    "id":"1", 
+    "value": "11"
+}
+###
+GET https://otoplenok.ru:8080/targetTemperature?jwt={{TOKEN}}
+content-type: application/json
