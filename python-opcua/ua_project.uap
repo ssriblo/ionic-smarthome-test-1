@@ -1,8 +1,8 @@
 [Servers]
-0\Name=SerebrumGW_2.0.1_test
-0\Connected=false
+0\Name=SerebrumGW_2.0.1_test VPS
+0\Connected=true
 0\ProjectServerId=0
-0\ServerUrl=opc.tcp://192.168.1.38:16664
+0\ServerUrl=opc.tcp://193.124.56.188:16664
 0\Server.ApplicationUri=
 0\Server.ProductUri=
 0\Server.ApplicationNameLocale=
@@ -17,7 +17,7 @@
 0\NoOfUserIdentityTokens=0
 0\TransportProfileUri=
 0\SecurityLevel=0
-0\DisplayName=SerebrumGW_2.0.1_test
+0\DisplayName=SerebrumGW_2.0.1_test VPS
 0\ReverseConnect=false
 0\ClientEndpointUrl=
 0\UserTokenType=1
@@ -29,36 +29,6 @@
 0\PrivateKeyFile=
 0\Namespaces\0=http://opcfoundation.org/UA/
 0\Namespaces\1=urn:telemetry:gateway
-1\Name=GW VPS
-1\Connected=true
-1\ProjectServerId=1
-1\ServerUrl=opc.tcp://193.124.56.188:16664
-1\Server.ApplicationUri=
-1\Server.ProductUri=
-1\Server.ApplicationNameLocale=
-1\Server.ApplicationNameText=
-1\Server.ApplicationType=0
-1\Server.GatewayServerUri=
-1\Server.DiscoveryProfileUri=
-1\Server.NoOfDiscoveryUrls=0
-1\ServerCertificate=@ByteArray()
-1\MessageSecurityMode=1
-1\SecurityPolicy=http://opcfoundation.org/UA/SecurityPolicy#None
-1\NoOfUserIdentityTokens=0
-1\TransportProfileUri=
-1\SecurityLevel=0
-1\DisplayName=GW VPS
-1\ReverseConnect=false
-1\ClientEndpointUrl=
-1\UserTokenType=1
-1\SessionName=
-1\DiscoveryHost=
-1\UserName=ua_client
-1\StorePassword=true
-1\CertificateFile=
-1\PrivateKeyFile=
-1\Namespaces\0=http://opcfoundation.org/UA/
-1\Namespaces\1=urn:telemetry:gateway
 
 [Documents]
 Data%20Access%20View\DocumentType=Data Access View
@@ -69,6 +39,20 @@ Data%20Access%20View\DocumentSettings\SubscriptionSettings\maxKeepAliveCount=10
 Data%20Access%20View\DocumentSettings\SubscriptionSettings\maxNotificationsPerPublish=0
 Data%20Access%20View\DocumentSettings\SubscriptionSettings\priority=0
 Data%20Access%20View\DocumentSettings\SubscriptionSettings\publishingEnabled=true
+Data%20Access%20View\DocumentSettings\Items\000\001\DisplayName=RoomT
+Data%20Access%20View\DocumentSettings\Items\000\001\NodeId="s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl:RoomT"
+Data%20Access%20View\DocumentSettings\Items\000\001\Status=2
+Data%20Access%20View\DocumentSettings\Items\000\001\MonitoringMode=2
+Data%20Access%20View\DocumentSettings\Items\000\001\MonitoringParameters\DiscardOldest=1
+Data%20Access%20View\DocumentSettings\Items\000\001\MonitoringParameters\QueueSize=1
+Data%20Access%20View\DocumentSettings\Items\000\001\MonitoringParameters\SamplingInterval=250
+Data%20Access%20View\DocumentSettings\Items\000\003\DisplayName=Mercury_val_1
+Data%20Access%20View\DocumentSettings\Items\000\003\NodeId="s=YA1002d00213437471231373739:Otoplenok:Counters:Mercury_val_1"
+Data%20Access%20View\DocumentSettings\Items\000\003\Status=2
+Data%20Access%20View\DocumentSettings\Items\000\003\MonitoringMode=2
+Data%20Access%20View\DocumentSettings\Items\000\003\MonitoringParameters\DiscardOldest=1
+Data%20Access%20View\DocumentSettings\Items\000\003\MonitoringParameters\QueueSize=1
+Data%20Access%20View\DocumentSettings\Items\000\003\MonitoringParameters\SamplingInterval=250
 
 [Attribute%20Plugin]
 Act_OnOff_Checked=true
