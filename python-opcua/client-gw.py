@@ -33,6 +33,8 @@ def browse_recursive(node):
     for childId in node.get_children():
         ch = client.get_node(childId)
         print("NODE is:", ch.get_node_class(), ch.get_browse_name(), ch.get_path())
+        print("NODE name is:",  ch.get_browse_name())
+        print("NODE path is:",  ch.get_path() )
         if ch.get_node_class() == ua.NodeClass.Object:
             browse_recursive(ch)
         elif ch.get_node_class() == ua.NodeClass.Variable:
@@ -107,7 +109,7 @@ if __name__ == "__main__":
         uri = "urn:telemetry:gateway"
         idx = client.get_namespace_index(uri)
         print(idx)
-#        browse_recursive(root)
+        browse_recursive(root)
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok))]
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok:TemperaturesControl) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl))]
@@ -141,7 +143,7 @@ if __name__ == "__main__":
         node =              root.get_children()[0].get_children()[1].get_children()[0]
         node_temperature =      node.get_children()[0]
         node_alarm =            node.get_children()[1]
-        node_serversStatus =    node.get_children()[1]
+        node_serversStatus =    node.get_children()[1] # used before, but then dropped
         node_counter =          node.get_children()[2]
 
         targetT =       node_temperature.get_children()[2]
@@ -149,7 +151,6 @@ if __name__ == "__main__":
         waterT =        node_temperature.get_children()[0]
         counter =       node_counter.get_children()[0]
         alarm =         node_alarm.get_children()[0]
-        serversStatus = node_serversStatus.get_children()[1]
 
         print(
             targetT.get_display_name().Text, 
@@ -157,17 +158,15 @@ if __name__ == "__main__":
             waterT.get_display_name().Text, 
             counter.get_display_name().Text,
             alarm.get_display_name().Text, 
-            serversStatus.get_display_name().Text, 
             )
 
         while True:
             TV.roomT = roomT.get_value()
             TV.waterT = waterT.get_value()
-            TV.serversStatus = serversStatus.get_value()
             datavalue = ua.DataValue(ua.Variant(TV.targetT, ua.VariantType.Float)) 
             targetT.set_value(datavalue)
-            print("roomT", roomT.get_value(), "waterT", waterT.get_value(), "tartetT", targetT.get_value(), "serversStatus", serversStatus.get_value())
-            logging.warning(f'roomT={roomT.get_value()} waterT={waterT.get_value()} tartetT={targetT.get_value()} serversStatus={serversStatus.get_value()}')
+            print("roomT", roomT.get_value(), "waterT", waterT.get_value(), "tartetT", targetT.get_value())
+            logging.warning(f'roomT={roomT.get_value()} waterT={waterT.get_value()} tartetT={targetT.get_value()}')
             time.sleep(10)
 
         while True:
