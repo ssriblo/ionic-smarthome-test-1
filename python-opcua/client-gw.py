@@ -27,27 +27,36 @@ class SubHandler(object):
 
     def event_notification(self, event):
         print("Python: New event", event)
-
 ############### from https://github.com/FreeOpcUa/python-opcua/issues/863 #########################
 def browse_recursive(node):
+    child = None
     for childId in node.get_children():
         ch = client.get_node(childId)
-        print("NODE is:", ch.get_node_class(), ch.get_browse_name(), ch.get_path())
-        print("NODE name is:",  ch.get_browse_name())
-        print("NODE path is:",  ch.get_path() )
+#        print("NODE class is:", ch.get_node_class())
+#        print("NODE name is:",  ch.get_browse_name())
+#        print("NODE path is:",  ch.get_path() )
         if ch.get_node_class() == ua.NodeClass.Object:
             browse_recursive(ch)
         elif ch.get_node_class() == ua.NodeClass.Variable:
             try:
+                print("NODE class is:", ch.get_node_class())
+                print("NODE name is:",  ch.get_browse_name())
+                print("NODE path is:",  ch.get_path() )
+                string = str(ch.get_browse_name())
                 print("{bn} has value {val}".format(
                     bn=ch.get_browse_name(),
                     val=str(ch.get_value()))
                 )
+                if string.find("Array_F") >= 0 :
+                    print(">>>>>>>>>>>>>>>>>>>>>", string)
+                    child = ch
 #            except ua.uaerrors._auto.BadWaitingForInitialData:
             except:
                 pass
 
                 pass
+    if child != None:
+        print("<<<<<<<<<<<<<<<<<<<<<<<<<", child.get_value() )
 ################################################################################################
 
 if __name__ == "__main__":
