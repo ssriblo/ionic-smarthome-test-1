@@ -15,8 +15,8 @@ from data_parser import DataParserF8, DataParserB2
 
 
 TV = TempValLocal()
-global ch_F8
-global ch_B2
+ch_F8 = None
+ch_B2 = None
 
 class SubHandler(object):
     
@@ -35,10 +35,12 @@ class SubHandler(object):
 
 ############### from https://github.com/FreeOpcUa/python-opcua/issues/863 #########################
 def browse_recursive(node):
-
+    global ch_F8
+    global ch_B2
     for childId in node.get_children():
         ch = client.get_node(childId)
-#        print("NODE class is:", ch.get_node_class())
+#        ch = childId
+#        print("NODE class is:", childId, ch.get_node_class())
 #        print("NODE name is:",  ch.get_browse_name())
 #        print("NODE path is:",  ch.get_path() )
         if ch.get_node_class() == ua.NodeClass.Object:
@@ -127,17 +129,15 @@ if __name__ == "__main__":
         idx = client.get_namespace_index(uri)
         print("uri=", idx)
         
-        ch_F8 = None
-        ch_B2 = None
         browse_recursive(root)
         DF8 = DataParserF8(ch_F8)
         DB2 = DataParserB2(ch_B2)
-        print(ch_F8,ch_B2, DF8, DB2)
-#        while True:
-#            TV.roomT = DF8.roomT
-#            TV.waterT = DF8.waterT
-#            print("roomT", DF8.roomT, "waterT", DF8.waterT)
-#            time.sleep(10)
+        print(">>>>>>", ch_F8,ch_B2, DF8, DB2)
+        while True:
+            TV.roomT = DF8.roomT
+            TV.waterT = DF8.waterT
+            print("roomT", DF8.roomT, "waterT", DF8.waterT)
+            time.sleep(10)
 
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok))]
