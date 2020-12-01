@@ -10,8 +10,13 @@ import time
 from opcua import Client
 from opcua import ua
 from temperatures_local_db import TempValLocal
+from data_parser import DataParserF8, DataParserB2
+
+
 
 TV = TempValLocal()
+global ch_F8
+global ch_B2
 
 class SubHandler(object):
     
@@ -27,9 +32,10 @@ class SubHandler(object):
 
     def event_notification(self, event):
         print("Python: New event", event)
+
 ############### from https://github.com/FreeOpcUa/python-opcua/issues/863 #########################
 def browse_recursive(node):
-    child = None
+
     for childId in node.get_children():
         ch = client.get_node(childId)
 #        print("NODE class is:", ch.get_node_class())
@@ -39,24 +45,26 @@ def browse_recursive(node):
             browse_recursive(ch)
         elif ch.get_node_class() == ua.NodeClass.Variable:
             try:
-                print("NODE class is:", ch.get_node_class())
-                print("NODE name is:",  ch.get_browse_name())
-                print("NODE path is:",  ch.get_path() )
+#                print("NODE class is:", ch.get_node_class())
+#                print("NODE name is:",  ch.get_browse_name())
+#                print("NODE path is:",  ch.get_path() )
+#                print("{bn} has value {val}".format(
+#                    bn=ch.get_browse_name(),
+#                    val=str(ch.get_value()))
+#                )
                 string = str(ch.get_browse_name())
-                print("{bn} has value {val}".format(
-                    bn=ch.get_browse_name(),
-                    val=str(ch.get_value()))
-                )
                 if string.find("Array_F") >= 0 :
-                    print(">>>>>>>>>>>>>>>>>>>>>", string)
-                    child = ch
+                    print("Found  Array_F8", string, ch)
+                    ch_F8 = ch
+                if string.find("Array_B") >= 0 :
+                    print("Found Array_B2", string, ch)
+                    ch_B2 = ch
 #            except ua.uaerrors._auto.BadWaitingForInitialData:
             except:
-                pass
-
-                pass
-    if child != None:
-        print("<<<<<<<<<<<<<<<<<<<<<<<<<", child.get_value() )
+                e = sys.exc_info()[0]
+                print( "EXCEPTION: ", e)
+                cntr = cntr + 1
+    
 ################################################################################################
 
 if __name__ == "__main__":
@@ -117,8 +125,20 @@ if __name__ == "__main__":
 # >> ns_available ['http://opcfoundation.org/UA/', 'urn:telemetry:gateway']
         uri = "urn:telemetry:gateway"
         idx = client.get_namespace_index(uri)
-        print(idx)
+        print("uri=", idx)
+        
+        ch_F8 = None
+        ch_B2 = None
         browse_recursive(root)
+        DF8 = DataParserF8(ch_F8)
+        DB2 = DataParserB2(ch_B2)
+        print(ch_F8,ch_B2, DF8, DB2)
+#        while True:
+#            TV.roomT = DF8.roomT
+#            TV.waterT = DF8.waterT
+#            print("roomT", DF8.roomT, "waterT", DF8.waterT)
+#            time.sleep(10)
+
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok))]
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok:TemperaturesControl) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl))]
