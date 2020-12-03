@@ -17,6 +17,18 @@ class TempValLocal():
             self.mydict['economT'] = 14
         if 'waterT' not in self.mydict: 
             self.mydict['waterT'] = 35
+        if 'mercutyV1' not in self.mydict: 
+            self.mydict['mercutyV1'] = 0
+        if 'mercutyV2' not in self.mydict: 
+            self.mydict['mercutyV2'] = 0
+        if 'proteyW' not in self.mydict: 
+            self.mydict['proteyW'] = 0
+        if 'weatherT' not in self.mydict: 
+            self.mydict['weatherT'] = 1
+        if 'flags1' not in self.mydict: 
+            self.mydict['flags1'] = 0
+        if 'flags2' not in self.mydict: 
+            self.mydict['flags2'] = 0
 ######################################
     @property
     def targetT(self):
