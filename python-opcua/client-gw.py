@@ -166,7 +166,7 @@ if __name__ == "__main__":
             ch_targetT.set_value(datavalue)
             
             try:
-                print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={DF8.weatherT:4.2f}; MercuryV1={DF8.mercuryV1:6.2f}; MercuryV2={DF8.mercuryV2:6.2f}; ProteyW={DF8.proteyW:10.2}; TargetT={DF8.targetT:4.2f}" )
+                print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={DF8.weatherT:4.2f}; MercuryV1={DF8.mercuryV1:6.2f}; MercuryV2={DF8.mercuryV2:6.2f}; ProteyW={DF8.proteyW:2.0f}; TargetT={DF8.targetT:4.2f}" )
             except:
                 e = sys.exc_info()
                 print( "EXCEPTION: ", e[0], e[1])
