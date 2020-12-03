@@ -167,8 +167,8 @@ if __name__ == "__main__":
             
             try:
                 print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={DF8.weatherT:4.2f}; ", end='')
-                print(f"MercuryV1={DF8.mercuryV1:6.2f}; MercuryV2={DF8.mercuryV2:6.2f};", end='')
-                print(f"ProteyW={DF8.proteyW:2.0f}; TargetT={DF8.targetT:4.2f}", end='' )
+                print(f"MercuryV1={DF8.mercuryV1:6.2f}; MercuryV2={DF8.mercuryV2:6.2f};  ", end='')
+                print(f"ProteyW={DF8.proteyW:2.0f}; TargetT={DF8.targetT:4.2f}  ", end='' )
                 TV.flags1 = DB2.flags1
                 TV.flags2 = DB2.flags2
                 print(f"FLAGs1_(byte0)={TV.flags1}; FLAGs2_(byte1)={TV.flags2}")
