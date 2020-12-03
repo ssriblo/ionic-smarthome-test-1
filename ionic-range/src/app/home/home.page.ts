@@ -9,6 +9,7 @@ import { ApiService } from '../services/api.service';
 import { environment } from '../../environments/environment';
 import { GlobalService } from "../services/global.service";
 import { AlertsPage } from "../pages/alerts/alerts.page";
+import { Vibration } from '@ionic-native/vibration/ngx';
 
 
 const { App } = Plugins;
@@ -37,6 +38,7 @@ export class HomePage  implements OnInit  {
     private apiService: ApiService,
     public globalVar: GlobalService,
     private alertsPage: AlertsPage,
+    private vibration: Vibration,
     ) {}
 
   ngOnInit() {
@@ -84,8 +86,16 @@ export class HomePage  implements OnInit  {
         console.log("[setInterval]: every 60s");
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
-      },60000);       
+      },60000);     
   } // ngOnInit() finished
+
+  async isActive() {
+      let isActiveApp = await App.getState();
+      if ( isActiveApp == true) {
+        this.vibration.vibrate([2000,1000,2000]); // For test only. Let remove later         
+      }
+      return isActiveApp
+    }
 
   toSetupPage() {
     this.router.navigate(['setup']);  
