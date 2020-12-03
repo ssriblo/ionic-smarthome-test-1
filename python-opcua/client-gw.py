@@ -162,7 +162,7 @@ if __name__ == "__main__":
                 print( "EXCEPTION: ", e[0], e[1])
                 pass
             
-            datavalue = ua.DataValue(ua.Variant(TV.targetT, ua.VariantType.Float)) 
+            datavalue = ua.DataValue(ua.Variant(float(TV.targetT), ua.VariantType.Float)) 
             ch_targetT.set_value(datavalue)
             
             try:
@@ -173,7 +173,7 @@ if __name__ == "__main__":
                 pass                
             TV.flags1 = DB2.flags1
             TV.flags2 = DB2.flags2
-            print(f"FLAGs1 (byte0) is{TV.flags1}; FLAGs2 (byte1) is{TV.flags2}")
+            print(f"FLAGs1_(byte0)={TV.flags1}; FLAGs2_(byte1)={TV.flags2}")
             time.sleep(10)
 
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]
