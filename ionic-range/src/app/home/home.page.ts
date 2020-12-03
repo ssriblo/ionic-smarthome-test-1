@@ -90,7 +90,7 @@ export class HomePage  implements OnInit  {
   } // ngOnInit() finished
 
   async isActive() {
-      let isActiveApp = await App.getState();
+      let isActiveApp = await (await App.getState()).isActive
       if ( isActiveApp == true) {
         this.vibration.vibrate([2000,1000,2000]); // For test only. Let remove later         
       }
