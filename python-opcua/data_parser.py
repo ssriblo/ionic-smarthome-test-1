@@ -39,10 +39,10 @@ class DataParserB2(object):
         self.ch = ch
 ######################################
     @property
-    def byte0(self):
+    def flags1(self):
         return self.ch.get_value()[0]
 ######################################    
     @property
-    def byte1(self):
+    def flags2(self):
         return self.ch.get_value()[1]
 ######################################    

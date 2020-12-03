@@ -19,7 +19,7 @@ Push = Post2onesignal()
 TV = TempValLocal()
 WT = Weather()
 token = Token()
-__server_status = 0
+__flags_status = 0
 __pushN = 0
 
 logging.basicConfig(filename='./web-serv.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
@@ -42,7 +42,7 @@ if location == "cloud":
         )
 
 def checkAlert(): 
-    global __server_status
+    global __flags_status
     global __pushN
     prompts = [
         "Тестовое сообщение",
@@ -56,19 +56,27 @@ def checkAlert():
         ]
 #    ticks = time.time()
 #    print ("Number of ticks since 12:00am, January 1, 1970:", ticks)
-    ss = int(TV.serversStatus)
-    if ( ( ss != __server_status ) and (ss != 0) ):
-        if ( (ss >= 1) and (ss <= 8) ):
-            prompt = prompts[ss]
+    fs = int(TV.flags1)
+    if ( ( fs != __flags_status ) and (fs != 0) ):
+        if ( (fs >= 1) and (fs <= 8) ):
+            prompt = prompts[fs]
             Push.push("ОТОПЛЕНОК", "Пуш нотификация", prompt + " " + str(__pushN))
-            logging.warning(f'PUSH: ss={ss} __pushN={__pushN}')
+            logging.warning(f'PUSH: fs={fs} __pushN={__pushN}')
             __pushN = __pushN + 1
-    __server_status = ss
+    __flags_status = fs
+
+
+def weatherUpdate():
+    weather_temp = "%.1f" % (WT.request_current_weather(520555,) ) # 520555 - Nizhniy Novgorod
+    TV.weatherT = weather_temp
+    print(f"Weather Update={TV.weatherT}")
+
 
 # https://www.programcreek.com/python/example/94838/apscheduler.schedulers.background.BackgroundScheduler 
 # Example 1
 scheduler = BackgroundScheduler()
 scheduler.add_job(checkAlert, 'interval', seconds=60)
+scheduler.add_job(weatherUpdate, 'interval', seconds=60)
 scheduler.start()
 
 ###############################################################################
@@ -93,8 +101,9 @@ def temperatureWeather():
 #    print("JWT: ", jwt)
     _tk = token.getToken(jwt)
 #    print("[temperatureWeather] _tk : ", _tk)
-    weather_temp = "%.1f" % (WT.request_current_weather(520555,) ) # 520555 - Nizhniy Novgorod
-    value = weather_temp if (_tk != None) else None
+#    weather_temp = "%.1f" % (WT.request_current_weather(520555,) ) # 520555 - Nizhniy Novgorod
+    value = TV.weatherT if (_tk != None) else None
+#    value = weather_temp if (_tk != None) else None
     print("[temperature_weather] NN value:  ", value)
     return {"value": value}
 
