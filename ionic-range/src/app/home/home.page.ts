@@ -87,10 +87,11 @@ export class HomePage  implements OnInit  {
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
       },60000);     
+      this.isActive();
   } // ngOnInit() finished
 
   async isActive() {
-      let isActiveApp = await (await App.getState()).isActive
+      const isActiveApp = (await App.getState()).isActive
       if ( isActiveApp == true) {
         this.vibration.vibrate([2000,1000,2000]); // For test only. Let remove later         
       }
