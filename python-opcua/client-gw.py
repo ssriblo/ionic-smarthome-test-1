@@ -10,8 +10,15 @@ import time
 from opcua import Client
 from opcua import ua
 from temperatures_local_db import TempValLocal
+from data_parser import DataParserF8, DataParserB2
+
+
 
 TV = TempValLocal()
+ch_F8 = None
+ch_B2 = None
+ch_targetT = None
+ch_weatherT = None
 
 class SubHandler(object):
     
@@ -30,24 +37,50 @@ class SubHandler(object):
 
 ############### from https://github.com/FreeOpcUa/python-opcua/issues/863 #########################
 def browse_recursive(node):
+    global ch_F8
+    global ch_B2
+    global ch_targetT
+    global ch_weatherT
+
     for childId in node.get_children():
+        # NOTE: both lines below works the same! So ch=childID the same as get_node(childID)
         ch = client.get_node(childId)
-        print("NODE is:", ch.get_node_class(), ch.get_browse_name(), ch.get_path())
-        print("NODE name is:",  ch.get_browse_name())
-        print("NODE path is:",  ch.get_path() )
+#        ch = childId
+
+#        print("NODE class is:", childId, ch.get_node_class())
+#        print("NODE name is:",  ch.get_browse_name())
+#        print("NODE path is:",  ch.get_path() )
         if ch.get_node_class() == ua.NodeClass.Object:
             browse_recursive(ch)
         elif ch.get_node_class() == ua.NodeClass.Variable:
             try:
-                print("{bn} has value {val}".format(
-                    bn=ch.get_browse_name(),
-                    val=str(ch.get_value()))
-                )
+#                print("NODE class is:", ch.get_node_class())
+#                print("NODE name is:",  ch.get_browse_name())
+#                print("NODE path is:",  ch.get_path() )
+#                print("{bn} has value {val}".format(
+#                    bn=ch.get_browse_name(),
+#                    val=str(ch.get_value()))
+#                )
+                string = str(ch.get_browse_name())
+                if string.find("Array_F") >= 0 :
+                    print("Found  Array_F8", string, ch)
+                    ch_F8 = ch
+                if string.find("Array_B") >= 0 :
+                    print("Found Array_B2", string, ch)
+                    ch_B2 = ch
+                if string.find("TargetT") >= 0 :
+                    print("Found TargetT", string, ch)
+                    ch_targetT = ch
+                if string.find("WeatherT") >= 0 :
+                    print("Found WeatherT", string, ch)
+                    ch_weatherT = ch
+
 #            except ua.uaerrors._auto.BadWaitingForInitialData:
             except:
-                pass
-
-                pass
+                e = sys.exc_info()
+                print( "EXCEPTION: ", e[0], e[1])
+                cntr = cntr + 1
+    
 ################################################################################################
 
 if __name__ == "__main__":
@@ -108,8 +141,41 @@ if __name__ == "__main__":
 # >> ns_available ['http://opcfoundation.org/UA/', 'urn:telemetry:gateway']
         uri = "urn:telemetry:gateway"
         idx = client.get_namespace_index(uri)
-        print(idx)
+        print("uri=", idx)
+        
         browse_recursive(root)
+        DF8 = DataParserF8(ch_F8)
+        DB2 = DataParserB2(ch_B2)
+        print("FOUND:", ch_F8,ch_B2, ch_targetT, ch_weatherT, DF8, DB2)
+        while True:
+            TV.roomT = DF8.roomT
+            TV.waterT = DF8.waterT
+            TV.mercutyV1 = DF8.mercuryV1
+            TV.mercutyV2 = DF8.mercuryV2
+            TV.proteyW = DF8.proteyW
+
+            datavalue = ua.DataValue(ua.Variant(TV.weatherT, ua.VariantType.Float)) 
+            try:
+                ch_weatherT.set_value(datavalue)
+            except:
+                e = sys.exc_info()
+                print( "EXCEPTION: ", e[0], e[1])
+                pass
+            
+            datavalue = ua.DataValue(ua.Variant(TV.targetT, ua.VariantType.Float)) 
+            ch_targetT.set_value(datavalue)
+            
+            try:
+                print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={DF8.weatherT:4.2f}; MercuryV1={DF8.mercuryV1:6.2f}; MercuryV2={DF8.mercuryV2:6.2f}; ProteyW={DF8.proteyW:2.0f}; TargetT={DF8.targetT:4.2f}" )
+            except:
+                e = sys.exc_info()
+                print( "EXCEPTION: ", e[0], e[1])
+                pass                
+            TV.flags1 = DB2.flags1
+            TV.flags2 = DB2.flags2
+            print(f"FLAGs1 (byte0) is{TV.flags1}; FLAGs2 (byte1) is{TV.flags2}")
+            time.sleep(10)
+
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok))]
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok:TemperaturesControl) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl))]

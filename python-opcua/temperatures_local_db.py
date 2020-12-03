@@ -66,6 +66,54 @@ class TempValLocal():
     def serversStatus(self, val):
         self.mydict['serversStatus'] = val
 ######################################
+    @property
+    def mercutyV1(self):
+        return self.mydict['mercutyV1']
+
+    @mercutyV1.setter
+    def mercutyV1(self, val):
+        self.mydict['mercutyV1'] = val
+######################################
+    @property
+    def mercutyV2(self):
+        return self.mydict['mercutyV2']
+
+    @mercutyV2.setter
+    def mercutyV2(self, val):
+        self.mydict['mercutyV2'] = val
+######################################
+    @property
+    def proteyW(self):
+        return self.mydict['proteyW']
+
+    @proteyW.setter
+    def proteyW(self, val):
+        self.mydict['proteyW'] = val
+######################################
+    @property
+    def weatherT(self):
+        return self.mydict['weatherT']
+        
+    @weatherT.setter
+    def weatherT(self, val):
+        self.mydict['weatherT'] = val
+######################################
+    @property
+    def flags1(self):
+        return self.mydict['flags1']
+
+    @flags1.setter
+    def flags1(self, val):
+        self.mydict['flags1'] = val
+######################################
+    @property
+    def flags2(self):
+        return self.mydict['flags2']
+
+    @flags2.setter
+    def flags2(self, val):
+        self.mydict['flags2'] = val
+######################################
 
 
 ######################################
