@@ -154,26 +154,28 @@ if __name__ == "__main__":
             TV.mercutyV2 = DF8.mercuryV2
             TV.proteyW = DF8.proteyW
 
-            datavalue = ua.DataValue(ua.Variant(TV.weatherT, ua.VariantType.Float)) 
+            datavalue = ua.DataValue(ua.Variant(float(TV.weatherT), ua.VariantType.Float)) 
             try:
                 ch_weatherT.set_value(datavalue)
             except:
                 e = sys.exc_info()
-                print( "EXCEPTION: ", e[0], e[1])
+                print( "EXCEPTION1: ", e[0], e[1])
                 pass
             
             datavalue = ua.DataValue(ua.Variant(float(TV.targetT), ua.VariantType.Float)) 
             ch_targetT.set_value(datavalue)
             
             try:
-                print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={DF8.weatherT:4.2f}; MercuryV1={DF8.mercuryV1:6.2f}; MercuryV2={DF8.mercuryV2:6.2f}; ProteyW={DF8.proteyW:2.0f}; TargetT={DF8.targetT:4.2f}" )
+                print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={DF8.weatherT:4.2f}; ", end='')
+                print(f"MercuryV1={DF8.mercuryV1:6.2f}; MercuryV2={DF8.mercuryV2:6.2f};", end='')
+                print(f"ProteyW={DF8.proteyW:2.0f}; TargetT={DF8.targetT:4.2f}", end='' )
+                TV.flags1 = DB2.flags1
+                TV.flags2 = DB2.flags2
+                print(f"FLAGs1_(byte0)={TV.flags1}; FLAGs2_(byte1)={TV.flags2}")
             except:
                 e = sys.exc_info()
-                print( "EXCEPTION: ", e[0], e[1])
+                print( "EXCEPTION2: ", e[0], e[1])
                 pass                
-            TV.flags1 = DB2.flags1
-            TV.flags2 = DB2.flags2
-            print(f"FLAGs1_(byte0)={TV.flags1}; FLAGs2_(byte1)={TV.flags2}")
             time.sleep(10)
 
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]
