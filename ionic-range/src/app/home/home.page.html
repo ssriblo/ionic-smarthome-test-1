@@ -33,13 +33,10 @@
     
     
     <ion-header >
-      <ion-toolbar color="secondary">
-        
+      <ion-toolbar color="secondary">       
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-
-
       <div id="headertext">
         <ion-title>Отопленок 
           <span id="version"></span> 
@@ -53,6 +50,8 @@
       </div>
       </ion-toolbar>
     </ion-header>
+
+    <ion-router-outlet id="main"></ion-router-outlet>
 
     <ion-content>
     <ion-grid fixed style="background-color: #3dc2ff" >
@@ -107,9 +106,6 @@
         </ion-col>
       </ion-row>
   </ion-grid>
-
-<ion-router-outlet id="main"></ion-router-outlet>
-
 </ion-content>
 </ion-app>
 </body>
