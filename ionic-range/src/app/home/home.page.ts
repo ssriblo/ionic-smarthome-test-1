@@ -80,12 +80,21 @@ export class HomePage  implements OnInit  {
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
     }, 5000);
 
-    setInterval(()=> {
-        console.log("[setInterval]: every 60s");
+    setInterval(async ()=> {
+      const isActive = this.isActiveApp();
+      if (await isActive == true) {
+        console.log("[setInterval]: every 60s - ACTIVE");
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
+      }else {
+        console.log("[setInterval]: every 60s - NOT ACTIVE");
+      }
       },60000);       
   } // ngOnInit() finished
+
+  async isActiveApp() {
+    return (await App.getState()).isActive
+  }
 
   toSetupPage() {
     this.router.navigate(['setup']);  
@@ -94,7 +103,6 @@ export class HomePage  implements OnInit  {
   toAlertPage() {
     this.alertsPage.updateAlerts();
     this.router.navigate(['alerts']);  
-
   }
 
   //////////////
