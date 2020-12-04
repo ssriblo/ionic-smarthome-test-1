@@ -9,7 +9,7 @@ import { ApiService } from '../services/api.service';
 import { environment } from '../../environments/environment';
 import { GlobalService } from "../services/global.service";
 import { AlertsPage } from "../pages/alerts/alerts.page";
-
+import { MenuController } from '@ionic/angular';
 
 const { App } = Plugins;
 
@@ -37,6 +37,7 @@ export class HomePage  implements OnInit  {
     private apiService: ApiService,
     public globalVar: GlobalService,
     private alertsPage: AlertsPage,
+    private menu: MenuController,
     ) {}
 
   ngOnInit() {
@@ -103,6 +104,14 @@ export class HomePage  implements OnInit  {
   toAlertPage() {
     this.alertsPage.updateAlerts();
     this.router.navigate(['alerts']);  
+  }
+
+  toMetersPage() {
+    this.router.navigate(['meters']);  
+  }
+
+  toHomePage() {
+    this.menu.toggle();
   }
 
   //////////////
