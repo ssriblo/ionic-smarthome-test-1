@@ -174,6 +174,62 @@ def serversStatus():
     return {"value": value}
 
 ###############################################################################
+@app.route('/electroMeter_t1', methods=['GET']) 
+def electroMeter_t1():
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[serversStatus] _tk : ", _tk)
+    value = TV.electroMeter_t1 if (_tk != None) else None
+    print("[electroMeter_t1] value:  ", value)
+    return {"value": value}
+
+###############################################################################
+@app.route('/electroMeter_t2', methods=['GET']) 
+def electroMeter_t2():
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[serversStatus] _tk : ", _tk)
+    value = TV.electroMeter_t2 if (_tk != None) else None
+    print("[electroMeter_t2] value:  ", value)
+    return {"value": value}
+
+###############################################################################
+@app.route('/warmMeter', methods=['GET']) 
+def warmMeter():
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[serversStatus] _tk : ", _tk)
+    value = TV.warmMeter if (_tk != None) else None
+    print("[warmMeter] value:  ", value)
+    return {"value": value}
+
+###############################################################################
+@app.route('/waterColdMeter', methods=['GET']) 
+def waterColdMeter():
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[serversStatus] _tk : ", _tk)
+    value = TV.waterColdMeter if (_tk != None) else None
+    print("[waterColdMeter] value:  ", value)
+    return {"value": value}
+
+###############################################################################
+@app.route('/waterHotMeter', methods=['GET']) 
+def waterHotMeter():
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[serversStatus] _tk : ", _tk)
+    value = TV.waterHotMeter if (_tk != None) else None
+    print("[waterHotMeter] value:  ", value)
+    return {"value": value}
+
+###############################################################################
+###############################################################################
 @app.route('/updateTargetTemperature', methods=['POST']) 
 def updateTargetTemperature():
     body = request.json

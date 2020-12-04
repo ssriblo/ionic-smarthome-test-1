@@ -25,6 +25,11 @@ export class HomePage  implements OnInit  {
   economT: number;
   weather_t_s:string = "";
   room_t_s:string = "";
+  electroMeter_t1:number;
+  electroMeter_t2:number;
+  warmMeter:number;
+  waterColdMeter:number;
+  waterHotMeter:number;
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
@@ -79,16 +84,21 @@ export class HomePage  implements OnInit  {
       console.log("[setTimeout]: after 5s");
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
+      this.apiService.getApiCB('electroMeter_t1', (result) => {this.electroMeter_t1 = result['value'] });
+      this.apiService.getApiCB('electroMeter_t2', (result) => {this.electroMeter_t2 = result['value'] });
+      this.apiService.getApiCB('warmMeter', (result) => {this.warmMeter = result['value'] });
+      this.apiService.getApiCB('waterColdMeter', (result) => {this.waterColdMeter = result['value'] });
+      this.apiService.getApiCB('waterHotMeter', (result) => {this.waterHotMeter = result['value'] });
     }, 5000);
 
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
       if (await isActive == true) {
-        console.log("[setInterval]: every 60s - ACTIVE");
+//        console.log("[setInterval]: every 60s - ACTIVE");
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
       }else {
-        console.log("[setInterval]: every 60s - NOT ACTIVE");
+//        console.log("[setInterval]: every 60s - NOT ACTIVE");
       }
       },60000);       
   } // ngOnInit() finished
