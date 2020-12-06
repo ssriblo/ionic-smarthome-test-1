@@ -79,11 +79,6 @@ export class HomePage  implements OnInit  {
       console.log("[setTimeout]: after 5s");
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
-      // this.apiService.getApiCB('electroMeterT1', (result) => {this.electroMeterT1 = result['value'] });
-      // this.apiService.getApiCB('electroMeterT2', (result) => {this.electroMeterT2 = result['value'] });
-      // this.apiService.getApiCB('warmMeter', (result) => {this.warmMeter = result['value'] });
-      // this.apiService.getApiCB('waterColdMeter', (result) => {this.waterColdMeter = result['value'] });
-      // this.apiService.getApiCB('waterHotMeter', (result) => {this.waterHotMeter = result['value'] });
     }, 5000);
 
     setInterval(async ()=> {
@@ -92,11 +87,6 @@ export class HomePage  implements OnInit  {
 //        console.log("[setInterval]: every 60s - ACTIVE");
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
-        // this.apiService.getApiCB('electroMeterT1', (result) => {this.electroMeterT1 = result['value'] });
-        // this.apiService.getApiCB('electroMeterT2', (result) => {this.electroMeterT2 = result['value'] });
-        // this.apiService.getApiCB('warmMeter', (result) => {this.warmMeter = result['value'] });
-        // this.apiService.getApiCB('waterColdMeter', (result) => {this.waterColdMeter = result['value'] });
-        // this.apiService.getApiCB('waterHotMeter', (result) => {this.waterHotMeter = result['value'] });
       }else {
 //        console.log("[setInterval]: every 60s - NOT ACTIVE");
       }

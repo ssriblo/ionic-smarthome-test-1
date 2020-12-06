@@ -27,6 +27,15 @@ export class MetersPage implements OnInit {
 
   ngOnInit() {
 
+    setTimeout(()=> {
+      console.log("[setTimeout]: after 5s");
+      this.apiService.getApiCB('electroMeterT1', (result) => {this.electroMeterT1 = result['value'].toFixed(2) });
+      this.apiService.getApiCB('electroMeterT2', (result) => {this.electroMeterT2 = result['value'].toFixed(2) });
+      this.apiService.getApiCB('warmMeter', (result) => {this.warmMeter = result['value'].toFixed(2) });
+      this.apiService.getApiCB('waterColdMeter', (result) => {this.waterColdMeter = result['value'].toFixed(2) });
+      this.apiService.getApiCB('waterHotMeter', (result) => {this.waterHotMeter = result['value'].toFixed(2) });
+    }, 5000);
+
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
       if (await isActive == true) {
@@ -39,7 +48,7 @@ export class MetersPage implements OnInit {
       }else {
 //        console.log("[setInterval]: every 60s - NOT ACTIVE");
       }
-      },2000);       
+      },30000);       
   } // ngOnInit() finished
 
   async isActiveApp() {
