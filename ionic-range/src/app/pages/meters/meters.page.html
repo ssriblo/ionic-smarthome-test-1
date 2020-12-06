@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" color="secondary">
+<ion-content class="ion-padding"  color="secondary">
 
   <ion-grid>
     <ion-row>
@@ -22,14 +22,14 @@
     </ion-row>
 
     <ion-row>
-      <ion-col   >
-            <ion-label >Электро (день)</ion-label>
+      <ion-col>
+            <ion-label class="ion-label">Электро (день)</ion-label>
       </ion-col>
       <ion-col   >
-          <ion-label >12345</ion-label>
+          <ion-label >{{electroMeterT1}}</ion-label>
       </ion-col>
       <ion-col  >
-          <ion-label >12345</ion-label>
+          <ion-label >{{electroMeterT1}}</ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -37,10 +37,10 @@
             <ion-label >Электро (ночь)</ion-label>
       </ion-col>
       <ion-col   >
-          <ion-label >12345</ion-label>
+          <ion-label >{{electroMeterT2}}</ion-label>
       </ion-col>
       <ion-col  >
-          <ion-label >12345</ion-label>
+          <ion-label >{{electroMeterT2}}</ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -48,10 +48,10 @@
             <ion-label >Тепло</ion-label>
       </ion-col>
       <ion-col   >
-          <ion-label >12345</ion-label>
+          <ion-label >{{warmMeter}}</ion-label>
       </ion-col>
       <ion-col  >
-          <ion-label >12345</ion-label>
+          <ion-label >{{warmMeter}}</ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -59,10 +59,10 @@
             <ion-label >Вода (хол.)</ion-label>
       </ion-col>
       <ion-col   >
-          <ion-label >12345</ion-label>
+          <ion-label >{{waterColdMeter}}</ion-label>
       </ion-col>
       <ion-col  >
-          <ion-label >12345</ion-label>
+          <ion-label >{{waterColdMeter}}</ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -70,10 +70,10 @@
             <ion-label >Вода (гор.)</ion-label>
       </ion-col>
       <ion-col   >
-          <ion-label >12345</ion-label>
+          <ion-label >{{waterHotMeter}}</ion-label>
       </ion-col>
       <ion-col  >
-          <ion-label >12345</ion-label>
+          <ion-label >{{waterHotMeter}}</ion-label>
       </ion-col>
     </ion-row>
   </ion-grid>

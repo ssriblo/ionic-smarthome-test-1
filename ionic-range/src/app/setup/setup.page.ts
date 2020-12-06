@@ -14,8 +14,8 @@ import { AlertsPage } from "../pages/alerts/alerts.page";
   styleUrls: ['./setup.page.scss'],
 })
 export class SetupPage implements OnInit {
-  private comfortInpVal: number = 22.5;
-  private economInpVal: number = 18;
+  public comfortInpVal: number = 22.5;
+  public economInpVal: number = 18;
   private alertController = new AlertController()
   testOption: string [] = this.globalVar.GlobalTestOption;
 

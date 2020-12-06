@@ -152,8 +152,8 @@ if __name__ == "__main__":
             TV.waterT = DF8.waterT
             TV.electroMeterT1 = DF8.electroMeterT1
             TV.electroMeterT2 = DF8.electroMeterT2
-            TV.waterColdMeter = DF8.waterColdMeter
-            TV.waterHotMeter = DF8.waterHotMeter
+            TV.waterColdMeter = DF8.waterColdMeter/1000
+            TV.waterHotMeter = DF8.waterHotMeter/1000
             TV.warmMeter = DF8.warmMeter
 
             datavalue = ua.DataValue(ua.Variant(float(TV.weatherT), ua.VariantType.Float)) 
@@ -168,13 +168,13 @@ if __name__ == "__main__":
             ch_targetT.set_value(datavalue)
             
             try:
-                print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={float(TV.weatherT):4.2f}; ", end='')
-                print(f"electroMeterT1={DF8.electroMeterT1:6.2f}; electroMeterT2={DF8.electroMeterT2:6.2f};  ", end='')
-                print(f"waterColdMeter={DF8.waterColdMeter:2.0f}; waterHotMeter={DF8.waterHotMeter:2.0f}  ", end='')
-                print(f"warmMeter={DF8.warmMeter:2.0f}; TargetT={TV.targetT:4.2f}  ", end='')
+                print(f"roomT={TV.roomT:4.2f}; waterT={TV.waterT:4.2f}; weatherT={float(TV.weatherT):4.2f}; ", end='')
+                print(f"electroMeterT1={TV.electroMeterT1:6.2f}; electroMeterT2={TV.electroMeterT2:6.2f};  ", end='')
+                print(f"waterColdMeter={TV.waterColdMeter:6.2f}; waterHotMeter={TV.waterHotMeter:6.2f}  ", end='')
+                print(f"warmMeter={TV.warmMeter:2.0f}; TargetT={TV.targetT:4.2f}  ", end='')
                 TV.flags1 = DB2.flags1
                 TV.flags2 = DB2.flags2
-                print(f"FLAGs1_(byte0)={TV.flags1}; FLAGs2_(byte1)={TV.flags2}")
+                print(f"FLAGs1={TV.flags1}; FLAGs2={TV.flags2}")
             except:
                 e = sys.exc_info()
                 print( "EXCEPTION2: ", e[0], e[1])
