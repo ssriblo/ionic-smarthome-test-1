@@ -13,23 +13,23 @@ class DataParserF8(object):
         return self.ch.get_value()[2]
 ######################################
     @property
-    def mercuryV1(self):
+    def electroMeterT1(self):
         return self.ch.get_value()[4]
 ######################################
     @property
-    def mercuryV2(self):
+    def electroMeterT2(self):
         return self.ch.get_value()[5]
 ######################################
     @property
-    def proteyW(self):
+    def waterColdMeter(self):
         return self.ch.get_value()[6]
 ######################################
     @property
-    def weatherT(self):
+    def waterHotMeter(self):
         return self.ch.get_value()[7]
 ######################################
     @property
-    def targetT(self):
+    def warmMeter(self):
         return self.ch.get_value()[3]
 ######################################
 
