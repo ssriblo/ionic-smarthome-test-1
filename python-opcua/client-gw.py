@@ -168,7 +168,7 @@ if __name__ == "__main__":
             ch_targetT.set_value(datavalue)
             
             try:
-                print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={TV.weatherT:4.2f}; ", end='')
+                print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={float(TV.weatherT):4.2f}; ", end='')
                 print(f"electroMeterT1={DF8.electroMeterT1:6.2f}; electroMeterT2={DF8.electroMeterT2:6.2f};  ", end='')
                 print(f"waterColdMeter={DF8.waterColdMeter:2.0f}; waterHotMeter={DF8.waterHotMeter:2.0f}  ", end='')
                 print(f"warmMeter={DF8.warmMeter:2.0f}; TargetT={TV.targetT:4.2f}  ", end='')

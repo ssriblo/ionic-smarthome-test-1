@@ -100,7 +100,7 @@ class TempValLocal():
     def electroMeterT2(self, val):
         self.mydict['electroMeterT2'] = val
 ######################################
-    @warmMeter
+    @property
     def warmMeter(self):
         return self.mydict['warmMeter']
 
@@ -108,7 +108,7 @@ class TempValLocal():
     def warmMeter(self, val):
         self.mydict['warmMeter'] = val
 ######################################
-    @waterColdMeter
+    @property
     def waterColdMeter(self):
         return self.mydict['waterColdMeter']
 
@@ -116,7 +116,7 @@ class TempValLocal():
     def waterColdMeter(self, val):
         self.mydict['waterColdMeter'] = val
 ######################################
-    @waterHotMeter
+    @property
     def waterHotMeter(self):
         return self.mydict['waterHotMeter']
 
