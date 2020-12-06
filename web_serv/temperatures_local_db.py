@@ -17,12 +17,18 @@ class TempValLocal():
             self.mydict['economT'] = 14
         if 'waterT' not in self.mydict: 
             self.mydict['waterT'] = 35
-        if 'mercutyV1' not in self.mydict: 
-            self.mydict['mercutyV1'] = 0
-        if 'mercutyV2' not in self.mydict: 
-            self.mydict['mercutyV2'] = 0
-        if 'proteyW' not in self.mydict: 
-            self.mydict['proteyW'] = 0
+        if 'serversStatus' not in self.mydict: 
+            self.mydict['serversStatus'] = 0
+        if 'electroMeterT1' not in self.mydict: 
+            self.mydict['electroMeterT1'] = 0
+        if 'electroMeterT2' not in self.mydict: 
+            self.mydict['electroMeterT2'] = 0
+        if 'warmMeter' not in self.mydict: 
+            self.mydict['warmMeter'] = 0
+        if 'waterColdMeter' not in self.mydict: 
+            self.mydict['waterColdMeter'] = 0
+        if 'waterHotMeter' not in self.mydict: 
+            self.mydict['waterHotMeter'] = 0
         if 'weatherT' not in self.mydict: 
             self.mydict['weatherT'] = 1
         if 'flags1' not in self.mydict: 
@@ -79,28 +85,44 @@ class TempValLocal():
         self.mydict['serversStatus'] = val
 ######################################
     @property
-    def mercutyV1(self):
-        return self.mydict['mercutyV1']
+    def electroMeterT1(self):
+        return self.mydict['electroMeterT1']
 
-    @mercutyV1.setter
-    def mercutyV1(self, val):
-        self.mydict['mercutyV1'] = val
+    @electroMeterT1.setter
+    def electroMeterT1(self, val):
+        self.mydict['electroMeterT1'] = val
 ######################################
     @property
-    def mercutyV2(self):
-        return self.mydict['mercutyV2']
+    def electroMeterT2(self):
+        return self.mydict['electroMeterT2']
 
-    @mercutyV2.setter
-    def mercutyV2(self, val):
-        self.mydict['mercutyV2'] = val
+    @electroMeterT2.setter
+    def electroMeterT2(self, val):
+        self.mydict['electroMeterT2'] = val
 ######################################
-    @property
-    def proteyW(self):
-        return self.mydict['proteyW']
+    @warmMeter
+    def warmMeter(self):
+        return self.mydict['warmMeter']
 
-    @proteyW.setter
-    def proteyW(self, val):
-        self.mydict['proteyW'] = val
+    @warmMeter.setter
+    def warmMeter(self, val):
+        self.mydict['warmMeter'] = val
+######################################
+    @waterColdMeter
+    def waterColdMeter(self):
+        return self.mydict['waterColdMeter']
+
+    @waterColdMeter.setter
+    def waterColdMeter(self, val):
+        self.mydict['waterColdMeter'] = val
+######################################
+    @waterHotMeter
+    def waterHotMeter(self):
+        return self.mydict['waterHotMeter']
+
+    @waterHotMeter.setter
+    def waterHotMeter(self, val):
+        self.mydict['waterHotMeter'] = val
 ######################################
     @property
     def weatherT(self):

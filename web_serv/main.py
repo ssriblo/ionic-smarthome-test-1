@@ -174,25 +174,25 @@ def serversStatus():
     return {"value": value}
 
 ###############################################################################
-@app.route('/electroMeter_t1', methods=['GET']) 
-def electroMeter_t1():
+@app.route('/electroMeterT1', methods=['GET']) 
+def electroMeterT1():
     jwt = request.args.get('jwt')
 #    print("JWT: ", jwt)
     _tk = token.getToken(jwt)
 #    print("[serversStatus] _tk : ", _tk)
-    value = TV.electroMeter_t1 if (_tk != None) else None
-    print("[electroMeter_t1] value:  ", value)
+    value = TV.electroMeterT1 if (_tk != None) else None
+    print("[electroMeterT1] value:  ", value)
     return {"value": value}
 
 ###############################################################################
-@app.route('/electroMeter_t2', methods=['GET']) 
-def electroMeter_t2():
+@app.route('/electroMeterT2', methods=['GET']) 
+def electroMeterT2():
     jwt = request.args.get('jwt')
 #    print("JWT: ", jwt)
     _tk = token.getToken(jwt)
 #    print("[serversStatus] _tk : ", _tk)
-    value = TV.electroMeter_t2 if (_tk != None) else None
-    print("[electroMeter_t2] value:  ", value)
+    value = TV.electroMeterT2 if (_tk != None) else None
+    print("[electroMeterT2] value:  ", value)
     return {"value": value}
 
 ###############################################################################

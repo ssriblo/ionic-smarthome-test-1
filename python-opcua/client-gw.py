@@ -150,9 +150,11 @@ if __name__ == "__main__":
         while True:
             TV.roomT = DF8.roomT
             TV.waterT = DF8.waterT
-            TV.mercutyV1 = DF8.mercuryV1
-            TV.mercutyV2 = DF8.mercuryV2
-            TV.proteyW = DF8.proteyW
+            TV.electroMeterT1 = DF8.electroMeterT1
+            TV.electroMeterT2 = DF8.electroMeterT2
+            TV.waterColdMeter = DF8.waterColdMeter
+            TV.waterHotMeter = DF8.waterHotMeter
+            TV.warmMeter = DF8.warmMeter
 
             datavalue = ua.DataValue(ua.Variant(float(TV.weatherT), ua.VariantType.Float)) 
             try:
@@ -166,9 +168,10 @@ if __name__ == "__main__":
             ch_targetT.set_value(datavalue)
             
             try:
-                print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={DF8.weatherT:4.2f}; ", end='')
-                print(f"MercuryV1={DF8.mercuryV1:6.2f}; MercuryV2={DF8.mercuryV2:6.2f};  ", end='')
-                print(f"ProteyW={DF8.proteyW:2.0f}; TargetT={DF8.targetT:4.2f}  ", end='' )
+                print(f"roomT={DF8.roomT:4.2f}; waterT={DF8.waterT:4.2f}; weatherT={TV.weatherT:4.2f}; ", end='')
+                print(f"electroMeterT1={DF8.electroMeterT1:6.2f}; electroMeterT2={DF8.electroMeterT2:6.2f};  ", end='')
+                print(f"waterColdMeter={DF8.waterColdMeter:2.0f}; waterHotMeter={DF8.waterHotMeter:2.0f}  ", end='')
+                print(f"warmMeter={DF8.warmMeter:2.0f}; TargetT={TV.targetT:4.2f}  ", end='')
                 TV.flags1 = DB2.flags1
                 TV.flags2 = DB2.flags2
                 print(f"FLAGs1_(byte0)={TV.flags1}; FLAGs2_(byte1)={TV.flags2}")
