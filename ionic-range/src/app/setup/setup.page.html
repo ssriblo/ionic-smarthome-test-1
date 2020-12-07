@@ -73,20 +73,54 @@
     </ion-item>
 
 
-  <ion-row>
-    <ion-col>
-      <ion-button 
-        strong="true" 
-        shape="round" 
-        size="large" 
-        expand="full" 
-        color="primary"
-        (click)="deregistered()" 
-        disabled=false>Регистрация заново</ion-button>
-    </ion-col>
-  </ion-row>
-  <ion-item-divider color=#0000>
-    <div style="width: 100%; height: 35px;"></div>
-  </ion-item-divider>
+    <ion-row>
+      <ion-col>
+        <ion-button 
+          strong="true" 
+          shape="round" 
+          size="large" 
+          expand="full" 
+          color="primary"
+          (click)="deregistered()" 
+          disabled=false>Регистрация заново</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-item-divider color=#0000>
+      <div style="width: 100%; height: 35px;"></div>
+    </ion-item-divider>
+
+    <ion-row>
+        <ion-toolbar  color="secondary">
+          <ion-title><h1>Расписание</h1></ion-title>
+        </ion-toolbar>
+    </ion-row>
+    
+    <ion-row>       
+      <ion-col class="width-100" style="background-color:#3dc2ff ;">
+        <!-- Расписание -->
+                <ion-item class="inputarea">
+                  <ion-label ><h1>Комфорт</h1></ion-label>
+                  <ion-input 
+                    class="inputform"
+                    type="number"
+                    required=true
+                    placeholder="22.5"
+                    name=comfort-t
+                    debounce="2000"
+                    [(ngModel)]="comfortInpVal"
+                    (ionChange)="comfortInput()" >
+                  </ion-input>
+                </ion-item>
+      
+      </ion-col>
+      <ion-col class="width-100" style="background-color:#3dc2ff ;">
+        
+      </ion-col>
+      <ion-col class="width-100" style="background-color:#3dc2ff ;">
+        
+      </ion-col>
+
+    </ion-row>
+
   </ion-grid>
 </ion-content>
