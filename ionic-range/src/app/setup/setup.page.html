@@ -87,8 +87,10 @@
             (ionChange)="timeTableSetup()" >
           </ion-input>
           </ion-col>
-          <ion-col></ion-col>
-      </ion-row>
+          <ion-col>
+            <ion-icon size="large"  name="help-circle-outline" (click)=timeTableHelp()></ion-icon>
+          </ion-col>
+          </ion-row>
 
       <ion-row>
         <ion-col class="day" (click)="dayToggle()">Пн</ion-col>
@@ -139,7 +141,7 @@
       </ion-input>
       </ion-col>
       <ion-col>
-        <ion-icon size="large" name="arrow-back-outline" (click)=onClic></ion-icon>
+        <ion-icon size="large"  name="help-circle-outline" (click)=timeTableHelp()></ion-icon>
       </ion-col>
   </ion-row>
 
@@ -191,7 +193,9 @@
       (ionChange)="timeTableSetup()" >
     </ion-input>
     </ion-col>
-    <ion-col></ion-col>
+    <ion-col>
+      <ion-icon size="large"  name="help-circle-outline" (click)=timeTableHelp()></ion-icon>
+    </ion-col>
 </ion-row>
 
 <ion-row>
