@@ -18,7 +18,7 @@ export class AuthGuardService implements CanActivate {
       backdropDismiss: true,
       header: 'Внимание',
 //      subHeader: 'Subtitle',
-      message: 'Сначала надо зарегистритоваться, для этого приготовьте QR код регистрации и нажмите кнопку "Регистрация" ',
+      message: 'Сначала надо зарегистрироваться, для этого приготовьте QR код регистрации и нажмите кнопку "Регистрация" ',
       buttons: ['OK']
     });
 
