@@ -1,7 +1,40 @@
+.inputformTT{
+    border-radius: 5px !important;
+    text-align: center;
+    font-size: 1.0em;
+    border: 2px solid #f1f1f1 !important;
+    background: #a8dff8 !important;
+    padding: 3px 5px;
+}
 
+.cardTT{
+    border-radius: 8px !important;
+    padding: 3px 5px;
+}
+
+.inputline{
+    display: inline-block;
+}
+
+.day {
+    display: inline-block;
+    padding: 3px 5px;
+    color: #333;
+    background: #fff;
+    border: 1px solid #666;
+    border-radius: 3px;
+  }
+  .day.active {
+    color: #fff;
+    background: #666;
+  }
+  .KomfortTT{
+    background: #ffffff !important;
+    color: #333;
+}
 
 .inputform{
-    border-radius: 10px !important;
+    border-radius: 15px !important;
     margin-left: 15%;
     margin-right: 15%;
     text-align: center;
@@ -10,15 +43,6 @@
     background: #a8dff8 !important;
 }
 
-.inputform2{
-    border-radius: 10px !important;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    font-size: 1.5em;
-    border: 2px solid #f1f1f1 !important;
-    background: #a8dff8 !important;
-}
 .inputarea{
     background: #a8dff8 !important;
 }

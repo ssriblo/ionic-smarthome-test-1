@@ -18,6 +18,12 @@ export class SetupPage implements OnInit {
   public economInpVal: number = 18;
   private alertController = new AlertController()
   testOption: string [] = this.globalVar.GlobalTestOption;
+  titmetable_1_start: number = 0;
+  titmetable_1_end: number = 0;
+  titmetable_2_start: number = 0;
+  titmetable_2_end: number = 0;
+  titmetable_3_start: number = 0;
+  titmetable_3_end: number = 0;
 
   constructor( 
     public router: Router, 
@@ -83,7 +89,7 @@ export class SetupPage implements OnInit {
   deleteAllAlerts() {
     this.alertsPage.deleteAllAlerts()
   }
-  private async alertImitator() {
+  public async alertImitator() {
 
     // For TEST purpos only, need change to timetableSetup() for product!
 
@@ -168,4 +174,22 @@ export class SetupPage implements OnInit {
     });
     await alert.present();
   }
+  
+  timeTableSetup() {
+
+  }
+
+  dayToggle() {
+    console.log("Day Toggled")
+  }
+
+  timeTableHelp() {
+    // Alert page with help text
+      //     Интервал расписания, в которм будет задана температура КОМФОРТ
+      // - задается начальное и конечное время интервала (часы)
+      // - задаются дни недели, где этот интервал применим
+      // - вне интервалов будет задана температура ЭКОНОМ
+      // - активный интервал выделяется цветом
+  }
+
 }
