@@ -50,7 +50,7 @@
     <ion-title><h1>Расписание</h1></ion-title>
   </ion-toolbar>
 
-      <ion-card [class]="tt_active[0] ? 'cardTT' : 'cardTT active'">
+      <ion-card [class]="tt_active[0] ? 'cardTT active' : 'cardTT '">
         <ion-row>
           <ion-col class="KomfortTT">
             <ion-label ><h1>Комфорт</h1></ion-label>
@@ -101,7 +101,7 @@
     </ion-row>
   </ion-card>
 
-  <ion-card class="cardTT">
+  <ion-card [class]="tt_active[1] ? 'cardTT active' : 'cardTT '">
     <ion-row>
       <ion-col class="KomfortTT">
         <ion-label ><h1>Комфорт</h1></ion-label>
@@ -152,7 +152,7 @@
 </ion-row>
 </ion-card>
 
-<ion-card class="cardTT">
+<ion-card [class]="tt_active[2] ? 'cardTT active' : 'cardTT '">
   <ion-row>
     <ion-col class="KomfortTT">
       <ion-label ><h1>Комфорт</h1></ion-label>

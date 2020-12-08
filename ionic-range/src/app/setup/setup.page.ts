@@ -186,16 +186,16 @@ export class SetupPage implements OnInit {
   }
 
   dayToggle(i0:number, i1:number) {
+    this.tt_days[i0][i1] = !this.tt_days[i0][i1]
     let res = false;
     for (let val of this.tt_days[i0]) {
       if (val === true) {
         res = true;
         break;
       }
-      this.tt_active[i0] = res;
     }
-    console.log("dayToggle tt_active", i0, this.tt_active[0], res)
-    this.tt_days[i0][i1] = !this.tt_days[i0][i1]
+    this.tt_active[i0] = res;
+//    console.log("dayToggle tt_active", i0, this.tt_active[0], res)
     return res;
   }
 
