@@ -18,6 +18,18 @@ export class SetupPage implements OnInit {
   public economInpVal: number = 18;
   private alertController = new AlertController()
   testOption: string [] = this.globalVar.GlobalTestOption;
+  titmetable_1_start: number = 0;
+  titmetable_1_end: number = 0;
+  titmetable_2_start: number = 0;
+  titmetable_2_end: number = 0;
+  titmetable_3_start: number = 0;
+  titmetable_3_end: number = 0;
+  tt_days = [
+    [false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false],
+  ];
+  tt_active = [false, false, false];
 
   constructor( 
     public router: Router, 
@@ -83,7 +95,7 @@ export class SetupPage implements OnInit {
   deleteAllAlerts() {
     this.alertsPage.deleteAllAlerts()
   }
-  private async alertImitator() {
+  public async alertImitator() {
 
     // For TEST purpos only, need change to timetableSetup() for product!
 
@@ -125,15 +137,6 @@ export class SetupPage implements OnInit {
     });
     await alert.present();
   }
-  timetableSetup() {
-    // if (this.data.server == 'cloud') {
-    //   this.data.server = 'local'
-    //   this.data.display = "локальный"
-    // }else {
-    //   this.data.server = 'cloud'
-    //   this.data.display = "облачный"
-    // }
-  }
 
   deregistered() {
     this.presentAlert();
@@ -168,4 +171,46 @@ export class SetupPage implements OnInit {
     });
     await alert.present();
   }
+  
+  timeTableSetup() {
+
+  }
+
+  dayToggle(i0:number, i1:number) {
+    this.tt_days[i0][i1] = !this.tt_days[i0][i1]
+    let res = false;
+    for (let val of this.tt_days[i0]) {
+      if (val === true) {
+        res = true;
+        break;
+      }
+    }
+    this.tt_active[i0] = res;
+//    console.log("dayToggle tt_active", i0, this.tt_active[0], res)
+    return res;
+  }
+
+  public async timeTableHelp() {
+    // Alert page with help text
+      //     Интервал расписания, в которм будет задана температура КОМФОРТ
+      // - задается начальное и конечное время интервала (часы)
+      // - задаются дни недели, где этот интервал применим
+      // - вне интервалов будет задана температура ЭКОНОМ
+      // - активный интервал выделяется цветом
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        animated: true,
+        backdropDismiss: true,
+//        header: 'Помощь',
+        message: '<p><b>Интервал расписания, в которм будет задана температура КОМФОРТ</b></p> <ul><li>задается начальное и конечное время интервала (часы)</li> <li> задаются дни недели, где этот интервал применим</li> <li>вне интервалов будет задана температура ЭКОНОМ</li> <li> активный интервал выделяется цветом</li> </ul>',
+        buttons: [
+          {
+            text: 'ОК',
+            role: 'cancel',
+          },
+        ]
+      });
+      await alert.present();
+    }
+
 }
