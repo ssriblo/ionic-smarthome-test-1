@@ -207,9 +207,6 @@ export class SetupPage implements OnInit {
           {
             text: 'ОК',
             role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
           },
         ]
       });
