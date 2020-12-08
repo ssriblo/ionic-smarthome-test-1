@@ -18,12 +18,17 @@ export class SetupPage implements OnInit {
   public economInpVal: number = 18;
   private alertController = new AlertController()
   testOption: string [] = this.globalVar.GlobalTestOption;
-  titmetable_1_start: number = 0;
-  titmetable_1_end: number = 0;
-  titmetable_2_start: number = 0;
-  titmetable_2_end: number = 0;
-  titmetable_3_start: number = 0;
-  titmetable_3_end: number = 0;
+  tt_vals = [
+    {line0: "0", start:0, end:0},
+    {line1: "1", start:0, end:0},
+    {line2: "2", start:0, end:0},
+  ]
+  products = [
+    { product: "Salt", quantity: 23, price: 4567 },
+    { product: "Sugar", quantity: 12, price: 21 }
+  ];
+
+
   tt_days = [
     [false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false],
@@ -172,8 +177,17 @@ export class SetupPage implements OnInit {
     await alert.present();
   }
   
-  timeTableSetup() {
-
+  timeTableSetup(ind) {
+    console.log("[timetableSetup", ind, this.tt_vals[ind].start, this.tt_vals[ind].end)
+    let start = this.tt_vals[ind].start
+    let end = this.tt_vals[ind].end
+    if (start > 23) {start = 23}
+    if (end > 23) {end = 23}
+    if (start < 0) {start = 0}
+    // if (end < 0) {end = 0}
+    // if (end > start ) {end = start}
+    this.tt_vals[ind].start = Math.round(start)
+    this.tt_vals[ind].end = Math.round(end)
   }
 
   dayToggle(i0:number, i1:number) {
@@ -191,18 +205,17 @@ export class SetupPage implements OnInit {
   }
 
   public async timeTableHelp() {
-    // Alert page with help text
-      //     Интервал расписания, в которм будет задана температура КОМФОРТ
-      // - задается начальное и конечное время интервала (часы)
-      // - задаются дни недели, где этот интервал применим
-      // - вне интервалов будет задана температура ЭКОНОМ
-      // - активный интервал выделяется цветом
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         animated: true,
         backdropDismiss: true,
 //        header: 'Помощь',
-        message: '<p><b>Интервал расписания, в которм будет задана температура КОМФОРТ</b></p> <ul><li>задается начальное и конечное время интервала (часы)</li> <li> задаются дни недели, где этот интервал применим</li> <li>вне интервалов будет задана температура ЭКОНОМ</li> <li> активный интервал выделяется цветом</li> </ul>',
+        message: '<p><b>Интервал расписания, в которм будет задана температура КОМФОРТ</b></p> \
+          <ul><li>задается начальное и конечное время интервала (часы)</li> \
+          <li> задаются дни недели, где этот интервал применим</li> \
+          <li>вне интервалов будет задана температура ЭКОНОМ</li> \
+          <li>левое поле - начальное время, правое поле - конечное время интервала</li> \
+          <li> активный интервал выделяется цветом</li> </ul>',
         buttons: [
           {
             text: 'ОК',

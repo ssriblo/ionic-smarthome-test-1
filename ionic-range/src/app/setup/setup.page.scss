@@ -1,7 +1,7 @@
 .inputformTT{
     border-radius: 5px !important;
     text-align: center;
-    font-size: 1.0em;
+    font-size: 1.5em;
     border: 2px solid #f1f1f1 !important;
     background: #a8dff8 !important;
     padding: 3px 5px;
@@ -41,6 +41,8 @@
   .KomfortTT{
     background: #ffffff !important;
     color: #333;
+    align-items: center;
+    justify-content: center;
 }
 
 .inputform{
@@ -69,3 +71,10 @@ ion-select {
     /* Set full opacity on the placeholder */
     --placeholder-opacity: 1;
   }
+
+  ion-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
