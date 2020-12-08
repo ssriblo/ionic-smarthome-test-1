@@ -5,8 +5,9 @@ import { ApiService } from '../services/api.service';
 import { AlertController } from '@ionic/angular';
 import { GlobalService } from "../services/global.service";
 import { StorageService, Item } from "../services/storage.service";
-import {UUID} from 'uuid-generator-ts';
 import { AlertsPage } from "../pages/alerts/alerts.page";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+
 
 @Component({
   selector: 'app-setup',
@@ -30,6 +31,8 @@ export class SetupPage implements OnInit {
     [false, false, false, false, false, false, false],
   ];
   tt_active = [false, false, false];
+  ionicForm: FormGroup;
+  isSubmitted = false;
 
   constructor( 
     public router: Router, 
@@ -38,6 +41,7 @@ export class SetupPage implements OnInit {
     public globalVar: GlobalService,
     private storageService: StorageService,
     private alertsPage: AlertsPage,
+    public formBuilder: FormBuilder,
     ) { }
 
   ngOnInit() {
@@ -45,6 +49,11 @@ export class SetupPage implements OnInit {
     this.getEconomT();
 //    this.setServerOption(true);
     console.log('setup.page.ts - ngOnInit()', this.testOption)
+
+    this.ionicForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+    })
+
   }
 
   setTestOption() {
@@ -211,6 +220,20 @@ export class SetupPage implements OnInit {
         ]
       });
       await alert.present();
+    }
+
+    get errorControl() {
+      return this.ionicForm.controls;
+    }
+
+    submitForm() {
+      this.isSubmitted = true;
+      if (!this.ionicForm.valid) {
+        console.log('Please provide all the required values!')
+        return false;
+      } else {
+        console.log(this.ionicForm.value)
+      }
     }
 
 }
