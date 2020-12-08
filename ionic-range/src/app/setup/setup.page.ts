@@ -137,15 +137,6 @@ export class SetupPage implements OnInit {
     });
     await alert.present();
   }
-  timetableSetup() {
-    // if (this.data.server == 'cloud') {
-    //   this.data.server = 'local'
-    //   this.data.display = "локальный"
-    // }else {
-    //   this.data.server = 'cloud'
-    //   this.data.display = "облачный"
-    // }
-  }
 
   deregistered() {
     this.presentAlert();
@@ -199,13 +190,30 @@ export class SetupPage implements OnInit {
     return res;
   }
 
-  timeTableHelp() {
+  public async timeTableHelp() {
     // Alert page with help text
       //     Интервал расписания, в которм будет задана температура КОМФОРТ
       // - задается начальное и конечное время интервала (часы)
       // - задаются дни недели, где этот интервал применим
       // - вне интервалов будет задана температура ЭКОНОМ
       // - активный интервал выделяется цветом
-  }
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        animated: true,
+        backdropDismiss: true,
+        header: 'Помощь',
+        message: 'Интервал расписания, в которм будет задана температура КОМФОРТ - задается начальное и конечное время интервала (часы) - задаются дни недели, где этот интервал применим - вне интервалов будет задана температура ЭКОНОМ  - активный интервал выделяется цветом ',
+        buttons: [
+          {
+            text: 'ОК',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+        ]
+      });
+      await alert.present();
+    }
 
 }
