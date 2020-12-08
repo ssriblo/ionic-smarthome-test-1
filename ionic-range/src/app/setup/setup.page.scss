@@ -10,7 +10,17 @@
 .cardTT{
     border-radius: 8px !important;
     padding: 3px 5px;
+//    border: 2px solid #545ca7;
+//    background: #a8dff8 !important;
 }
+
+.cardTT.active{
+    border-radius: 8px !important;
+    padding: 3px 5px;
+    border: 3px solid #545ca7;
+//    background: #a8dff8 !important;
+}
+
 
 .inputline{
     display: inline-block;

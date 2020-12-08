@@ -24,6 +24,12 @@ export class SetupPage implements OnInit {
   titmetable_2_end: number = 0;
   titmetable_3_start: number = 0;
   titmetable_3_end: number = 0;
+  tt_days = [
+    [false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false],
+  ];
+  tt_active = [false, false, false];
 
   constructor( 
     public router: Router, 
@@ -179,8 +185,18 @@ export class SetupPage implements OnInit {
 
   }
 
-  dayToggle() {
-    console.log("Day Toggled")
+  dayToggle(i0:number, i1:number) {
+    let res = false;
+    for (let val of this.tt_days[i0]) {
+      if (val === true) {
+        res = true;
+        break;
+      }
+      this.tt_active[i0] = res;
+    }
+    console.log("dayToggle tt_active", i0, this.tt_active[0], res)
+    this.tt_days[i0][i1] = !this.tt_days[i0][i1]
+    return res;
   }
 
   timeTableHelp() {
