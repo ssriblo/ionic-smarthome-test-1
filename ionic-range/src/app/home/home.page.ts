@@ -28,6 +28,10 @@ export class HomePage  implements OnInit  {
   isFillComfort = "solid";
   isFillEconom = "outline";
   isFillTimetable = "outline";
+  isDisabledTimetable = false
+  isDisabledComfort = false
+  isDisabledEconom = false
+  isMode = "Comfort"; // may be ["Timetable", "Comfort", "Econom"]
 
   constructor(
     public platform:Platform, 
@@ -38,32 +42,12 @@ export class HomePage  implements OnInit  {
     public globalVar: GlobalService,
     private alertsPage: AlertsPage,
     private menu: MenuController,
+
     ) {}
 
   ngOnInit() {
     this.platform.ready().then(()=>{
-      this.storage.get('targetT').then((val) => {
-//        console.log('[ngOnInit] HOME-targetT is', val)
-      });
-
-      this.room_t_s  = "20.5"
-      this.storage.get('targetT').then((val) => {
-        if(val){
-          this.rangeVal = val
-          this.storage.get('comfortT').then((val) => {
-            this.comfortT = val;
-          });
-          this.storage.get('economT').then((val) => {
-            this.economT = val;
-          });
-//          console.log('[ngOnInit home.page.js]: targetT is', val, 'Comfort:', this.comfortT, 'Econom:', this.economT)      
-        }else{
-          val = 22;
-          this.rangeVal = val;
-          this.storage.set('targetT', val);
-          console.log('[ngOnInit home.page.js]: targetT is', val)
-        }
-      });
+      this.initVars();
       document.getElementById("version").innerHTML = environment.version;
 //      document.getElementById("server-option").innerHTML = environment.serverLoc
     }) // this.platform.ready().then()
@@ -92,6 +76,36 @@ export class HomePage  implements OnInit  {
       }
       },60000);       
   } // ngOnInit() finished
+
+  initVars() {
+    this.room_t_s  = "20.5"
+    this.storage.get('targetT').then((val) => {
+      if(val){ this.rangeVal = val }else{
+        val = 22;
+        this.rangeVal = val;
+        this.storage.set('targetT', val);
+        console.log('[ngOnInit home.page.js]: targetT ', val)
+      }
+    });
+    this.storage.get('comfortT').then((val) => {
+      if(val){ this.comfortT = val }else{
+        val = 22;
+        this.comfortT = val;
+        this.storage.set('comfortT', val);
+        console.log('[ngOnInit home.page.js]: comfortT ', val)
+      }
+    });
+    this.storage.get('economT').then((val) => {
+      if(val){ this.economT = val }else{
+        val = 22;
+        this.economT = val;
+        this.storage.set('economT', val);
+        console.log('[ngOnInit home.page.js]: economT ', val)
+      }
+    });
+
+  } // initVars()
+
 
   async isActiveApp() {
     return (await App.getState()).isActive
@@ -134,7 +148,6 @@ export class HomePage  implements OnInit  {
     this.storage.set('targetT', this.rangeVal);
     this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
   }
-  isDisabledTimetable = true
 
   clickComfort() {
     this.isFillComfort = "solid"
@@ -155,7 +168,17 @@ export class HomePage  implements OnInit  {
   }
 
   clickTimetable() {
-    console.log('[clickTimetable]')
+    this.isFillComfort = "outline"
+    this.isFillEconom = "outline"
+    this.isFillTimetable = "solid"
+    let val = this.timeTableVal()
+    console.log('[clickTimetable]: TartetT is', val)
+    this.rangeVal = (val == null)? 22.5 * 10 : val * 10
   }
+
+  timeTableVal() {
+    return 20.5
+  }
+
 }
 

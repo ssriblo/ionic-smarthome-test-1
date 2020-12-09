@@ -7,6 +7,8 @@ import { GlobalService } from "../services/global.service";
 import { StorageService, Item } from "../services/storage.service";
 import {UUID} from 'uuid-generator-ts';
 import { AlertsPage } from "../pages/alerts/alerts.page";
+import { TimetableService } from "../services/timetable.service"
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-setup',
@@ -18,23 +20,9 @@ export class SetupPage implements OnInit {
   public economInpVal: number = 18;
   private alertController = new AlertController()
   testOption: string [] = this.globalVar.GlobalTestOption;
-  tt_vals = [
-    {line0: "0", start:0, end:0},
-    {line1: "1", start:0, end:0},
-    {line2: "2", start:0, end:0},
-  ]
-  products = [
-    { product: "Salt", quantity: 23, price: 4567 },
-    { product: "Sugar", quantity: 12, price: 21 }
-  ];
-
-
-  tt_days = [
-    [false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false],
-  ];
-  tt_active = [false, false, false];
+  tt_vals: any;
+  tt_days: any;
+  tt_active: any;
 
   constructor( 
     public router: Router, 
@@ -43,13 +31,25 @@ export class SetupPage implements OnInit {
     public globalVar: GlobalService,
     private storageService: StorageService,
     private alertsPage: AlertsPage,
+    private timeTableService: TimetableService,
+    public platform:Platform, 
     ) { }
 
   ngOnInit() {
-    this.getComfortT();
-    this.getEconomT();
-//    this.setServerOption(true);
-    console.log('setup.page.ts - ngOnInit()', this.testOption)
+
+    this.platform.ready().then(()=>{
+      this.getComfortT();
+      this.getEconomT();
+      this.getTimeTable();
+  //    this.setServerOption(true);
+      console.log('setup.page.ts - ngOnInit()', this.testOption)    
+    }) 
+  }
+
+  getTimeTable() {
+    this.tt_vals = this.timeTableService.getTimeTable_vals()
+    this.tt_days = this.timeTableService.getTimeTable_days()
+    this.tt_active = this.timeTableService.getTimeTable_active()
   }
 
   setTestOption() {
@@ -188,6 +188,7 @@ export class SetupPage implements OnInit {
     // if (end > start ) {end = start}
     this.tt_vals[ind].start = Math.round(start)
     this.tt_vals[ind].end = Math.round(end)
+    this.timeTableService.updateTimeTable_vals(this.tt_vals)
   }
 
   dayToggle(i0:number, i1:number) {
@@ -201,29 +202,32 @@ export class SetupPage implements OnInit {
     }
     this.tt_active[i0] = res;
 //    console.log("dayToggle tt_active", i0, this.tt_active[0], res)
+    this.timeTableService.updateTimeTable_days(this.tt_days)
+    this.timeTableService.updateTimeTable_active(this.tt_active)
     return res;
   }
 
   public async timeTableHelp() {
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        animated: true,
-        backdropDismiss: true,
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      animated: true,
+      backdropDismiss: true,
 //        header: 'Помощь',
-        message: '<p><b>Интервал расписания, в которм будет задана температура КОМФОРТ</b></p> \
-          <ul><li>задается начальное и конечное время интервала (часы)</li> \
-          <li> задаются дни недели, где этот интервал применим</li> \
-          <li>вне интервалов будет задана температура ЭКОНОМ</li> \
-          <li>левое поле - начальное время, правое поле - конечное время интервала</li> \
-          <li> активный интервал выделяется цветом</li> </ul>',
-        buttons: [
-          {
-            text: 'ОК',
-            role: 'cancel',
-          },
-        ]
-      });
-      await alert.present();
-    }
+      message: '<p><b>Интервал расписания, в которм будет задана температура КОМФОРТ</b></p> \
+        <ul><li>задается начальное и конечное время интервала (часы)</li> \
+        <li> задаются дни недели, где этот интервал применим</li> \
+        <li>вне интервалов будет задана температура ЭКОНОМ</li> \
+        <li>левое поле - начальное время, правое поле - конечное время интервала</li> \
+        <li> активный интервал выделяется цветом</li> </ul>',
+      buttons: [
+        {
+          text: 'ОК',
+          role: 'cancel',
+        },
+      ]
+    });
+    await alert.present();
+  }
+  
 
 }
