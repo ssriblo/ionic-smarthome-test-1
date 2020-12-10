@@ -26,7 +26,7 @@ export class HomePage  implements OnInit  {
   economT: number;
   weather_t_s:string = "";
   room_t_s:string = "";
-  isFillComfort = "solid";
+  isFillComfort = "outline";
   isFillEconom = "outline";
   isFillTimetable = "outline";
   isDisabledTimetable = false
@@ -132,16 +132,17 @@ export class HomePage  implements OnInit  {
   //////////////
   private  updateRangeDisplay() {
     console.log('[updateRange] rangeVal, Comfort Econom', this.rangeVal, this.comfortT, this.economT)
-    if ((this.rangeVal != this.comfortT * 10) && (this.rangeVal != this.economT * 10)) {
-      this.isFillComfort = "outline"
-      this.isFillEconom = "outline"
-    }
-    if (this.rangeVal == this.comfortT * 10 ) {
-      this.isFillComfort = "solid"
-    }
-    if (this.rangeVal == this.economT * 10) {
-      this.isFillEconom = "solid"
-    }
+    // Does not needed -> Buttons handlers deal with this more properly:
+    // if ((this.rangeVal != this.comfortT * 10) && (this.rangeVal != this.economT * 10)) {
+    //   this.isFillComfort = "outline"
+    //   this.isFillEconom = "outline"
+    // }
+    // if (this.rangeVal == this.comfortT * 10 ) {
+    //   this.isFillComfort = "solid"
+    // }
+    // if (this.rangeVal == this.economT * 10) {
+    //   this.isFillEconom = "solid"
+    // }
   }
 
   updateRange() {
@@ -153,6 +154,7 @@ export class HomePage  implements OnInit  {
   clickComfort() {
     this.isFillComfort = "solid"
     this.isFillEconom = "outline"
+    this.isFillTimetable = "outline"
     this.storage.get('comfortT').then((val) => {
       console.log('[clickComfort]: comfortT is', val)
       this.rangeVal = (val == null)? 22.5 * 10 : val * 10
@@ -162,6 +164,7 @@ export class HomePage  implements OnInit  {
   clickEconom() {
     this.isFillComfort = "outline"
     this.isFillEconom = "solid"
+    this.isFillTimetable = "outline"
     this.storage.get('economT').then((val) => {
       console.log('[clickEconom]: economT is', val)
       this.rangeVal = (val == null)? 18.5 * 10 : val * 10
@@ -172,13 +175,17 @@ export class HomePage  implements OnInit  {
     this.isFillComfort = "outline"
     this.isFillEconom = "outline"
     this.isFillTimetable = "solid"
-    let val = this.timeTableVal()
-    console.log('[clickTimetable]: TartetT is', val)
-    this.rangeVal = (val == null)? 22.5 * 10 : val * 10
-  }
-
-  timeTableVal() {
-    return 20.5
+    let res = 0;
+    if (this.timeTableService.targetIsComfort() === true ) {
+      this.storage.get('comfortT').then((val) => {
+        this.rangeVal = val * 10
+      });
+    }else {
+      this.storage.get('economT').then((val) => {
+        this.rangeVal = val * 10
+      });
+    }
+    console.log('[clickTimetable]: TartetT is', this.rangeVal)
   }
 
 }

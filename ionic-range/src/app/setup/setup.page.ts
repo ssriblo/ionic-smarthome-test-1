@@ -38,13 +38,21 @@ export class SetupPage implements OnInit {
 
   ngOnInit() {
     this.platform.ready().then(()=>{
-    setTimeout(()=> {
-      console.log("[setup.page ngOnInit]: after 5s");
       this.getComfortT();
       this.getEconomT();
-      this.getTimeTable();
+      setTimeout(()=> {
+        console.log("[setup.page ngOnInit]: after 5s");
+        this.getTimeTable();
+        this.getComfortT();
+        this.getEconomT();
       }, 2000);
     }) 
+
+    setInterval(async ()=> {
+      this.getTimeTable();
+    },60000);   
+
+
   }
 
   getTimeTable() {
