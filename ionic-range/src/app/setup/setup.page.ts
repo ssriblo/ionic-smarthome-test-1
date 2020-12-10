@@ -32,7 +32,7 @@ export class SetupPage implements OnInit {
     private storageService: StorageService,
     private alertsPage: AlertsPage,
     private timeTableService: TimetableService,
-    public platform:Platform, 
+    public platform:Platform,  
     ) { }
 
   ngOnInit() {
@@ -47,6 +47,7 @@ export class SetupPage implements OnInit {
   }
 
   getTimeTable() {
+    this.timeTableService.timeTableInit(false)
     this.tt_vals = this.timeTableService.getTimeTable_vals()
     this.tt_days = this.timeTableService.getTimeTable_days()
     this.tt_active = this.timeTableService.getTimeTable_active()

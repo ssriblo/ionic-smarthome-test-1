@@ -25,7 +25,7 @@ export class TimetableService {
       this.timeTableInit(false);
   }
 
-  private timeTableInit(isCleared: boolean) {
+  timeTableInit(isCleared: boolean) {
     if (isCleared === true) {
       this.storage.remove('tt_vals')
       this.storage.remove('tt_days')
