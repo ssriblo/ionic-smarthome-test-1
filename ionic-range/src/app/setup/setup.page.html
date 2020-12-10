@@ -92,6 +92,9 @@
         <ion-col [class]="tt_days[i][5] ? 'day active' : 'day'" (click)="dayToggle(i,5)">Сб</ion-col>
         <ion-col [class]="tt_days[i][6] ? 'day active' : 'day'" (click)="dayToggle(i,6)">Вс</ion-col>
     </ion-row>
+    <ion-row>
+      <ion-label [class]="isErrorInterval[i] ? 'timeTableErrorOff' : 'timeTableErrorOn'">Начало интервала должно быть меньше конца интервала</ion-label>
+    </ion-row>
   </ion-card>
 
 <ion-item-divider color=#0000>

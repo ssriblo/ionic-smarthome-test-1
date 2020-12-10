@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 import { GlobalService } from "../services/global.service";
 import { AlertsPage } from "../pages/alerts/alerts.page";
 import { MenuController } from '@ionic/angular';
+import { TimetableService } from "../services/timetable.service"
 
 const { App } = Plugins;
 
@@ -42,7 +43,7 @@ export class HomePage  implements OnInit  {
     public globalVar: GlobalService,
     private alertsPage: AlertsPage,
     private menu: MenuController,
-
+    private timeTableService: TimetableService,
     ) {}
 
   ngOnInit() {

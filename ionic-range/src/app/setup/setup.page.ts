@@ -23,6 +23,7 @@ export class SetupPage implements OnInit {
   tt_vals: any;
   tt_days: any;
   tt_active: any;
+  isErrorInterval: boolean [] = [false, false, false];
 
   constructor( 
     public router: Router, 
@@ -36,13 +37,13 @@ export class SetupPage implements OnInit {
     ) { }
 
   ngOnInit() {
-
     this.platform.ready().then(()=>{
+    setTimeout(()=> {
+      console.log("[setup.page ngOnInit]: after 5s");
       this.getComfortT();
       this.getEconomT();
       this.getTimeTable();
-  //    this.setServerOption(true);
-      console.log('setup.page.ts - ngOnInit()', this.testOption)    
+      }, 2000);
     }) 
   }
 
@@ -102,9 +103,6 @@ export class SetupPage implements OnInit {
     this.alertsPage.deleteAllAlerts()
   }
   public async alertImitator() {
-
-    // For TEST purpos only, need change to timetableSetup() for product!
-
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       animated: true,
@@ -179,14 +177,16 @@ export class SetupPage implements OnInit {
   }
   
   timeTableSetup(ind) {
-    console.log("[timetableSetup", ind, this.tt_vals[ind].start, this.tt_vals[ind].end)
     let start = this.tt_vals[ind].start
     let end = this.tt_vals[ind].end
     if (start > 23) {start = 23}
-    if (end > 23) {end = 23}
+    if (end > 24) {end = 24}
     if (start < 0) {start = 0}
-    // if (end < 0) {end = 0}
-    // if (end > start ) {end = start}
+    if (end < 1) {end = 1}
+//    this.isErrorInterval[ind] = (start < end)? true : false
+    if (start < end) {this.isErrorInterval[ind]=true}
+    if (start >= end) {this.isErrorInterval[ind]=false}
+//    console.log("[timetableSetup]", ind, this.tt_vals[ind].start, this.tt_vals[ind].end, this.isErrorInterval[ind])
     this.tt_vals[ind].start = Math.round(start)
     this.tt_vals[ind].end = Math.round(end)
     this.timeTableService.updateTimeTable_vals(this.tt_vals)
@@ -219,7 +219,11 @@ export class SetupPage implements OnInit {
         <li> задаются дни недели, где этот интервал применим</li> \
         <li>вне интервалов будет задана температура ЭКОНОМ</li> \
         <li>левое поле - начальное время, правое поле - конечное время интервала</li> \
-        <li> активный интервал выделяется цветом</li> </ul>',
+        <li>активный интервал выделяется цветом</li> </ul> \
+        <li>начальный интервал времени не может быть больше 23</li> \
+        <li>конечный интервал времени не может быть меньше 1 и больше 24</li> \
+        <li>если начальный интервал равен конечному, то это нулевой интервал</li> \
+        <li>для выбора суток полностью надо указать 0 - 24</li>' ,
       buttons: [
         {
           text: 'ОК',
@@ -228,6 +232,8 @@ export class SetupPage implements OnInit {
       ]
     });
     await alert.present();
+    this.timeTableService.targetIsComfort() // Just for debug only
+//    this.timeTableSetup() // Just for debug only
   }
   
 
