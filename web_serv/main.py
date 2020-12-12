@@ -230,6 +230,19 @@ def waterHotMeter():
 
 ###############################################################################
 ###############################################################################
+###############################################################################
+@app.route('/updateTimeTable', methods=['POST']) 
+def updateTimeTable():
+    body = request.json
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[updateTimeTable] _tk : ", _tk)
+    if (_tk != None):
+        print("[updateTimeTable] RETURN OK  body.value: ", body)
+    return {'value': str(TV.targetT)}
+
+###############################################################################
 @app.route('/updateTargetTemperature', methods=['POST']) 
 def updateTargetTemperature():
     body = request.json

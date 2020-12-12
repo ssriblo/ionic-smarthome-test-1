@@ -33,6 +33,9 @@ export class HomePage  implements OnInit  {
   isDisabledComfort = false
   isDisabledEconom = false
   isMode = "Comfort"; // may be ["Timetable", "Comfort", "Econom"]
+  tt_vals: any;
+  tt_days: any;
+  tt_active: any;
 
   constructor(
     public platform:Platform, 
@@ -149,6 +152,17 @@ export class HomePage  implements OnInit  {
     this.updateRangeDisplay()
     this.storage.set('targetT', this.rangeVal);
     this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
+
+    this.tt_vals = this.timeTableService.timeTableInit(false)
+    this.tt_vals = this.timeTableService.getTimeTable_vals()
+    console.log("tt_vals", this.tt_vals[0][0], this.tt_vals[0][1])
+    this.apiService.postApi('updateTimeTable', {
+      "id":"timetable", 
+      "value": [
+            {"line0": 25},
+            {"line1": 26},
+          ]
+    })
   }
 
   clickComfort() {
