@@ -35,6 +35,16 @@ class TempValLocal():
             self.mydict['flags1'] = 0
         if 'flags2' not in self.mydict: 
             self.mydict['flags2'] = 0
+        if 'timetable' not in self.mydict: 
+            self.mydict['timetable'] = {}
+######################################
+    @property
+    def timetable(self):
+        return self.mydict['timetable']
+
+    @timetable.setter
+    def timetable(self, val):
+        self.mydict['timetable'] = val
 ######################################
     @property
     def targetT(self):
