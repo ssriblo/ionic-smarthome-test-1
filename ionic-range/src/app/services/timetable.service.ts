@@ -6,6 +6,8 @@ import { ApiService } from '../services/api.service';
   providedIn: 'root'
 })
 export class TimetableService {
+  mode:string = "Comfort"; // may be ["Timetable", "Comfort", "Econom"]
+
   tt_vals = [
     {line0: "0", start:0, end:1},
     {line1: "1", start:0, end:1},
@@ -29,10 +31,18 @@ export class TimetableService {
 
   public timeTableInit(isCleared: boolean) {
     if (isCleared === true) {
+      this.storage.remove('mode')
       this.storage.remove('tt_vals')
       this.storage.remove('tt_days')
       this.storage.remove('tt_active')
     }
+    this.storage.get('mode').then((val) => {
+      //      console.log('[timeTableInit] mode is', val);
+            if(val){ this.mode = val }else{
+              this.storage.set('mode', this.mode);
+              console.log('[timeTableInit]: mode init', this.mode)
+            }
+          }); 
     this.storage.get('tt_vals').then((val) => {
 //      console.log('[timeTableInit] tt_vals is', val);
       if(val){ this.tt_vals = val }else{

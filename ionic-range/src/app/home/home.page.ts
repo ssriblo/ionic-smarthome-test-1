@@ -32,10 +32,10 @@ export class HomePage  implements OnInit  {
   isDisabledTimetable = false
   isDisabledComfort = false
   isDisabledEconom = false
-  isMode = "Comfort"; // may be ["Timetable", "Comfort", "Econom"]
-  tt_vals: any;
-  tt_days: any;
-  tt_active: any;
+  mode:string = ""; // may be ["Timetable", "Comfort", "Econom"]
+  tt_vals:any;
+  tt_days:any;
+  tt_active:any;
 
   constructor(
     public platform:Platform, 
@@ -132,27 +132,9 @@ export class HomePage  implements OnInit  {
     this.menu.toggle();
   }
 
-  //////////////
-  private  updateRangeDisplay() {
-    console.log('[updateRange] rangeVal, Comfort Econom', this.rangeVal, this.comfortT, this.economT)
-    // Does not needed -> Buttons handlers deal with this more properly:
-    // if ((this.rangeVal != this.comfortT * 10) && (this.rangeVal != this.economT * 10)) {
-    //   this.isFillComfort = "outline"
-    //   this.isFillEconom = "outline"
-    // }
-    // if (this.rangeVal == this.comfortT * 10 ) {
-    //   this.isFillComfort = "solid"
-    // }
-    // if (this.rangeVal == this.economT * 10) {
-    //   this.isFillEconom = "solid"
-    // }
-  }
-
   updateRange() {
-    this.updateRangeDisplay()
     this.storage.set('targetT', this.rangeVal);
     this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
-    this.timeTableService.postTimeTable();
   }
 
   clickComfort() {
@@ -190,6 +172,7 @@ export class HomePage  implements OnInit  {
       });
     }
     console.log('[clickTimetable]: TartetT is', this.rangeVal)
+    this.timeTableService.postTimeTable();
   }
 
 }
