@@ -36,7 +36,7 @@ export class HomePage  implements OnInit  {
   tt_vals:any;
   tt_days:any;
   tt_active:any;
-  progress = 0.20;   
+  progress = 0;   
 
 
   constructor(
@@ -67,15 +67,15 @@ export class HomePage  implements OnInit  {
     });
 
     setInterval( () => {  
-      this.progress += .333;  
-    }, 1000 );  
+      this.progress += .1;  
+    }, 250 );  
       
     setTimeout(()=> {
       console.log("[setTimeout]: after 5s");
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
       this.getTimeTable();
-    }, 3000);
+    }, 2500);
 
     setInterval(async ()=> {
       const isActive = this.isActiveApp();

@@ -24,6 +24,7 @@ export class SetupPage implements OnInit {
   tt_days: any;
   tt_active: any;
   isErrorInterval: boolean [] = [false, false, false];
+  progress = 0;   
 
   constructor( 
     public router: Router, 
@@ -41,7 +42,12 @@ export class SetupPage implements OnInit {
       this.getComfortT();
       this.getEconomT();
 
-      setTimeout(()=> {
+
+    setInterval( () => {  
+      this.progress += .1;  
+    }, 250 ); 
+
+    setTimeout(()=> {
         console.log("[setup.page ngOnInit]: after 5s");
         this.getTimeTable();
         this.getComfortT();

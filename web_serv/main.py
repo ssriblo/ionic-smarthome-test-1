@@ -239,6 +239,7 @@ def updateTimeTable():
     _tk = token.getToken(jwt)
 #    print("[updateTimeTable] _tk : ", _tk)
     if (_tk != None):
+        TV.timetable = body
         print("[updateTimeTable] RETURN OK  body.value: ", body)
     return {'value': str(TV.targetT)}
 
@@ -253,6 +254,8 @@ def updateTargetTemperature():
     if (_tk != None):
         TV.targetT = body['value']
         print("[update_target_temperature] RETURN OK  body.value: ", body,  body['value'])
+        print("[update_target_temperature] TIMETABLE: ", TV.timetable)
+
     return {'value': str(TV.targetT)}
 
 ###############################################################################
