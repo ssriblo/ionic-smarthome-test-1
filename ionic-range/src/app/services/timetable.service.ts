@@ -6,7 +6,7 @@ import { ApiService } from '../services/api.service';
   providedIn: 'root'
 })
 export class TimetableService {
-  mode:string = "Comfort"; // may be ["Timetable", "Comfort", "Econom"]
+  mode:string = ""; // may be ["Timetable", "Comfort", "Econom"]
 
   tt_vals = [
     {line0: "0", start:0, end:1},
@@ -66,22 +66,23 @@ export class TimetableService {
     }); 
   }
 
+  public getTimeTable_mode() { return this.mode } 
   public getTimeTable_vals() { return this.tt_vals } 
-
   public getTimeTable_days() { return this.tt_days }
-  
   public getTimeTable_active() { return this.tt_active }
 
-  public updateTimeTable_vals(val) { 
+  public updateTimeTable_mode(val:string) { 
+    this.storage.set('mode', val);
+    this.mode = val; 
+  }
+   public updateTimeTable_vals(val) { 
     this.storage.set('tt_vals', val);
     this.tt_vals = val; 
   }
-
   public updateTimeTable_days(val) { 
     this.storage.set('tt_days', val);
     this.tt_days = val;
   }
-
   public updateTimeTable_active(val) { 
     this.storage.set('tt_active', val);
     this.tt_active = val;
@@ -112,7 +113,7 @@ export class TimetableService {
 
     this.apiService.postApi('updateTimeTable', {
       "id":"timetable", 
-      "mode": 0,
+      "mode": this.mode,
       "tt_vals": [
         {"start":this.tt_vals[0]['start'], "end":this.tt_vals[0]['end']  },
         {"start":this.tt_vals[1]['start'], "end":this.tt_vals[1]['end']  },
@@ -120,37 +121,19 @@ export class TimetableService {
       ],
       "tt_days": [ 
         {
-          "1":this.tt_days[0][0], 
-          "2":this.tt_days[0][1], 
-          "3":this.tt_days[0][2], 
-          "4":this.tt_days[0][3], 
-          "5":this.tt_days[0][4], 
-          "6":this.tt_days[0][5], 
-          "7":this.tt_days[0][6]
+          "1":this.tt_days[0][0], "2":this.tt_days[0][1], "3":this.tt_days[0][2], 
+          "4":this.tt_days[0][3], "5":this.tt_days[0][4], "6":this.tt_days[0][5], "7":this.tt_days[0][6]
         },
         {
-          "1":this.tt_days[1][0], 
-          "2":this.tt_days[1][1], 
-          "3":this.tt_days[1][2], 
-          "4":this.tt_days[1][3], 
-          "5":this.tt_days[1][4], 
-          "6":this.tt_days[1][5], 
-          "7":this.tt_days[1][6]
+          "1":this.tt_days[1][0], "2":this.tt_days[1][1], "3":this.tt_days[1][2], 
+          "4":this.tt_days[1][3], "5":this.tt_days[1][4], "6":this.tt_days[1][5], "7":this.tt_days[1][6]
         },
         {
-          "1":this.tt_days[2][0], 
-          "2":this.tt_days[2][1], 
-          "3":this.tt_days[2][2], 
-          "4":this.tt_days[2][3], 
-          "5":this.tt_days[2][4], 
-          "6":this.tt_days[2][5], 
-          "7":this.tt_days[2][6]
+          "1":this.tt_days[2][0], "2":this.tt_days[2][1], "3":this.tt_days[2][2], 
+          "4":this.tt_days[2][3], "5":this.tt_days[2][4], "6":this.tt_days[2][5], "7":this.tt_days[2][6]
         },
       ],
-
-
     })
-
   }
 
 }

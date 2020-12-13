@@ -40,6 +40,7 @@ export class SetupPage implements OnInit {
     this.platform.ready().then(()=>{
       this.getComfortT();
       this.getEconomT();
+
       setTimeout(()=> {
         console.log("[setup.page ngOnInit]: after 5s");
         this.getTimeTable();
@@ -49,7 +50,8 @@ export class SetupPage implements OnInit {
     }) 
 
     setInterval(async ()=> {
-      this.getTimeTable();
+      // ToDo: add here re-calculate and change background color of the TimeTable Panel
+      this.timeTableService.targetIsComfort() 
     },60000);   
 
 

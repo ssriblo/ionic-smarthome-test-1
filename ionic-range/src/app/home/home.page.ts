@@ -36,6 +36,8 @@ export class HomePage  implements OnInit  {
   tt_vals:any;
   tt_days:any;
   tt_active:any;
+  progress = 0.20;   
+
 
   constructor(
     public platform:Platform, 
@@ -52,6 +54,7 @@ export class HomePage  implements OnInit  {
   ngOnInit() {
     this.platform.ready().then(()=>{
       this.initVars();
+//      this.getTimeTable();
       document.getElementById("version").innerHTML = environment.version;
 //      document.getElementById("server-option").innerHTML = environment.serverLoc
     }) // this.platform.ready().then()
@@ -63,11 +66,16 @@ export class HomePage  implements OnInit  {
       }
     });
 
+    setInterval( () => {  
+      this.progress += .333;  
+    }, 1000 );  
+      
     setTimeout(()=> {
       console.log("[setTimeout]: after 5s");
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
-    }, 5000);
+      this.getTimeTable();
+    }, 3000);
 
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
@@ -80,6 +88,18 @@ export class HomePage  implements OnInit  {
       }
       },60000);       
   } // ngOnInit() finished
+
+  getTimeTable() {
+    this.timeTableService.timeTableInit(false)
+    this.mode = this.timeTableService.getTimeTable_mode()
+    console.log("[home.page getTimeTable] mode", this.mode)
+    this.tt_vals = this.timeTableService.getTimeTable_vals()
+    this.tt_days = this.timeTableService.getTimeTable_days()
+    this.tt_active = this.timeTableService.getTimeTable_active()
+    if ( this.mode == "Comfort" ) { this.clickComfort() }
+    if ( this.mode == "Econom" ) { this.clickEconom() }
+    if ( this.mode == "TimeTable" ) { this.clickTimetable() }
+  }
 
   initVars() {
     this.room_t_s  = "20.5"
@@ -145,6 +165,8 @@ export class HomePage  implements OnInit  {
       console.log('[clickComfort]: comfortT is', val)
       this.rangeVal = (val == null)? 22.5 * 10 : val * 10
     });
+    this.mode = "Comfort"
+    this.timeTableService.updateTimeTable_mode(this.mode);
   }
 
   clickEconom() {
@@ -155,6 +177,8 @@ export class HomePage  implements OnInit  {
       console.log('[clickEconom]: economT is', val)
       this.rangeVal = (val == null)? 18.5 * 10 : val * 10
     });
+    this.mode = "Econom"
+    this.timeTableService.updateTimeTable_mode(this.mode);
   }
 
   clickTimetable() {
@@ -173,6 +197,8 @@ export class HomePage  implements OnInit  {
     }
     console.log('[clickTimetable]: TartetT is', this.rangeVal)
     this.timeTableService.postTimeTable();
+    this.mode = "TimeTable"
+    this.timeTableService.updateTimeTable_mode(this.mode);
   }
 
 }
