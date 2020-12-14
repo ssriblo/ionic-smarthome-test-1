@@ -77,7 +77,7 @@ def browse_recursive(node):
                 if string.find("WeatherT") >= 0 :
                     print("Found WeatherT", string, ch)
                     ch_weatherT = ch
-                if string.find("TimeTableArray") >= 0 :
+                if string.find("TimeTable") >= 0 :
                     print("Found TimeTableArray", string, ch)
                     ch_timetable = ch
 
@@ -152,8 +152,8 @@ if __name__ == "__main__":
         browse_recursive(root)
         DF8 = DataParserF8(ch_F8)
         DB2 = DataParserB2(ch_B2)
-        DTT = DataParserTT(ch_timetable, TV.timetable)
-        print("FOUND:", ch_F8,ch_B2, ch_targetT, ch_weatherT, DF8, DB2)
+        DTT = DataParserTT(TV.timetable)
+        print("FOUND:", ch_targetT, ch_F8,ch_B2, ch_targetT, ch_weatherT, DF8, DB2)
         while True:
             TV.roomT = DF8.roomT
             TV.waterT = DF8.waterT
@@ -186,8 +186,10 @@ if __name__ == "__main__":
                 e = sys.exc_info()
                 print( "EXCEPTION2: ", e[0], e[1])
                 pass      
-            obj = TV.timetable
-            DTT.timetableParser()
+            array16 = DTT.timetableParser()
+            datavalue = ua.DataValue(ua.Variant(array16, ua.VariantType.Byte)) 
+            print(f"datavalue=", datavalue)
+            ch_timetable.set_value(datavalue)
             time.sleep(10)
 
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]

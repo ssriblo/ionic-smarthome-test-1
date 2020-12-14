@@ -121,6 +121,7 @@ export class TimetableService {
           "comf_1": (valC & 0xff00) >> 8,
           "econ_0": (valE & 0xff),
           "econ_1": (valE & 0xff00) >> 8,
+          'reserve': 0, // TBD, let setup now and will modify in future
           "status": 0,  // TBD, let setup now and will modify in future
           "tt_vals": [
             { "start":this.tt_vals[0]['start'], "end":this.tt_vals[0]['end']  },
