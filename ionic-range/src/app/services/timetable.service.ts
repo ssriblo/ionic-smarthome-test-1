@@ -109,30 +109,37 @@ export class TimetableService {
     return isTargetComfort;
   } // targetIsComfort()
 
-  postTimeTable() {
-
-    this.apiService.postApi('updateTimeTable', {
-      "id":"timetable", 
-      value: [
-      {"mode": this.mode},
-      {"tt_vals": [
-        {"start":this.tt_vals[0]['start'], "end":this.tt_vals[0]['end']  },
-        {"start":this.tt_vals[1]['start'], "end":this.tt_vals[1]['end']  },
-        {"start":this.tt_vals[2]['start'], "end":this.tt_vals[2]['end']  },
-      ]},
-      {"tt_days": [ 
-        [this.tt_days[0][0], this.tt_days[0][1], this.tt_days[0][2], 
-          this.tt_days[0][3], this.tt_days[0][4], this.tt_days[0][5], this.tt_days[0][6]
-        ],
-        [this.tt_days[1][0], this.tt_days[1][1], this.tt_days[1][2], 
-          this.tt_days[1][3], this.tt_days[1][4], this.tt_days[1][5], this.tt_days[1][6]
-        ],
-        [this.tt_days[2][0], this.tt_days[2][1], this.tt_days[2][2], 
-          this.tt_days[2][3], this.tt_days[2][4], this.tt_days[2][5], this.tt_days[2][6]
-        ],
-      ]},
-    ]
-    })
-  }
+  postTimeTable(val_comfort: number, val_econom: number) {
+    // нехорошо, что ComrtT/EconomT хранятся не так, как TimeTable. Лучше все привести к единому виду. Пока как есть...
+        let valC = val_comfort * 10;
+        let valE = val_econom * 10;
+        console.log("[postTimeTable] val_comfort  vaval_economlE", val_comfort, val_econom)
+        this.apiService.postApi('updateTimeTable', {
+          "id":"timetable", 
+          "mode": this.mode,
+          "comf_0": (valC & 0xff),
+          "comf_1": (valC & 0xff00) >> 8,
+          "econ_0": (valE & 0xff),
+          "econ_1": (valE & 0xff00) >> 8,
+          "status": 0,  // TBD, let setup now and will modify in future
+          "tt_vals": [
+            { "start":this.tt_vals[0]['start'], "end":this.tt_vals[0]['end']  },
+            { "start":this.tt_vals[1]['start'], "end":this.tt_vals[1]['end']  },
+            { "start":this.tt_vals[2]['start'], "end":this.tt_vals[2]['end']  },
+          ],
+          "tt_days": [ 
+            [ this.tt_days[0][0], this.tt_days[0][1], this.tt_days[0][2], 
+              this.tt_days[0][3], this.tt_days[0][4], this.tt_days[0][5], this.tt_days[0][6]
+            ],
+            [ this.tt_days[1][0], this.tt_days[1][1], this.tt_days[1][2], 
+              this.tt_days[1][3], this.tt_days[1][4], this.tt_days[1][5], this.tt_days[1][6]
+            ],
+            [ this.tt_days[2][0], this.tt_days[2][1], this.tt_days[2][2], 
+              this.tt_days[2][3], this.tt_days[2][4], this.tt_days[2][5], this.tt_days[2][6]
+            ],
+          ],
+        
+        }) // postApi()
+  } // postTimeTable
 
 }

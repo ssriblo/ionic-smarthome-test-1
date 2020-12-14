@@ -196,7 +196,7 @@ export class HomePage  implements OnInit  {
       });
     }
     console.log('[clickTimetable]: TartetT is', this.rangeVal)
-    this.timeTableService.postTimeTable();
+    this.timeTableService.postTimeTable(this.comfortT, this.economT);
     this.mode = "TimeTable"
     this.timeTableService.updateTimeTable_mode(this.mode);
   }
