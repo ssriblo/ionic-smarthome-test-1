@@ -121,18 +121,15 @@ export class TimetableService {
         {"start":this.tt_vals[2]['start'], "end":this.tt_vals[2]['end']  },
       ]},
       {"tt_days": [ 
-        {
-          "1":this.tt_days[0][0], "2":this.tt_days[0][1], "3":this.tt_days[0][2], 
-          "4":this.tt_days[0][3], "5":this.tt_days[0][4], "6":this.tt_days[0][5], "7":this.tt_days[0][6]
-        },
-        {
-          "1":this.tt_days[1][0], "2":this.tt_days[1][1], "3":this.tt_days[1][2], 
-          "4":this.tt_days[1][3], "5":this.tt_days[1][4], "6":this.tt_days[1][5], "7":this.tt_days[1][6]
-        },
-        {
-          "1":this.tt_days[2][0], "2":this.tt_days[2][1], "3":this.tt_days[2][2], 
-          "4":this.tt_days[2][3], "5":this.tt_days[2][4], "6":this.tt_days[2][5], "7":this.tt_days[2][6]
-        },
+        [this.tt_days[0][0], this.tt_days[0][1], this.tt_days[0][2], 
+          this.tt_days[0][3], this.tt_days[0][4], this.tt_days[0][5], this.tt_days[0][6]
+        ],
+        [this.tt_days[1][0], this.tt_days[1][1], this.tt_days[1][2], 
+          this.tt_days[1][3], this.tt_days[1][4], this.tt_days[1][5], this.tt_days[1][6]
+        ],
+        [this.tt_days[2][0], this.tt_days[2][1], this.tt_days[2][2], 
+          this.tt_days[2][3], this.tt_days[2][4], this.tt_days[2][5], this.tt_days[2][6]
+        ],
       ]},
     ]
     })
