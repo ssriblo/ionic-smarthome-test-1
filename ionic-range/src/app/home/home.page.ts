@@ -32,7 +32,12 @@ export class HomePage  implements OnInit  {
   isDisabledTimetable = false
   isDisabledComfort = false
   isDisabledEconom = false
-  isMode = "Comfort"; // may be ["Timetable", "Comfort", "Econom"]
+  mode:string = ""; // may be ["Timetable", "Comfort", "Econom"]
+  tt_vals:any;
+  tt_days:any;
+  tt_active:any;
+  progress = 0;   
+
 
   constructor(
     public platform:Platform, 
@@ -49,6 +54,7 @@ export class HomePage  implements OnInit  {
   ngOnInit() {
     this.platform.ready().then(()=>{
       this.initVars();
+//      this.getTimeTable();
       document.getElementById("version").innerHTML = environment.version;
 //      document.getElementById("server-option").innerHTML = environment.serverLoc
     }) // this.platform.ready().then()
@@ -60,11 +66,16 @@ export class HomePage  implements OnInit  {
       }
     });
 
+    setInterval( () => {  
+      this.progress += .1;  
+    }, 250 );  
+      
     setTimeout(()=> {
       console.log("[setTimeout]: after 5s");
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
-    }, 5000);
+      this.getTimeTable();
+    }, 2500);
 
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
@@ -77,6 +88,18 @@ export class HomePage  implements OnInit  {
       }
       },60000);       
   } // ngOnInit() finished
+
+  getTimeTable() {
+    this.timeTableService.timeTableInit(false)
+    this.mode = this.timeTableService.getTimeTable_mode()
+    console.log("[home.page getTimeTable] mode", this.mode)
+    this.tt_vals = this.timeTableService.getTimeTable_vals()
+    this.tt_days = this.timeTableService.getTimeTable_days()
+    this.tt_active = this.timeTableService.getTimeTable_active()
+    if ( this.mode == "Comfort" ) { this.clickComfort() }
+    if ( this.mode == "Econom" ) { this.clickEconom() }
+    if ( this.mode == "TimeTable" ) { this.clickTimetable() }
+  }
 
   initVars() {
     this.room_t_s  = "20.5"
@@ -129,24 +152,7 @@ export class HomePage  implements OnInit  {
     this.menu.toggle();
   }
 
-  //////////////
-  private  updateRangeDisplay() {
-    console.log('[updateRange] rangeVal, Comfort Econom', this.rangeVal, this.comfortT, this.economT)
-    // Does not needed -> Buttons handlers deal with this more properly:
-    // if ((this.rangeVal != this.comfortT * 10) && (this.rangeVal != this.economT * 10)) {
-    //   this.isFillComfort = "outline"
-    //   this.isFillEconom = "outline"
-    // }
-    // if (this.rangeVal == this.comfortT * 10 ) {
-    //   this.isFillComfort = "solid"
-    // }
-    // if (this.rangeVal == this.economT * 10) {
-    //   this.isFillEconom = "solid"
-    // }
-  }
-
   updateRange() {
-    this.updateRangeDisplay()
     this.storage.set('targetT', this.rangeVal);
     this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
   }
@@ -159,6 +165,8 @@ export class HomePage  implements OnInit  {
       console.log('[clickComfort]: comfortT is', val)
       this.rangeVal = (val == null)? 22.5 * 10 : val * 10
     });
+    this.mode = "Comfort"
+    this.timeTableService.updateTimeTable_mode(this.mode);
   }
 
   clickEconom() {
@@ -169,6 +177,8 @@ export class HomePage  implements OnInit  {
       console.log('[clickEconom]: economT is', val)
       this.rangeVal = (val == null)? 18.5 * 10 : val * 10
     });
+    this.mode = "Econom"
+    this.timeTableService.updateTimeTable_mode(this.mode);
   }
 
   clickTimetable() {
@@ -186,6 +196,9 @@ export class HomePage  implements OnInit  {
       });
     }
     console.log('[clickTimetable]: TartetT is', this.rangeVal)
+    this.timeTableService.postTimeTable(this.comfortT, this.economT);
+    this.mode = "TimeTable"
+    this.timeTableService.updateTimeTable_mode(this.mode);
   }
 
 }

@@ -11,6 +11,7 @@ from opcua import Client
 from opcua import ua
 from temperatures_local_db import TempValLocal
 from data_parser import DataParserF8, DataParserB2
+from timetable_parser import DataParserTT
 
 
 
@@ -19,6 +20,7 @@ ch_F8 = None
 ch_B2 = None
 ch_targetT = None
 ch_weatherT = None
+ch_timetable = None
 
 class SubHandler(object):
     
@@ -41,6 +43,7 @@ def browse_recursive(node):
     global ch_B2
     global ch_targetT
     global ch_weatherT
+    global ch_timetable
 
     for childId in node.get_children():
         # NOTE: both lines below works the same! So ch=childID the same as get_node(childID)
@@ -74,6 +77,9 @@ def browse_recursive(node):
                 if string.find("WeatherT") >= 0 :
                     print("Found WeatherT", string, ch)
                     ch_weatherT = ch
+                if string.find("TimeTable") >= 0 :
+                    print("Found TimeTableArray", string, ch)
+                    ch_timetable = ch
 
 #            except ua.uaerrors._auto.BadWaitingForInitialData:
             except:
@@ -146,7 +152,8 @@ if __name__ == "__main__":
         browse_recursive(root)
         DF8 = DataParserF8(ch_F8)
         DB2 = DataParserB2(ch_B2)
-        print("FOUND:", ch_F8,ch_B2, ch_targetT, ch_weatherT, DF8, DB2)
+        DTT = DataParserTT(TV.timetable)
+        print("FOUND:", ch_targetT, ch_F8,ch_B2, ch_targetT, ch_weatherT, DF8, DB2)
         while True:
             TV.roomT = DF8.roomT
             TV.waterT = DF8.waterT
@@ -178,7 +185,11 @@ if __name__ == "__main__":
             except:
                 e = sys.exc_info()
                 print( "EXCEPTION2: ", e[0], e[1])
-                pass                
+                pass      
+            array16 = DTT.timetableParser()
+            datavalue = ua.DataValue(ua.Variant(array16, ua.VariantType.Byte)) 
+            print(f"datavalue=", datavalue)
+            ch_timetable.set_value(datavalue)
             time.sleep(10)
 
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]
