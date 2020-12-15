@@ -153,7 +153,7 @@ if __name__ == "__main__":
         DF8 = DataParserF8(ch_F8)
         DB2 = DataParserB2(ch_B2)
         DTT = DataParserTT(TV.timetable)
-        print("FOUND:", ch_targetT, ch_F8,ch_B2, ch_targetT, ch_weatherT, DF8, DB2)
+#        print("FOUND:", ch_targetT, ch_F8,ch_B2, ch_targetT, ch_weatherT, DF8, DB2)
         while True:
             TV.roomT = DF8.roomT
             TV.waterT = DF8.waterT
@@ -163,16 +163,19 @@ if __name__ == "__main__":
             TV.waterHotMeter = DF8.waterHotMeter/1000
             TV.warmMeter = DF8.warmMeter
 
-            datavalue = ua.DataValue(ua.Variant(float(TV.weatherT), ua.VariantType.Float)) 
             try:
+                datavalue = ua.DataValue(ua.Variant(float(TV.weatherT), ua.VariantType.Float)) 
                 ch_weatherT.set_value(datavalue)
             except:
                 e = sys.exc_info()
                 print( "EXCEPTION1: ", e[0], e[1])
-                pass
             
-            datavalue = ua.DataValue(ua.Variant(float(TV.targetT), ua.VariantType.Float)) 
-            ch_targetT.set_value(datavalue)
+            try:
+                datavalue = ua.DataValue(ua.Variant(float(TV.targetT), ua.VariantType.Float)) 
+                ch_targetT.set_value(datavalue)
+            except:
+                e = sys.exc_info()
+                print( "EXCEPTION5: ", e[0], e[1])
             
             try:
                 print(f"roomT={TV.roomT:4.2f}; waterT={TV.waterT:4.2f}; weatherT={float(TV.weatherT):4.2f}; ", end='')
@@ -185,11 +188,15 @@ if __name__ == "__main__":
             except:
                 e = sys.exc_info()
                 print( "EXCEPTION2: ", e[0], e[1])
-                pass      
-            array16 = DTT.timetableParser()
-            datavalue = ua.DataValue(ua.Variant(array16, ua.VariantType.Byte)) 
-            print(f"datavalue=", datavalue)
-            ch_timetable.set_value(datavalue)
+
+            try:
+                array16 = DTT.timetableParser()
+                datavalue = ua.DataValue(ua.Variant(array16, ua.VariantType.Byte)) 
+                print(f"datavalue=", datavalue)
+                ch_timetable.set_value(datavalue)
+            except:
+                e = sys.exc_info()
+                print( "EXCEPTION4: ", e[0], e[1])
             time.sleep(10)
 
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]
