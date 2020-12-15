@@ -194,6 +194,7 @@ if __name__ == "__main__":
                 datavalue = ua.DataValue(ua.Variant(array16, ua.VariantType.Byte)) 
                 print(f"datavalue=", datavalue)
                 ch_timetable.set_value(datavalue)
+                logging.warning(f'OPCUA_datavalue={datavalue}')
             except:
                 e = sys.exc_info()
                 print( "EXCEPTION4: ", e[0], e[1])
