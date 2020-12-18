@@ -25,6 +25,7 @@ export class SetupPage implements OnInit {
   tt_active: any;
   isErrorInterval: boolean [] = [false, false, false];
   progress = 0;   
+  flag1 = 0;
 
   constructor( 
     public router: Router, 
@@ -39,6 +40,7 @@ export class SetupPage implements OnInit {
 
   ngOnInit() {
     this.platform.ready().then(()=>{
+      this.getTimeTable();
       this.getComfortT();
       this.getEconomT();
 
@@ -59,7 +61,8 @@ export class SetupPage implements OnInit {
       // ToDo: add here re-calculate and change background color of the TimeTable Panel
       this.timeTableService.targetIsComfort() 
     },60000);   
-
+    console.log("ngOninit setup.page.ts flag1", this.flag1, this.progress)
+    this.flag1 = 1;
 
   }
 
