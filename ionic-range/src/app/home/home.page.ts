@@ -186,16 +186,19 @@ export class HomePage  implements OnInit  {
     this.isFillEconom = "outline"
     this.isFillTimetable = "solid"
     let res = 0;
-    if (this.timeTableService.targetIsComfort() === true ) {
-      this.storage.get('comfortT').then((val) => {
-        this.rangeVal = val * 10
-      });
-    }else {
+    this.storage.get('comfortT').then((val) => {
+      this.comfortT = val
       this.storage.get('economT').then((val) => {
-        this.rangeVal = val * 10
+        this.economT = val
       });
+    });
+    if (this.timeTableService.targetIsComfort() === true ) {
+      this.rangeVal = this.comfortT * 10
+    }else{
+      this.rangeVal = this.economT * 10
     }
     console.log('[clickTimetable]: TartetT is', this.rangeVal)
+
     this.timeTableService.postTimeTable(this.comfortT, this.economT);
     this.mode = "TimeTable"
     this.timeTableService.updateTimeTable_mode(this.mode);
