@@ -1,15 +1,18 @@
 import numpy as np
 import sys
+import json
 
 class DataParserTT(object):
+    def __init__(self):
+        pass
+        # Let convert from string to json:    
+        #    
 
-
-    def __init__(self, obj):
-        self.obj = obj
-
-    def timetableParser(self):
-        ob = self.obj
+    def timetableParser(self, str):
+#        ob = self.obj
         a = [None]*16
+        print(f"\n\nstr type", type(str), str) # магическим образом этот принт нужен - без него type(str)=dict и все падает
+        ob = json.loads(str)
 #        print(f"OBJECT", ob, ob['mode'])
         try:
             if (ob['mode'] == "TimeTable"):

@@ -152,7 +152,7 @@ if __name__ == "__main__":
         browse_recursive(root)
         DF8 = DataParserF8(ch_F8)
         DB2 = DataParserB2(ch_B2)
-        DTT = DataParserTT(TV.timetable)
+        DTT = DataParserTT()
 #        print("FOUND:", ch_targetT, ch_F8,ch_B2, ch_targetT, ch_weatherT, DF8, DB2)
         while True:
             TV.roomT = DF8.roomT
@@ -190,7 +190,7 @@ if __name__ == "__main__":
                 print( "EXCEPTION2: ", e[0], e[1])
 
             try:
-                array16 = DTT.timetableParser()
+                array16 = DTT.timetableParser(TV.timetable)
                 datavalue = ua.DataValue(ua.Variant(array16, ua.VariantType.Byte)) 
                 print(f"datavalue=", datavalue)
                 ch_timetable.set_value(datavalue)
