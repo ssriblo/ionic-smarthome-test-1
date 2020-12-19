@@ -32,27 +32,27 @@
 
 [Documents]
 Data%20Access%20View\DocumentType=Data Access View
-Data%20Access%20View\DocumentSettings\headerState=@ByteArray(\0\0\0\xff\0\0\0\0\0\0\0\x1\0\0\0\x1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x3\x43\0\0\0\t\x1\0\x1\0\0\0\0\0\0\0\0\0\0\0\0\0\x64\xff\xff\xff\xff\0\0\0\x84\0\0\0\0\0\0\0\x2\0\0\0#\0\0\0\x1\0\0\0\0\0\0\x3 \0\0\0\b\0\0\0\0)
+Data%20Access%20View\DocumentSettings\headerState="@ByteArray(\0\0\0\xff\0\0\0\0\0\0\0\x1\0\0\0\x1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x4:\0\0\0\t\x1\0\x1\0\0\0\0\0\0\0\0\0\0\0\0\0\x64\xff\xff\xff\xff\0\0\0\x84\0\0\0\0\0\0\0\x4\0\0\0#\0\0\0\x1\0\0\0\0\0\0\x1,\0\0\0\x3\0\0\0\0\0\0\x1[\0\0\0\x1\0\0\0\0\0\0\x1\x90\0\0\0\x4\0\0\0\0)"
 Data%20Access%20View\DocumentSettings\SubscriptionSettings\publishingInterval=500
 Data%20Access%20View\DocumentSettings\SubscriptionSettings\lifetimeCount=2400
 Data%20Access%20View\DocumentSettings\SubscriptionSettings\maxKeepAliveCount=10
 Data%20Access%20View\DocumentSettings\SubscriptionSettings\maxNotificationsPerPublish=0
 Data%20Access%20View\DocumentSettings\SubscriptionSettings\priority=0
 Data%20Access%20View\DocumentSettings\SubscriptionSettings\publishingEnabled=true
-Data%20Access%20View\DocumentSettings\Items\000\001\DisplayName=RoomT
-Data%20Access%20View\DocumentSettings\Items\000\001\NodeId="s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl:RoomT"
-Data%20Access%20View\DocumentSettings\Items\000\001\Status=2
-Data%20Access%20View\DocumentSettings\Items\000\001\MonitoringMode=2
-Data%20Access%20View\DocumentSettings\Items\000\001\MonitoringParameters\DiscardOldest=1
-Data%20Access%20View\DocumentSettings\Items\000\001\MonitoringParameters\QueueSize=1
-Data%20Access%20View\DocumentSettings\Items\000\001\MonitoringParameters\SamplingInterval=250
-Data%20Access%20View\DocumentSettings\Items\000\003\DisplayName=Mercury_val_1
-Data%20Access%20View\DocumentSettings\Items\000\003\NodeId="s=YA1002d00213437471231373739:Otoplenok:Counters:Mercury_val_1"
+Data%20Access%20View\DocumentSettings\Items\000\003\DisplayName=TimeTableArray
+Data%20Access%20View\DocumentSettings\Items\000\003\NodeId="s=YA1002d00213437471231373739:Otoplenok:TimeTable:TimeTableArray"
 Data%20Access%20View\DocumentSettings\Items\000\003\Status=2
 Data%20Access%20View\DocumentSettings\Items\000\003\MonitoringMode=2
 Data%20Access%20View\DocumentSettings\Items\000\003\MonitoringParameters\DiscardOldest=1
 Data%20Access%20View\DocumentSettings\Items\000\003\MonitoringParameters\QueueSize=1
 Data%20Access%20View\DocumentSettings\Items\000\003\MonitoringParameters\SamplingInterval=250
+Data%20Access%20View\DocumentSettings\Items\000\000\DisplayName=RoomT
+Data%20Access%20View\DocumentSettings\Items\000\000\NodeId="s=YA1002d00213437471231373739:Otoplenok:TemperaturesControl:RoomT"
+Data%20Access%20View\DocumentSettings\Items\000\000\Status=2
+Data%20Access%20View\DocumentSettings\Items\000\000\MonitoringMode=2
+Data%20Access%20View\DocumentSettings\Items\000\000\MonitoringParameters\DiscardOldest=1
+Data%20Access%20View\DocumentSettings\Items\000\000\MonitoringParameters\QueueSize=1
+Data%20Access%20View\DocumentSettings\Items\000\000\MonitoringParameters\SamplingInterval=250
 
 [Attribute%20Plugin]
 Act_OnOff_Checked=true
