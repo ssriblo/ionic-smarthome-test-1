@@ -13,12 +13,16 @@ import time
 import logging
 from weather_temp import Weather
 from temperatures_local_db import TempValLocal
+import json
+from datetime import datetime
 
 Push = Post2onesignal()
 #Push.push("Пуш нотификация","Тревога") # for test only
 TV = TempValLocal()
 WT = Weather()
 token = Token()
+dateTimeObj = datetime.now()
+
 __flags_status = 0
 __pushN = 0
 
@@ -230,6 +234,24 @@ def waterHotMeter():
 
 ###############################################################################
 ###############################################################################
+###############################################################################
+@app.route('/updateTimeTable', methods=['POST']) 
+def updateTimeTable():
+    body = request.json
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[updateTimeTable] _tk : ", _tk)
+    if (_tk != None):
+        # Let convert json body to string:
+        s = json.dumps(body) 
+#        TV.timetable = body # это первоначальная реализация, на которой была проблема с sqlitedict
+        TV.timetable = s 
+        print("[updateTimeTable] body===", body)
+        logging.warning(f'updateTimeTable] body={body}')
+    return {'value': str(TV.targetT)}
+
+###############################################################################
 @app.route('/updateTargetTemperature', methods=['POST']) 
 def updateTargetTemperature():
     body = request.json
@@ -240,6 +262,7 @@ def updateTargetTemperature():
     if (_tk != None):
         TV.targetT = body['value']
         print("[update_target_temperature] RETURN OK  body.value: ", body,  body['value'])
+        print("[update_target_temperature] TIMETABLE: ", TV.timetable)
     return {'value': str(TV.targetT)}
 
 ###############################################################################
