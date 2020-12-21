@@ -155,30 +155,40 @@ export class HomePage  implements OnInit  {
   updateRange() {
     this.storage.set('targetT', this.rangeVal);
     this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
+    this.isFillComfort = "outline"
+    this.isFillEconom = "outline"
+    this.isFillTimetable = "outline"
+    console.log("updateRange()")
   }
 
   clickComfort() {
-    this.isFillComfort = "solid"
-    this.isFillEconom = "outline"
-    this.isFillTimetable = "outline"
     this.storage.get('comfortT').then((val) => {
       console.log('[clickComfort]: comfortT is', val)
       this.rangeVal = (val == null)? 22.5 * 10 : val * 10
     });
     this.mode = "Comfort"
     this.timeTableService.updateTimeTable_mode(this.mode);
+    setTimeout(()=> {
+      this.isFillComfort = "solid"
+      this.isFillEconom = "outline"
+      this.isFillTimetable = "outline"
+      console.log("clickComfort()")
+      }, 500);
   }
 
   clickEconom() {
-    this.isFillComfort = "outline"
-    this.isFillEconom = "solid"
-    this.isFillTimetable = "outline"
     this.storage.get('economT').then((val) => {
       console.log('[clickEconom]: economT is', val)
       this.rangeVal = (val == null)? 18.5 * 10 : val * 10
     });
     this.mode = "Econom"
     this.timeTableService.updateTimeTable_mode(this.mode);
+    setTimeout(()=> {
+      this.isFillComfort = "outline"
+      this.isFillEconom = "solid"
+      this.isFillTimetable = "outline"
+      console.log("clickEconom()")
+      }, 500);
   }
 
   clickTimetable() {
@@ -202,6 +212,12 @@ export class HomePage  implements OnInit  {
     this.timeTableService.postTimeTable(this.comfortT, this.economT);
     this.mode = "TimeTable"
     this.timeTableService.updateTimeTable_mode(this.mode);
+    setTimeout(()=> {
+      this.isFillComfort = "outline"
+      this.isFillEconom = "outline"
+      this.isFillTimetable = "solid"
+      console.log("clickTimetable()")
+      }, 500);
   }
 
 }

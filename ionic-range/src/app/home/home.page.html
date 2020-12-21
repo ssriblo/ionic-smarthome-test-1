@@ -74,7 +74,7 @@
           <div class="ion-padding">
             <h1  align="center" style=font-size:600%><b> {{(rangeVal/10).toFixed(1)}}</b></h1>
             <ion-item>
-              <ion-range (ionChange)="updateRange()" [(ngModel)]="rangeVal" pin="false" min="100" max="350" step="5" snaps="true" color="secondary" ticks="false">
+              <ion-range (ionChange)="updateRange()" [(ngModel)]="rangeVal" debounce="0" pin="false" min="100" max="350" step="5" snaps="true" color="secondary" ticks="false">
                   <ion-icon slot="end" color="danger" name="thermometer"></ion-icon>
               </ion-range>
             </ion-item>
