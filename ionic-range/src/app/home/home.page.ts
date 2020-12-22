@@ -74,6 +74,7 @@ export class HomePage  implements OnInit  {
       console.log("[setTimeout]: after 5s");
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
+      this.getMode();
       this.getTimeTable();
     }, 2500);
 
@@ -89,16 +90,21 @@ export class HomePage  implements OnInit  {
       },60000);       
   } // ngOnInit() finished
 
-  getTimeTable() {
+  getMode() {
     this.timeTableService.timeTableInit(false)
     this.mode = this.timeTableService.getTimeTable_mode()
-    console.log("[home.page getTimeTable] mode", this.mode)
-    this.tt_vals = this.timeTableService.getTimeTable_vals()
-    this.tt_days = this.timeTableService.getTimeTable_days()
-    this.tt_active = this.timeTableService.getTimeTable_active()
+    console.log("[home.page getMode()] mode", this.mode)
     if ( this.mode == "Comfort" ) { this.clickComfort() }
     if ( this.mode == "Econom" ) { this.clickEconom() }
     if ( this.mode == "TimeTable" ) { this.clickTimetable() }
+    if ( this.mode == "Range" ) { } // do nothing
+  }
+
+  getTimeTable() {
+    this.timeTableService.timeTableInit(false)
+    this.tt_vals = this.timeTableService.getTimeTable_vals()
+    this.tt_days = this.timeTableService.getTimeTable_days()
+    this.tt_active = this.timeTableService.getTimeTable_active()
   }
 
   initVars() {
@@ -158,7 +164,9 @@ export class HomePage  implements OnInit  {
     this.isFillComfort = "outline"
     this.isFillEconom = "outline"
     this.isFillTimetable = "outline"
-    console.log("updateRange()")
+    this.mode = "Range"
+    console.log("updateRange() mode=", this.mode)
+    this.timeTableService.updateTimeTable_mode(this.mode, this.comfortT, this.economT);
   }
 
   clickComfort() {
@@ -167,7 +175,7 @@ export class HomePage  implements OnInit  {
       this.rangeVal = (val == null)? 22.5 * 10 : val * 10
     });
     this.mode = "Comfort"
-    this.timeTableService.updateTimeTable_mode(this.mode);
+    this.timeTableService.updateTimeTable_mode(this.mode, this.comfortT, this.economT);
     setTimeout(()=> {
       this.isFillComfort = "solid"
       this.isFillEconom = "outline"
@@ -182,7 +190,7 @@ export class HomePage  implements OnInit  {
       this.rangeVal = (val == null)? 18.5 * 10 : val * 10
     });
     this.mode = "Econom"
-    this.timeTableService.updateTimeTable_mode(this.mode);
+    this.timeTableService.updateTimeTable_mode(this.mode, this.comfortT, this.economT);
     setTimeout(()=> {
       this.isFillComfort = "outline"
       this.isFillEconom = "solid"
@@ -211,7 +219,7 @@ export class HomePage  implements OnInit  {
 
     this.timeTableService.postTimeTable(this.comfortT, this.economT);
     this.mode = "TimeTable"
-    this.timeTableService.updateTimeTable_mode(this.mode);
+    this.timeTableService.updateTimeTable_mode(this.mode, this.comfortT, this.economT);
     setTimeout(()=> {
       this.isFillComfort = "outline"
       this.isFillEconom = "outline"

@@ -71,9 +71,10 @@ export class TimetableService {
   public getTimeTable_days() { return this.tt_days }
   public getTimeTable_active() { return this.tt_active }
 
-  public updateTimeTable_mode(val:string) { 
+  public updateTimeTable_mode(val:string, val_comfort: number, val_econom: number) { 
     this.storage.set('mode', val);
     this.mode = val; 
+    this.postTimeTable(val_comfort, val_econom); // this POST only for "mode". Let move POST MODE to another call in the future!!
   }
    public updateTimeTable_vals(val) { 
     this.storage.set('tt_vals', val);
