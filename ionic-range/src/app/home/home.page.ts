@@ -84,11 +84,26 @@ export class HomePage  implements OnInit  {
 //        console.log("[setInterval]: every 60s - ACTIVE");
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
+        this.checkAllVals();
       }else {
 //        console.log("[setInterval]: every 60s - NOT ACTIVE");
       }
       },60000);       
   } // ngOnInit() finished
+
+  checkAllVals() {
+    // This is rare issue - may be due to something RangeT or MODE may not sent properly
+    // For instanse if RangeT was jump many times and last of them missed
+    // How to check it? Let GET RangeT and if this is wrong then re-POST it
+    this.apiService.getApiCB('targetTemperature', (result) => {
+      let val = result['value']; 
+      if ( this.rangeVal != val) {
+        this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
+        this.timeTableService.updateTimeTable_mode(this.mode, this.comfortT, this.economT);
+        console.log("[home.page][checkAllVals] - !!!!!!!!!!!!!!!!!!!!!!!! rangeval != targetTemperature; rangeVal=", this.rangeVal, "targetTemperature=", val)
+      }
+    });
+  }
 
   getMode() {
     this.timeTableService.timeTableInit(false)

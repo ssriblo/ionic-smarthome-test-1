@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   mobileBuild: false, // setup FALSE for Chrome and TRUE for Android
-  version: "(v26) ",
+  version: "(v27) ",
   serverLoc: "cloud", // options: ["local", "cloud"]
 //  SERVER_URL_LOCAL: 'http://localhost:8080/OVK/OVK_mob1/1.0.7/',
   SERVER_URL_LOCAL: 'http://localhost:8080/',
