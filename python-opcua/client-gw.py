@@ -192,6 +192,8 @@ if __name__ == "__main__":
                 TV.flags1 = DB2.flags1
                 TV.flags2 = DB2.flags2
                 print(f"FLAGs1={TV.flags1}; FLAGs2={TV.flags2}")
+                logging.warning(f'roomT={TV.roomT:4.2f};  TargetT={TV.targetT:4.2f}')
+
             except:
                 e = sys.exc_info()
                 print( "EXCEPTION4: ", e[0], e[1])
