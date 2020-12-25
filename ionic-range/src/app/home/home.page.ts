@@ -11,6 +11,7 @@ import { GlobalService } from "../services/global.service";
 import { AlertsPage } from "../pages/alerts/alerts.page";
 import { MenuController } from '@ionic/angular';
 import { TimetableService } from "../services/timetable.service"
+import { Keepalive, KeepAliveStatus } from "../services/keepalive.service"
 
 const { App } = Plugins;
 
@@ -37,6 +38,7 @@ export class HomePage  implements OnInit  {
   tt_days:any;
   tt_active:any;
   progress = 0;   
+  private keeALiveStatus: KeepAliveStatus;
 
 
   constructor(
@@ -49,6 +51,7 @@ export class HomePage  implements OnInit  {
     private alertsPage: AlertsPage,
     private menu: MenuController,
     private timeTableService: TimetableService,
+    private keepalive: Keepalive,
     ) {}
 
   ngOnInit() {
@@ -76,7 +79,13 @@ export class HomePage  implements OnInit  {
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
       this.getMode();
       this.getTimeTable();
+      this.keepalive.pushKeepALive();
     }, 2500);
+
+    setTimeout(()=> {
+      console.log("[setTimeout]: after 30s");
+      this.keeALiveStatus = this.keepalive.isKeepALive();
+    }, 30000);    
 
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
@@ -85,6 +94,7 @@ export class HomePage  implements OnInit  {
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
         this.checkAllVals();
+//        this.checkKeepALive();
       }else {
 //        console.log("[setInterval]: every 60s - NOT ACTIVE");
       }

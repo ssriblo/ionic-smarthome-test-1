@@ -37,6 +37,26 @@ class TempValLocal():
             self.mydict['flags2'] = 0
         if 'timetable' not in self.mydict: 
             self.mydict['timetable'] = {}
+        if 'keepAliveToken' not in self.mydict: 
+            self.mydict['keepAliveToken'] = {}
+        if 'keepAliveReceive' not in self.mydict: 
+            self.mydict['keepAliveReceive'] = {}
+######################################
+    @property
+    def keepAliveToken(self):
+        return self.mydict['keepAliveToken']
+
+    @keepAliveToken.setter
+    def keepAliveToken(self, val):
+        self.mydict['keepAliveToken'] = val
+######################################
+    @property
+    def keepAliveReceive(self):
+        return self.mydict['keepAliveReceive']
+
+    @keepAliveReceive.setter
+    def keepAliveReceive(self, val):
+        self.mydict['keepAliveReceive'] = val
 ######################################
     @property
     def timetable(self):

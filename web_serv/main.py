@@ -233,7 +233,33 @@ def waterHotMeter():
     return {"value": value}
 
 ###############################################################################
+@app.route('/keepAliveReceive', methods=['GET']) 
+def keepAliveReceive():
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[serversStatus] _tk : ", _tk)
+#### TEMPORARY, due to OPCUA/YART not ready    value = TV.keepAliveReceive if (_tk != None) else None
+    value = {"api": True, "opcua":True, "plc":True} # TEMPORARY for test only!!!
+    print("[keepAliveReceive] value:  ", value)
+    return {"value": value}
+
 ###############################################################################
+###############################################################################
+###############################################################################
+@app.route('/keepAliveSendToken', methods=['POST']) 
+def keepAliveSendToken():
+    body = request.json
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[keepAliveSendToken] _tk : ", _tk)
+    if (_tk != None):
+        TV.keepAliveSendToken = body['token']
+        print("[keepAliveSendToken] body===", body)
+        logging.warning(f'keepAliveSendToken] body={body}')
+    return {'value': str(TV.targetT)}
+
 ###############################################################################
 @app.route('/updateTimeTable', methods=['POST']) 
 def updateTimeTable():
