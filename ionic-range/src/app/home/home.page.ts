@@ -74,7 +74,7 @@ export class HomePage  implements OnInit  {
     }, 250 );  
       
     setTimeout(()=> {
-      console.log("[setTimeout]: after 5s");
+      console.log("[setTimeout]: after 2.5s");
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
       this.getMode();
@@ -83,9 +83,9 @@ export class HomePage  implements OnInit  {
     }, 2500);
 
     setTimeout(()=> {
-      console.log("[setTimeout]: after 30s");
+      console.log("[setTimeout]: after 10s this.keeALiveStatus", this.keeALiveStatus);
       this.keeALiveStatus = this.keepalive.isKeepALive();
-    }, 30000);    
+    }, 10000);    
 
     setInterval(async ()=> {
       const isActive = this.isActiveApp();

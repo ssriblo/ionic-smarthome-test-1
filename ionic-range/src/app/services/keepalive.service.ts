@@ -37,9 +37,11 @@ export class Keepalive {
     }
 
     this.apiService.getApiCB("keepAliveReceive", (result:KeepAliveACK) => {
+      console.log("[isKeepALive] result=", result, this.tkn)
       if (this.tkn == result.plc) { res.plc = true; }
       if (this.tkn == result.opcua) { res.opcua = true; }
       if (this.tkn == result.api) { res.api = true; }
+      console.log("[isKeepALive] res=", res, "result=", result)
 //////////////////////////////////////////////////////////////////////////////////
 //     ПРОБЛЕМА: вызываю этот метод и он возвращает ответ через задержку. 
 //          Как переделать его на ASYNC/AWAIT
