@@ -223,12 +223,14 @@ if __name__ == "__main__":
             try: #ch_keepAliveUp -> Up means from PLC to MobApp
                 TV.keepAlivePLC = ch_keepAliveUp.get_value() # pass from PLC to MobApp value. It this value equal to Token, then PLC works well
                 TV.keepAliveOPCUA = TV.keepAliveToken # copy Token, received from MobApp back to MobApp. It's indicates that OPCUA works well
+                print(f'keepAlivePLC={TV.keepAlivePLC}; keepAliveOPCUA={TV.keepAliveOPCUA}, keepAliveToken={TV.keepAliveToken}')
             except:                                
                 print( "EXCEPTION6: ", e[0], e[1])
                 logging.error(f'EXCEPTION6 e[0]={e[0]}  e[1]={e[1]}')
 
             try: #ch_keepAliveDown -> Down means from MobApp to PLC
                 # pass Token from MobApp to PLC. Means that PLC copyes Token back via ch_keepAliveUp
+                print(f'TV.keepAliveToken', TV.keepAliveToken, type(TV.keepAliveToken))
                 datavalue = ua.DataValue(ua.Variant(int(TV.keepAliveToken), ua.VariantType.Int32)) 
                 ch_keepAliveDown.set_value(datavalue)
             except:                

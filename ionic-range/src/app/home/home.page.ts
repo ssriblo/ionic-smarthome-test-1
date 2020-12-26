@@ -79,17 +79,17 @@ export class HomePage  implements OnInit  {
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
       this.getMode();
       this.getTimeTable();
-      this.keepalive.pushKeepALive();
+      this.keepalive.postKeepALive();
     }, 2500);
 
     setTimeout(()=> {
       this.keeALiveStatus = this.keepalive.isKeepALive();
       console.log("[setTimeout]: after 5s this.keeALiveStatus", this.keeALiveStatus);
-    }, 5000);    
+    }, 30000);    
     // FOR DEBUG ONLY !!!!!!!!!!!!!!!!!!!!!!
     setTimeout(()=> {
       console.log("[setTimeout]: after 10s this.keeALiveStatus", this.keeALiveStatus);
-    }, 10000);    
+    }, 35000);    
 
 
     setInterval(async ()=> {

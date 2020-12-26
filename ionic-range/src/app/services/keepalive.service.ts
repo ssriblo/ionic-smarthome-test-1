@@ -23,9 +23,9 @@ export class Keepalive {
     private apiService: ApiService,
   ) { }
 
-  public pushKeepALive() {
+  public postKeepALive() {
     // generate random token "tkn" - 4 bytes/32bits number
-    this.tkn = this.randomInt(0, 0xffffffff);
+    this.tkn = this.randomInt(0, 0x7fffffff);
     this.apiService.postApi("keepAliveSendToken", {"token":this.tkn});
   }
 

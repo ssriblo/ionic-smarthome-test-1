@@ -258,7 +258,7 @@ def keepAliveSendToken():
     _tk = token.getToken(jwt)
 #    print("[keepAliveSendToken] _tk : ", _tk)
     if (_tk != None):
-        TV.keepAliveSendToken = body['token']
+        TV.keepAliveToken = body['token']
         keepAliveToken = body['token']
         print("[keepAliveSendToken] body===", body, body['token'])
         logging.warning(f'keepAliveSendToken] body={body}')
