@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   mobileBuild: false, // setup FALSE for Chrome and TRUE for Android
-  version: "(v27) ",
-  serverLoc: "local", // options: ["local", "cloud"]
+  version: "(v28) ",
+  serverLoc: "cloud", // options: ["local", "cloud"]
 //  SERVER_URL_LOCAL: 'http://localhost:8080/OVK/OVK_mob1/1.0.7/',
   SERVER_URL_LOCAL: 'http://localhost:8080/',
 // this project banned and disabled SERVER_URL_GOOGLE: 'https://web-serv13802.nw.r.appspot.com:8080/OVK/OVK_mob1/1.0.7/',

@@ -10,4 +10,6 @@ export class GlobalService {
   public isAlert: boolean = false;
   public testBit_1: boolean = false;
   public testBit_2: boolean = false;
+  public isKeepAliveGood: boolean = false; // true, if KeepAlive passed for all steps - servers, PCL
+  public isKeepAliveActual: boolean = false; // ture, if KeepAlive POST/GET passed already
 }

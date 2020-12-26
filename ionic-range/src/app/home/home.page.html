@@ -58,7 +58,10 @@
           </div>
         </ion-col>
         <ion-col style="background-color: #3dc2ff;">
-          <div class="ion-padding"></div>
+          <div class="ion-padding" class="ion-text-center">
+            <ion-icon *ngIf="globalVar.isKeepAliveActual" size="large" name="sync-outline" [color]="globalVar.isKeepAliveGood ? 'tertiary' : 'danger'" ></ion-icon><!--danger-->
+            <ion-spinner *ngIf="!globalVar.isKeepAliveActual" size="large"  name="lines" ></ion-spinner>
+          </div>
         </ion-col>
           <ion-col style="background-color: #3dc2ff;">
           <div class="ion-text-center">

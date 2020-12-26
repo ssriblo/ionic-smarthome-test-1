@@ -84,12 +84,10 @@ export class HomePage  implements OnInit  {
 
     setTimeout(()=> {
       this.keeALiveStatus = this.keepalive.isKeepALive();
-      console.log("[setTimeout]: after 5s this.keeALiveStatus", this.keeALiveStatus);
+      console.log("[setTimeout]: after 30s this.keeALiveStatus", this.keeALiveStatus);
+      this.globalVar.isKeepAliveActual = true;
     }, 30000);    
-    // FOR DEBUG ONLY !!!!!!!!!!!!!!!!!!!!!!
-    setTimeout(()=> {
-      console.log("[setTimeout]: after 10s this.keeALiveStatus", this.keeALiveStatus);
-    }, 35000);    
+   
 
 
     setInterval(async ()=> {
@@ -99,6 +97,7 @@ export class HomePage  implements OnInit  {
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
         this.checkAllVals();
+        this.keeALiveStatus = this.keepalive.isKeepALive();
 //        this.checkKeepALive();
       }else {
 //        console.log("[setInterval]: every 60s - NOT ACTIVE");
