@@ -21,6 +21,8 @@ ch_B2 = None
 ch_targetT = None
 ch_weatherT = None
 ch_timetable = None
+ch_keepAliveUp = None
+ch_keepAliveDown = None
 
 class SubHandler(object):
     
@@ -44,6 +46,8 @@ def browse_recursive(node):
     global ch_targetT
     global ch_weatherT
     global ch_timetable
+    global ch_keepAliveUp
+    global ch_keepAliveDown
 
     for childId in node.get_children():
         # NOTE: both lines below works the same! So ch=childID the same as get_node(childID)
@@ -80,6 +84,12 @@ def browse_recursive(node):
                 if string.find("TimeTable") >= 0 :
                     print("Found TimeTableArray", string, ch)
                     ch_timetable = ch
+                if string.find("KeepAliveUp") >= 0 :
+                    print("Found KeepAliveUp", string, ch)
+                    ch_keepAliveUp = ch
+                if string.find("KeepAliveDown") >= 0 :
+                    print("Found KeepAliveDown", string, ch)
+                    ch_keepAliveDown = ch
 
 #            except ua.uaerrors._auto.BadWaitingForInitialData:
             except:
@@ -209,6 +219,26 @@ if __name__ == "__main__":
                 e = sys.exc_info()
                 print( "EXCEPTION5: ", e[0], e[1])
                 logging.error(f'EXCEPTION5 e[0]={e[0]}  e[1]={e[1]}')
+
+            try: #ch_keepAliveUp -> Up means from PLC to MobApp
+                TV.keepAlivePLC = ch_keepAliveUp.get_value() # pass from PLC to MobApp value. It this value equal to Token, then PLC works well
+                TV.keepAliveOPCUA = TV.keepAliveToken # copy Token, received from MobApp back to MobApp. It's indicates that OPCUA works well
+                print(f'keepAlivePLC={TV.keepAlivePLC}; keepAliveOPCUA={TV.keepAliveOPCUA}, keepAliveToken={TV.keepAliveToken}')
+            except:                                
+                print( "EXCEPTION6: ", e[0], e[1])
+                logging.error(f'EXCEPTION6 e[0]={e[0]}  e[1]={e[1]}')
+
+            try: #ch_keepAliveDown -> Down means from MobApp to PLC
+                # pass Token from MobApp to PLC. Means that PLC copyes Token back via ch_keepAliveUp
+                print(f'TV.keepAliveToken', TV.keepAliveToken, type(TV.keepAliveToken))
+                datavalue = ua.DataValue(ua.Variant(int(TV.keepAliveToken), ua.VariantType.Int32)) 
+                ch_keepAliveDown.set_value(datavalue)
+            except:                
+                e = sys.exc_info()
+                print( "EXCEPTION6: ", e[0], e[1])
+                logging.error(f'EXCEPTION6 e[0]={e[0]}  e[1]={e[1]}')
+
+
             time.sleep(10)
 
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]

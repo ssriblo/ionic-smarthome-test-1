@@ -22,6 +22,7 @@ TV = TempValLocal()
 WT = Weather()
 token = Token()
 dateTimeObj = datetime.now()
+keepAliveToken = None
 
 __flags_status = 0
 __pushN = 0
@@ -31,7 +32,6 @@ logging.basicConfig(filename='./web-serv.log', filemode='a', format='%(levelname
 config = configparser.ConfigParser()                           
 config.read('./config.ini')
 log = config.get('MODE', 'LOGLEVEL')
-
 app = Flask(__name__)
 CORS(app)
 
@@ -233,7 +233,37 @@ def waterHotMeter():
     return {"value": value}
 
 ###############################################################################
+@app.route('/keepAliveReceive', methods=['GET']) 
+def keepAliveReceive():
+    global keepAliveToken
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[serversStatus] _tk : ", _tk)
+    valOPCUA = TV.keepAliveOPCUA if (_tk != None) else None
+    valPLC = TV.keepAlivePLC if (_tk != None) else None
+    value = {"plc":valPLC, "opcua":valOPCUA, "api":keepAliveToken}
+    print("[keepAliveReceive] value:  ", value)
+    return value
+
 ###############################################################################
+###############################################################################
+###############################################################################
+@app.route('/keepAliveSendToken', methods=['POST']) 
+def keepAliveSendToken():
+    global keepAliveToken
+    body = request.json
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[keepAliveSendToken] _tk : ", _tk)
+    if (_tk != None):
+        TV.keepAliveToken = body['token']
+        keepAliveToken = body['token']
+        print("[keepAliveSendToken] body===", body, body['token'])
+        logging.warning(f'keepAliveSendToken] body={body}')
+    return {'value': str(TV.targetT)}
+
 ###############################################################################
 @app.route('/updateTimeTable', methods=['POST']) 
 def updateTimeTable():
