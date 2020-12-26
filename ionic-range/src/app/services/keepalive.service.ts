@@ -42,11 +42,6 @@ export class Keepalive {
       if (this.tkn == result.opcua) { res.opcua = true; }
       if (this.tkn == result.api) { res.api = true; }
       console.log("[isKeepALive] res=", res, "result=", result)
-//////////////////////////////////////////////////////////////////////////////////
-//     ПРОБЛЕМА: вызываю этот метод и он возвращает ответ через задержку. 
-//          Как переделать его на ASYNC/AWAIT
-//            см. заметки Ильи
-//////////////////////////////////////////////////////////////////////////////////
         return res;
       });
       return res;

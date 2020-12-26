@@ -83,9 +83,14 @@ export class HomePage  implements OnInit  {
     }, 2500);
 
     setTimeout(()=> {
-      console.log("[setTimeout]: after 10s this.keeALiveStatus", this.keeALiveStatus);
       this.keeALiveStatus = this.keepalive.isKeepALive();
+      console.log("[setTimeout]: after 5s this.keeALiveStatus", this.keeALiveStatus);
+    }, 5000);    
+    // FOR DEBUG ONLY !!!!!!!!!!!!!!!!!!!!!!
+    setTimeout(()=> {
+      console.log("[setTimeout]: after 10s this.keeALiveStatus", this.keeALiveStatus);
     }, 10000);    
+
 
     setInterval(async ()=> {
       const isActive = this.isActiveApp();

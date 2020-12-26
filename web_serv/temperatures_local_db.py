@@ -39,8 +39,10 @@ class TempValLocal():
             self.mydict['timetable'] = {}
         if 'keepAliveToken' not in self.mydict: 
             self.mydict['keepAliveToken'] = {}
-        if 'keepAliveReceive' not in self.mydict: 
-            self.mydict['keepAliveReceive'] = {}
+        if 'keepAliveOPCUA' not in self.mydict: 
+            self.mydict['keepAliveOPCUA'] = {}
+        if 'keepAlivePLC' not in self.mydict: 
+            self.mydict['keepAlivePLC'] = {}
 ######################################
     @property
     def keepAliveToken(self):
@@ -51,12 +53,20 @@ class TempValLocal():
         self.mydict['keepAliveToken'] = val
 ######################################
     @property
-    def keepAliveReceive(self):
-        return self.mydict['keepAliveReceive']
+    def keepAliveOPCUA(self):
+        return self.mydict['keepAliveOPCUA']
 
-    @keepAliveReceive.setter
-    def keepAliveReceive(self, val):
-        self.mydict['keepAliveReceive'] = val
+    @keepAliveOPCUA.setter
+    def keepAliveOPCUA(self, val):
+        self.mydict['keepAliveOPCUA'] = val
+######################################
+    @property
+    def keepAlivePLC(self):
+        return self.mydict['keepAlivePLC']
+
+    @keepAlivePLC.setter
+    def keepAlivePLC(self, val):
+        self.mydict['keepAlivePLC'] = val
 ######################################
     @property
     def timetable(self):

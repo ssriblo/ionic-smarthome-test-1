@@ -240,8 +240,9 @@ def keepAliveReceive():
 #    print("JWT: ", jwt)
     _tk = token.getToken(jwt)
 #    print("[serversStatus] _tk : ", _tk)
-#### TEMPORARY, due to OPCUA/YART not ready    value = TV.keepAliveReceive if (_tk != None) else None
-    value = {"plc":keepAliveToken, "opcua":keepAliveToken, "api":keepAliveToken}
+    valOPCUA = TV.keepAliveOPCUA if (_tk != None) else None
+    valPLC = TV.keepAlivePLC if (_tk != None) else None
+    value = {"plc":valPLC, "opcua":valOPCUA, "api":keepAliveToken}
     print("[keepAliveReceive] value:  ", value)
     return value
 
