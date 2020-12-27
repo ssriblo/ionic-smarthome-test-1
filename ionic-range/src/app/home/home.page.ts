@@ -40,7 +40,8 @@ export class HomePage  implements OnInit  {
   progress = 0;   
   private keeALiveStatus: KeepAliveStatus;
   private flagKeepAliveFirst30S: boolean = true;
-
+  private time5s:number = 0;
+  private flagOdMinute;boolean = true;
 
   constructor(
     public platform:Platform, 
@@ -52,7 +53,7 @@ export class HomePage  implements OnInit  {
     private alertsPage: AlertsPage,
     private menu: MenuController,
     private timeTableService: TimetableService,
-    private keepalive: Keepalive,
+    public keepalive: Keepalive,
     ) {}
 
   ngOnInit() {
@@ -86,29 +87,37 @@ export class HomePage  implements OnInit  {
     setTimeout(()=> {
       this.flagKeepAliveFirst30S = false;
       this.globalVar.isKeepAliveActual = true;
-      console.log("[ngOnInit home.page]: after 30s this.keeALiveStatus", this.keeALiveStatus);
-    }, 30000);    
+      console.log("[ngOnInit home.page]: after 60s this.keeALiveStatus", this.keeALiveStatus);
+    }, 60000);    
    
     setInterval(()=> { // persisting GET KeepAlive first 30 seconds
       if (this.flagKeepAliveFirst30S === true) {
         this.keeALiveStatus = this.keepalive.isKeepALive();
-        console.log("[ngOnInit home.page]: every 5s this.keeALiveStatus", this.keeALiveStatus);
-        // if ( this.globalVar.isKeepAliveGood === true ) {
-        //   this.globalVar.isKeepAliveActual = true;
-        // }
+        this.time5s = this.time5s + 5;
+        console.log("[ngOnInit home.page] every 5s", "seconds=", this.time5s, " this.keeALiveStatus", this.keeALiveStatus);
       }
     }, 5000);
 
+/*******************************************************************************************
+ * KeepAlive посылается (POST) каждую нечетную минуту и ожидается (GET) каждую четную минуту
+ * flagOdMinute 
+********************************************************************************************/
 
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
       if (await isActive == true) {
-//        console.log("[setInterval]: every 60s - ACTIVE");
+        console.log("[setInterval]: every 60s - ACTIVE");
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
         this.checkAllVals();
-        this.keeALiveStatus = this.keepalive.isKeepALive();
-//        this.checkKeepALive();
+        this.flagOdMinute = !this.flagOdMinute;
+        if (this.flagOdMinute === true) {
+          console.log("********* KEEPASS POST MINUTE")
+          this.keepalive.postKeepALive();
+        }else {
+          console.log("********* KEEPASS GET MINUTE")
+          this.keeALiveStatus = this.keepalive.isKeepALive();
+        }
       }else {
 //        console.log("[setInterval]: every 60s - NOT ACTIVE");
       }
