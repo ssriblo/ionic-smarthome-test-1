@@ -39,6 +39,7 @@ export class HomePage  implements OnInit  {
   tt_active:any;
   progress = 0;   
   private keeALiveStatus: KeepAliveStatus;
+  private flagKeepAliveFirst30S: boolean = true;
 
 
   constructor(
@@ -83,11 +84,20 @@ export class HomePage  implements OnInit  {
     }, 2500);
 
     setTimeout(()=> {
-      this.keeALiveStatus = this.keepalive.isKeepALive();
-      console.log("[setTimeout]: after 30s this.keeALiveStatus", this.keeALiveStatus);
+      this.flagKeepAliveFirst30S = false;
       this.globalVar.isKeepAliveActual = true;
+      console.log("[ngOnInit home.page]: after 30s this.keeALiveStatus", this.keeALiveStatus);
     }, 30000);    
    
+    setInterval(()=> { // persisting GET KeepAlive first 30 seconds
+      if (this.flagKeepAliveFirst30S === true) {
+        this.keeALiveStatus = this.keepalive.isKeepALive();
+        console.log("[ngOnInit home.page]: every 5s this.keeALiveStatus", this.keeALiveStatus);
+        // if ( this.globalVar.isKeepAliveGood === true ) {
+        //   this.globalVar.isKeepAliveActual = true;
+        // }
+      }
+    }, 5000);
 
 
     setInterval(async ()=> {
