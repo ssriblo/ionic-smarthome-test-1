@@ -23,7 +23,7 @@ export class SetupPage implements OnInit {
   tt_vals: any;
   tt_days: any;
   tt_active: any;
-  isErrorInterval: boolean [] = [false, false, false];
+  isErrorInterval: boolean [] = [true, true, true];
   progress = 0;   
 
   constructor( 
