@@ -238,8 +238,7 @@ if __name__ == "__main__":
                 print( "EXCEPTION6: ", e[0], e[1])
                 logging.error(f'EXCEPTION6 e[0]={e[0]}  e[1]={e[1]}')
 
-
-            time.sleep(10)
+            time.sleep(1)
 
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739))]
 #NODE is: NodeClass.Object QualifiedName(0:YA1002d00213437471231373739:Otoplenok) [Node(TwoByteNodeId(i=84)), Node(TwoByteNodeId(i=85)), Node(StringNodeId(s=YA1002d00213437471231373739)), Node(StringNodeId(s=YA1002d00213437471231373739:Otoplenok))]
