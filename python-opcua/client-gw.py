@@ -12,6 +12,7 @@ from opcua import ua
 from temperatures_local_db import TempValLocal
 from data_parser import DataParserF8, DataParserB2
 from timetable_parser import DataParserTT
+from logging.handlers import RotatingFileHandler
 
 
 
@@ -100,11 +101,17 @@ def browse_recursive(node):
 ################################################################################################
 
 if __name__ == "__main__":
-#    logging.basicConfig(level=logging.WARN)
-    logging.basicConfig(filename='./client-gw.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
+#    logging.basicConfig(filename='./client-gw.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
+    log_formatter = logging.Formatter('%(asctime)s %(levelname)s (%(lineno)d) %(message)s')
+    logFile = './client-gw.log'
+    my_handler = RotatingFileHandler(logFile, mode='a', maxBytes=5*1024*1024, 
+                                    backupCount=2, encoding=None, delay=0)
+    my_handler.setFormatter(log_formatter)
+    my_handler.setLevel(logging.INFO)
+    logging = logging.getLogger('root')
+#    logging.setLevel(logging.INFO)
+    logging.addHandler(my_handler)
 
-    #logger = logging.getLogger("KeepAlive")
-    #logging.setLevel(logging.DEBUG)
 
     print ('Number of arguments:', len(sys.argv), 'arguments.')
     print ('Argument List:', str(sys.argv))
