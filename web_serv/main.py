@@ -15,6 +15,7 @@ from weather_temp import Weather
 from temperatures_local_db import TempValLocal
 import json
 from datetime import datetime
+from logging.handlers import RotatingFileHandler
 
 Push = Post2onesignal()
 #Push.push("Пуш нотификация","Тревога") # for test only
@@ -27,7 +28,17 @@ keepAliveToken = None
 __flags_status = 0
 __pushN = 0
 
-logging.basicConfig(filename='./web-serv.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
+#logging.basicConfig(filename='./web-serv.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
+log_formatter = logging.Formatter('%(asctime)s %(levelname)s (%(lineno)d) %(message)s')
+logFile = './web-serv.log'
+my_handler = RotatingFileHandler(logFile, mode='a', maxBytes=5*1024*1024, 
+                                backupCount=2, encoding=None, delay=0)
+my_handler.setFormatter(log_formatter)
+my_handler.setLevel(logging.INFO)
+logging = logging.getLogger('root')
+#    logging.setLevel(logging.INFO) # does not work, but why??
+logging.addHandler(my_handler)
+
 
 config = configparser.ConfigParser()                           
 config.read('./config.ini')
@@ -53,6 +64,14 @@ def checkAlert():
         "Нет электропитания",
         "Протечка в квартире",
         "Протечка на этаже",
+        "Авария оборудования-1",                
+        "Авария оборудования-2",                
+        "Авария оборудования-3",                
+        "Авария оборудования-4",                
+        "",                
+        "",                
+        "",                
+        "",                
         "",                
         "",                
         "",                
@@ -60,13 +79,18 @@ def checkAlert():
         ]
 #    ticks = time.time()
 #    print ("Number of ticks since 12:00am, January 1, 1970:", ticks)
+    # FLAGs1 byte format:
+    # SW1 SW2 SW3 spare DI4 DI3 DI2 POWER(1-failed)
     fs = int(TV.flags1)
     if ( ( fs != __flags_status ) and (fs != 0) ):
-        if ( (fs >= 1) and (fs <= 8) ):
-            prompt = prompts[fs]
-            Push.push("ОТОПЛЕНОК", "Пуш нотификация", prompt + " " + str(__pushN))
-            logging.warning(f'PUSH: fs={fs} __pushN={__pushN}')
-            __pushN = __pushN + 1
+        fs_shifted = fs >> 4 # shift right SW1/SW2/SW3
+        fs_shifted = fs_shifted | ( fs & 0x1) 
+        # fs_shifted byte format:
+        # X X X X SW1 SW2 SW3 POWER
+        prompt = prompts[fs_shifted]
+        Push.push("ОТОПЛЕНОК", "Пуш нотификация", prompt + " " + str(__pushN))
+        logging.warning(f'PUSH: fs={fs} PUSH notification={prompts[fs]} __pushN={__pushN}')
+        __pushN = __pushN + 1
     __flags_status = fs
 
 
@@ -79,7 +103,7 @@ def weatherUpdate():
 # https://www.programcreek.com/python/example/94838/apscheduler.schedulers.background.BackgroundScheduler 
 # Example 1
 scheduler = BackgroundScheduler()
-scheduler.add_job(checkAlert, 'interval', seconds=60)
+scheduler.add_job(checkAlert, 'interval', seconds=10) # for debugging 10s
 scheduler.add_job(weatherUpdate, 'interval', seconds=60)
 scheduler.start()
 
