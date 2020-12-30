@@ -63,8 +63,8 @@ def checkAlert():
         "Тестовое сообщение",
         "Нет электропитания",
         "Протечка в квартире",
-        "Протечка на этаже",
         "Авария оборудования-1",                
+        "Протечка на этаже",
         "Авария оборудования-2",                
         "Авария оборудования-3",                
         "Авария оборудования-4",                
@@ -82,8 +82,7 @@ def checkAlert():
     # FLAGs1 byte format:
     # SW1 SW2 SW3 spare DI4 DI3 DI2 POWER(1-failed)
     fs = int(TV.flags1)
-    logging.warning(f'PUSH: fs={fs} __flags_status={__flags_status}')
-
+#    logging.warning(f'PUSH: fs={fs} __flags_status={__flags_status}')
     if ( ( fs != __flags_status ) and (fs != 0) ):
         fs_shifted = fs >> 4 # shift right SW1/SW2/SW3
         fs_shifted = fs_shifted | ( fs & 0x1) 
