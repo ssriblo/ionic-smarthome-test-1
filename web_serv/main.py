@@ -91,7 +91,7 @@ def checkAlert():
         # X X X X SW1 SW2 SW3 POWER
         prompt = prompts[fs_shifted]
         Push.push("ОТОПЛЕНОК", "Пуш нотификация", prompt + " " + str(__pushN))
-        logging.warning(f'PUSH: fs={fs} PUSH notification={prompts[fs]} __pushN={__pushN}')
+        logging.warning(f'PUSH: fs={fs} PUSH notification={prompts[fs_shifted]} __pushN={__pushN}')
         __pushN = __pushN + 1
     __flags_status = fs
 
