@@ -58,6 +58,19 @@ export class AppComponent {
       let title = data.payload.title;
       let additionalData = data.payload.additionalData;
       this.showAlert(title, msg, additionalData.task);
+      let colorEv = ""
+      if ( msg.includes("нет") || (msg.includes("норме"))) {
+        colorEv = "success";
+      } else {
+        colorEv = "danger"
+      }
+      this.alertsPage.addAlert(1, msg, colorEv)
+// addAlert(1, 'ПРОТЕЧКА', "danger");
+// addAlert(1, 'Протечки нет', "success");
+// addAlert(2, 'НЕТ ЭЛЕКТРОЭНЕРГИИ', "warning");
+// addAlert(2, 'Электроэнергия в норме', "success");
+// addAlert(3, 'АВАРИЯ ДАТЧИКА', "tertiary");
+// addAlert(3, 'Датчик в норме', "success");
     });
  
     // Notification was really clicked/opened
