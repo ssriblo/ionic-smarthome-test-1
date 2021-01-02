@@ -13,6 +13,7 @@ from temperatures_local_db import TempValLocal
 from data_parser import DataParserF8, DataParserB2
 from timetable_parser import DataParserTT
 from logging.handlers import RotatingFileHandler
+import traceback
 
 
 
@@ -99,7 +100,29 @@ def browse_recursive(node):
                 cntr = cntr + 1
     
 ################################################################################################
+def loggingAndCheckBrokenPipe(i, e):       
+#    print( "EXCEPTION6: ", e[0], e[1])
+    logging.error(f'EXCEPTION i={i} e[0]={e[0]}  e[1]={e[1]} {traceback.format_exc()}')
+    traceback.print_exc()
+    if ( str(type(e[0])).find("BrokenPipe") != -1 ):
+        sys.exit(0)
+#        os.system('reboot')
+################################################################################################
+def testOnlyEception():
+    try:
+        raise TypeError("Oups!")
+    except Exception as err:
+        try:
+            raise TypeError("Again !?!")
+        except:
+            pass
 
+#        traceback.print_tb(err.__traceback__)
+        e= ["A", "B"]
+        loggingAndCheckBrokenPipe(1, e)
+        sys.exit(0)
+
+################################################################################################
 if __name__ == "__main__":
 #    logging.basicConfig(filename='./client-gw.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
     log_formatter = logging.Formatter('%(asctime)s %(levelname)s (%(lineno)d) %(message)s')
@@ -112,6 +135,7 @@ if __name__ == "__main__":
 #    logging.setLevel(logging.INFO)
     logging.addHandler(my_handler)
 
+#    testOnlyEception()
 
     print ('Number of arguments:', len(sys.argv), 'arguments.')
     print ('Argument List:', str(sys.argv))
@@ -182,24 +206,22 @@ if __name__ == "__main__":
                 TV.warmMeter = DF8.warmMeter
             except:
                 e = sys.exc_info()
-                print( "EXCEPTION1: ", e[0], e[1])
-                logging.error(f'EXCEPTION1 e[0]={e[0]}  e[1]={e[1]}')
+                loggingAndCheckBrokenPipe(1, e)
+
 
             try:
                 datavalue = ua.DataValue(ua.Variant(float(TV.weatherT), ua.VariantType.Float)) 
                 ch_weatherT.set_value(datavalue)
             except:
                 e = sys.exc_info()
-                print( "EXCEPTION2: ", e[0], e[1])
-                logging.error(f'EXCEPTION2 e[0]={e[0]}  e[1]={e[1]}')
+                loggingAndCheckBrokenPipe(2, e)
 
             try:
                 datavalue = ua.DataValue(ua.Variant(float(TV.targetT), ua.VariantType.Float)) 
                 ch_targetT.set_value(datavalue)
             except:
                 e = sys.exc_info()
-                print( "EXCEPTION3: ", e[0], e[1])
-                logging.error(f'EXCEPTION3 e[0]={e[0]}  e[1]={e[1]}')
+                loggingAndCheckBrokenPipe(3, e)    
             
             try:
                 print(f"roomT={TV.roomT:4.2f}; waterT={TV.waterT:4.2f}; weatherT={float(TV.weatherT):4.2f}; ", end='')
@@ -213,8 +235,7 @@ if __name__ == "__main__":
 
             except:
                 e = sys.exc_info()
-                print( "EXCEPTION4: ", e[0], e[1])
-                logging.error(f'EXCEPTION4 e[0]={e[0]}  e[1]={e[1]}')
+                loggingAndCheckBrokenPipe(4, e)    
 
             try:
                 array16 = DTT.timetableParser(TV.timetable)
@@ -224,16 +245,14 @@ if __name__ == "__main__":
                 logging.warning(f'OPCUA_datavalue={datavalue}')
             except:
                 e = sys.exc_info()
-                print( "EXCEPTION5: ", e[0], e[1])
-                logging.error(f'EXCEPTION5 e[0]={e[0]}  e[1]={e[1]}')
+                loggingAndCheckBrokenPipe(5, e)
 
             try: #ch_keepAliveUp -> Up means from PLC to MobApp
                 TV.keepAlivePLC = ch_keepAliveUp.get_value() # pass from PLC to MobApp value. It this value equal to Token, then PLC works well
                 TV.keepAliveOPCUA = TV.keepAliveToken # copy Token, received from MobApp back to MobApp. It's indicates that OPCUA works well
                 print(f'keepAlivePLC={TV.keepAlivePLC}; keepAliveOPCUA={TV.keepAliveOPCUA}, keepAliveToken={TV.keepAliveToken}')
             except:                                
-                print( "EXCEPTION6: ", e[0], e[1])
-                logging.error(f'EXCEPTION6 e[0]={e[0]}  e[1]={e[1]}')
+                loggingAndCheckBrokenPipe(6, e)
 
             try: #ch_keepAliveDown -> Down means from MobApp to PLC
                 # pass Token from MobApp to PLC. Means that PLC copyes Token back via ch_keepAliveUp
@@ -242,8 +261,7 @@ if __name__ == "__main__":
                 ch_keepAliveDown.set_value(datavalue)
             except:                
                 e = sys.exc_info()
-                print( "EXCEPTION6: ", e[0], e[1])
-                logging.error(f'EXCEPTION6 e[0]={e[0]}  e[1]={e[1]}')
+                loggingAndCheckBrokenPipe(7, e)
 
             time.sleep(1)
 
