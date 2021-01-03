@@ -166,11 +166,31 @@ coverage html
 firefox htmlcov/index.html
 ```
 ########################################################
+To run the server, please execute the following from the root directory:
+
+virtualenv --python=python3 env  (только первый раз!)
+source env/bin/activate
+pip install -r requirements.txt
+
+После того, как все настроено, надо заморозить виртуальное окружение и сохранить его описание командами:
+Сохранить:
+pip freeze > requirements.txt
+Восстановить в следующий раз:
+pip install -r requirements.txt
+
+source env/bin/activate
+python3 client-gw.py 193.124.56.188
+
+or
+./start.sh
+
+########################################################
 # https://www.linode.com/docs/quick-answers/linux/start-service-at-boot/
 # https://sysadmin.ru/articles/avtozapusk-v-linux
 
 ## Autostart:
 #cat apiserver.service 
+# PATH: /lib/systemd/system  
 [Unit]
 Description=OPC UA Client Autostart script
 After=multi-user.target
@@ -178,7 +198,8 @@ After=multi-user.target
 [Service]
 Type=idle
 ExecStart=/root/Work/ionic-smarthome-test-1/python-opcua/start.sh
-
+RestartSec=30
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

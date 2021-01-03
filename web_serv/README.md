@@ -31,7 +31,8 @@ gcloud app deploy
 # https://www.linode.com/docs/quick-answers/linux/start-service-at-boot/
 # https://sysadmin.ru/articles/avtozapusk-v-linux
 
-sskriblo@smart-home:/etc/systemd/system$ cat apiserver.service 
+#cat apiserver.service 
+# PATH: /lib/systemd/system  
 [Unit]
 Decription=API Server Autostart script
 After=multi-user.target
@@ -39,6 +40,8 @@ After=multi-user.target
 [Service]
 Type=idle
 ExecStart=/root/Work/ionic-smarthome-test-1/web_serv/start.sh
+RestartSec=30
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

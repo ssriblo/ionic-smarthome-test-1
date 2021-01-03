@@ -105,8 +105,7 @@ def loggingAndCheckBrokenPipe(i, e):
     logging.error(f'EXCEPTION i={i} e[0]={e[0]}  e[1]={e[1]} {traceback.format_exc()}')
     traceback.print_exc()
     if ( str(type(e[0])).find("BrokenPipe") != -1 ):
-        sys.exit(0)
-#        os.system('reboot')
+        sys.exit(1)
 ################################################################################################
 def testOnlyEception():
     try:
