@@ -3,9 +3,18 @@
     <ion-buttons slot="start"  (click)="toHomePage()">
       <ion-icon size="large" name="arrow-back-outline"></ion-icon><h4>Назад</h4></ion-buttons>
     <ion-title slot=""><h1>События</h1></ion-title>
+    <ion-buttons slot="end">
+      <ion-button 
+      strong="true" 
+      shape="round" 
+      size="large" 
+      expand="full" 
+      color="danger"
+      fill="outline"
+        (click)="deleteAllAlerts()">Удалить все</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content color="secondary">
 <!-- List of Text Items -->
 <ion-list inset="true" lines="full">

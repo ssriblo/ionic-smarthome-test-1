@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService, Item } from "../../services/storage.service";
 import { GlobalService } from "../../services/global.service";
@@ -20,6 +20,7 @@ export class AlertsPage implements OnInit {
     private storageService: StorageService,
     public globalVar: GlobalService,
     private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -66,6 +67,9 @@ export class AlertsPage implements OnInit {
         console.log('[aletrs.page.updateAlerts()]', this.items, this.items.length);
       }
     })    
+
+    this.cdr.detectChanges(); // Try to fix refresh *ngFor for Alerts List at the Html Template alerts.page.html
+
     this.ngZone.run(() => {
       this.globalVar.isAlert = false;
     }); 

@@ -36,10 +36,7 @@ export class StorageService {
         newItem.shift();
       }
       newItem.push(item);
-      //        console.log('[storage.service.addItem- ]) ----- 5]', newItem, newItem.length);
-      //      return this.storage.set(key, newItem);
-      await this.storage.set(key, newItem);
-      return;
+      return await this.storage.set(key, newItem);
     }
   }
 
