@@ -89,8 +89,10 @@ def checkAlert():
         # fs_shifted byte format:
         # X X X X SW1 SW2 SW3 POWER
         prompt = prompts[fs_shifted]
-        Push.push("ОТОПЛЕНОК", "Пуш нотификация", prompt + " " + str(__pushN))
-        logging.warning(f'PUSH: fs={fs} PUSH notification={prompts[fs_shifted]} __pushN={__pushN}')
+        #  def push(self, heading, cont_msg, alert_msg):
+        # NOTE: last argument "OK" - for button at alert splash temporary, V31 build. Later it will not mater
+        Push.push("ОТОПЛЕНОК", prompt + " " + str(__pushN), "OK") 
+        logging.warning(f'PUSH: fs={fs} PUSH notification={prompt} __pushN={__pushN}')
         __pushN = __pushN + 1
     __flags_status = fs
 

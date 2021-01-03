@@ -90,7 +90,7 @@ export class AppComponent {
       subHeader: msg,
       buttons: [
         {
-          text: `${task}`,
+          text: `OK`,
           handler: () => {
             // E.g: Navigate to a specific screen
           }
