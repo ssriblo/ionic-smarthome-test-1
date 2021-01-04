@@ -99,7 +99,7 @@ def checkAlert(opt):
         # X X X X WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA POWER_FAIL
         for i in range(0,4):
             if ( (diff >> i) & 1 ):
-                if ( fs_shifted >> i ):
+                if ( (fs_shifted >> i) & 1 ):
                     prompt = prompts[i][0] # Fault=1
                     __flags_status = __flags_status | (1<<i)
                     break
@@ -388,18 +388,32 @@ def foo():
 if __name__ == '__main__':
     # WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA spare DI4 DI3 DI2 POWER(1-failed)
     # X X X X WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA POWER_FAIL
-    checkAlert(1)
-    checkAlert(2**7 + 1)
-    checkAlert(2**7 + 2**5 + 1)
-    checkAlert(2**7 + 2**5 + 1)
-    checkAlert(2**7 + 2**5 + 1)
-    checkAlert(2**7 +  1)
-    checkAlert(2**7 + 2**5 )
-    checkAlert(0)
-    checkAlert(2**7 + 2**6 + 0)
-    checkAlert(0)
-    checkAlert(0)
-    sys.exit(0)
+    if False: # Unit test, set "True" instead of "False"
+        checkAlert(1)
+        checkAlert(2**7 + 1)
+        checkAlert(2**7 + 2**5 + 1)
+        checkAlert(2**7 + 2**5 + 1)
+        checkAlert(2**7 + 2**5 + 1)
+        checkAlert(2**7 +  1)
+        checkAlert(2**7 + 2**5 )
+        checkAlert(0)
+        checkAlert(2**7 + 2**6 + 0)
+        checkAlert(0)
+        checkAlert(0)
+        checkAlert(0)
+        print("***********")
+        checkAlert(2**7 + 2**6 + 2**5 + 1)
+        checkAlert(2**7 + 2**6 + 2**5 + 1)
+        checkAlert(2**7 + 2**6 + 2**5 + 1)
+        checkAlert(2**7 + 2**6 + 2**5 + 1)
+        checkAlert(2**7 + 2**6 + 2**5 + 1)
+        print("***********")
+        checkAlert(0)
+        checkAlert(0)
+        checkAlert(0)
+        checkAlert(0)
+        sys.exit(0)
+
     try:
         if location == "cloud":
             app.run(host='0.0.0.0', port=8080, debug=False, ssl_context=context)
