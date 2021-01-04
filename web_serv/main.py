@@ -16,6 +16,7 @@ from temperatures_local_db import TempValLocal
 import json
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
+import sys
 
 Push = Post2onesignal()
 #Push.push("Пуш нотификация","Тревога") # for test only
@@ -55,46 +56,67 @@ if location == "cloud":
         '/etc/letsencrypt/live/otoplenok.ru/fullchain.pem', 
         '/etc/letsencrypt/live/otoplenok.ru/privkey.pem'
         )
-
-def checkAlert(): 
+#######################################################
+# if opt argument == None - normal mode. If opt argument is number - test mode, opt==fs
+def checkAlert(opt): 
     global __flags_status
     global __pushN
+
     prompts = [
-        "Тестовое сообщение",
-        "Нет электропитания",
-        "Протечка в квартире",
-        "Авария оборудования-1",                
-        "Протечка на этаже",
-        "Авария оборудования-2",                
-        "Авария оборудования-3",                
-        "Авария оборудования-4",                
-        "",                
-        "",                
-        "",                
-        "",                
-        "",                
-        "",                
-        "",                
-        "",                
-        ]
+        ["Авария электропитания", "Электропитание в норме"],
+        ["Протечка", "Протечка устранена"],
+        ["Датчик воздуха недоступен", "Датчик воздуха норм."],
+        ["Датчик воды недоступен", "Датчик воды норм."],
+        [],
+        [],
+        [],
+        [],  ]
+
+    # print(prompts[0][0])        
+    # print(prompts[0][1])        
+    # print(prompts[1][0])        
+    # print(prompts[1][1])        
+    # print(prompts[2][0])        
+    # print(prompts[2][1])        
+    # print(prompts[3][0])        
+    # print(prompts[3][1])        
 #    ticks = time.time()
 #    print ("Number of ticks since 12:00am, January 1, 1970:", ticks)
     # FLAGs1 byte format:
     # SW1 SW2 SW3 spare DI4 DI3 DI2 POWER(1-failed)
-    fs = int(TV.flags1)
+    if (opt == None):
+        fs = int(TV.flags1)
+    else:
+        fs = opt
 #    logging.warning(f'PUSH: fs={fs} __flags_status={__flags_status}')
-    if ( ( fs != __flags_status ) and (fs != 0) ):
-        fs_shifted = fs >> 4 # shift right SW1/SW2/SW3
-        fs_shifted = fs_shifted | ( fs & 0x1) 
+    fs_shifted = fs >> 4 # shift right SW1/SW2/SW3
+    fs_shifted = fs_shifted | ( fs & 0x1) 
+    diff = fs_shifted ^ __flags_status
+    print(f"[checkAlert] argument={opt} fs_shifted={fs_shifted} __flags_status={__flags_status}")
+    prompt = ""
+    if ( diff != 0 ):
         # fs_shifted byte format:
-        # X X X X SW1 SW2 SW3 POWER
-        prompt = prompts[fs_shifted]
-        #  def push(self, heading, cont_msg, alert_msg):
-        # NOTE: last argument "OK" - for button at alert splash temporary, V31 build. Later it will not mater
-        Push.push("ОТОПЛЕНОК", prompt + " " + str(__pushN), "OK") 
-        logging.warning(f'PUSH: fs={fs} PUSH notification={prompt} __pushN={__pushN}')
-        __pushN = __pushN + 1
-    __flags_status = fs
+        # X X X X WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA POWER_FAIL
+        for i in range(0,4):
+            if ( (diff >> i) & 1 ):
+                if ( fs_shifted >> i ):
+                    prompt = prompts[i][0] # Fault=1
+                    __flags_status = __flags_status | (1<<i)
+                    break
+                else:
+                    prompt = prompts[i][1] # Fault=0
+                    __flags_status = __flags_status & ~(1<<i)
+                    break
+        if (opt != None):
+            print(f"after:  __flags_status={__flags_status}")
+            print(f"PROMPT={prompt}\n")
+            return
+        else:
+            #  def push(self, heading, cont_msg, alert_msg):
+            # NOTE: last argument "OK" - for button at alert splash temporary, V31 build. Later it will not mater
+            Push.push("ОТОПЛЕНОК", prompt, "OK") 
+            logging.warning(f'PUSH: fs={fs} PUSH notification={prompt} __pushN={__pushN}')
+            __pushN = __pushN + 1
 
 
 def weatherUpdate():
@@ -106,7 +128,7 @@ def weatherUpdate():
 # https://www.programcreek.com/python/example/94838/apscheduler.schedulers.background.BackgroundScheduler 
 # Example 1
 scheduler = BackgroundScheduler()
-scheduler.add_job(checkAlert, 'interval', seconds=10) # for debugging 10s
+scheduler.add_job(checkAlert, 'interval', [None], seconds=10) # for debugging 10s; [None] - means that ordinary call, not unit test
 scheduler.add_job(weatherUpdate, 'interval', seconds=60)
 scheduler.start()
 
@@ -364,6 +386,20 @@ def foo():
 
 
 if __name__ == '__main__':
+    # WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA spare DI4 DI3 DI2 POWER(1-failed)
+    # X X X X WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA POWER_FAIL
+    checkAlert(1)
+    checkAlert(2**7 + 1)
+    checkAlert(2**7 + 2**5 + 1)
+    checkAlert(2**7 + 2**5 + 1)
+    checkAlert(2**7 + 2**5 + 1)
+    checkAlert(2**7 +  1)
+    checkAlert(2**7 + 2**5 )
+    checkAlert(0)
+    checkAlert(2**7 + 2**6 + 0)
+    checkAlert(0)
+    checkAlert(0)
+    sys.exit(0)
     try:
         if location == "cloud":
             app.run(host='0.0.0.0', port=8080, debug=False, ssl_context=context)
