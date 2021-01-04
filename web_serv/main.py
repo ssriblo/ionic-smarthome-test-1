@@ -18,44 +18,9 @@ from datetime import datetime
 from logging.handlers import RotatingFileHandler
 import sys
 
-Push = Post2onesignal()
-#Push.push("Пуш нотификация","Тревога") # for test only
-TV = TempValLocal()
-WT = Weather()
-token = Token()
-dateTimeObj = datetime.now()
-keepAliveToken = None
-
-__flags_status = 0
-__pushN = 0
-
-#logging.basicConfig(filename='./web-serv.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
-log_formatter = logging.Formatter('%(asctime)s %(levelname)s (%(lineno)d) %(message)s')
-logFile = './web-serv.log'
-my_handler = RotatingFileHandler(logFile, mode='a', maxBytes=5*1024*1024, 
-                                backupCount=2, encoding=None, delay=0)
-my_handler.setFormatter(log_formatter)
-my_handler.setLevel(logging.INFO)
-logging = logging.getLogger('root')
-#    logging.setLevel(logging.INFO) # does not work, but why??
-logging.addHandler(my_handler)
-
-
-config = configparser.ConfigParser()                           
-config.read('./config.ini')
-log = config.get('MODE', 'LOGLEVEL')
 app = Flask(__name__)
 CORS(app)
 
-location = config.get('MODE', 'LOCATION')
-print ("[TokenJwt] location", location)
-if location == "cloud":
-    import ssl 
-    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER) 
-    context.load_cert_chain(
-        '/etc/letsencrypt/live/otoplenok.ru/fullchain.pem', 
-        '/etc/letsencrypt/live/otoplenok.ru/privkey.pem'
-        )
 #######################################################
 # if opt argument == None - normal mode. If opt argument is number - test mode, opt==fs
 def checkAlert(opt): 
@@ -63,15 +28,14 @@ def checkAlert(opt):
     global __pushN
 
     prompts = [
-        ["Авария электропитания", "Электропитание в норме"],
-        ["Протечка", "Протечка устранена"],
-        ["Датчик воздуха недоступен", "Датчик воздуха норм."],
-        ["Датчик воды недоступен", "Датчик воды норм."],
+        ["Авария электропитания", "warning", "Электропитание в норме", "success"],
+        ["Протечка",  "danger", "Протечка устранена", "success"],
+        ["Датчик воздуха недоступен", "tertiary",  "Датчик воздуха норм.", "success"],
+        ["Датчик воды недоступен", "tertiary", "Датчик воды норм.", "success"],
         [],
         [],
         [],
         [],  ]
-
     # print(prompts[0][0])        
     # print(prompts[0][1])        
     # print(prompts[1][0])        
@@ -94,6 +58,7 @@ def checkAlert(opt):
     diff = fs_shifted ^ __flags_status
     print(f"[checkAlert] argument={opt} fs_shifted={fs_shifted} __flags_status={__flags_status}")
     prompt = ""
+    color_alert = "danger"
     if ( diff != 0 ):
         # fs_shifted byte format:
         # X X X X WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA POWER_FAIL
@@ -101,20 +66,22 @@ def checkAlert(opt):
             if ( (diff >> i) & 1 ):
                 if ( (fs_shifted >> i) & 1 ):
                     prompt = prompts[i][0] # Fault=1
+                    color_alert = prompts[i][1]
                     __flags_status = __flags_status | (1<<i)
                     break
                 else:
-                    prompt = prompts[i][1] # Fault=0
+                    prompt = prompts[i][2] # Fault=0
+                    color_alert = prompts[i][3]
                     __flags_status = __flags_status & ~(1<<i)
                     break
         if (opt != None):
             print(f"after:  __flags_status={__flags_status}")
-            print(f"PROMPT={prompt}\n")
+            print(f"PROMPT={prompt} color_alert={color_alert}\n")
             return
         else:
             #  def push(self, heading, cont_msg, alert_msg):
             # NOTE: last argument "OK" - for button at alert splash temporary, V31 build. Later it will not mater
-            Push.push("ОТОПЛЕНОК", prompt, "OK") 
+            Push.push("ОТОПЛЕНОК", prompt, color_alert) 
             logging.warning(f'PUSH: fs={fs} PUSH notification={prompt} __pushN={__pushN}')
             __pushN = __pushN + 1
 
@@ -386,9 +353,56 @@ def foo():
 
 
 if __name__ == '__main__':
-    # WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA spare DI4 DI3 DI2 POWER(1-failed)
-    # X X X X WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA POWER_FAIL
-    if False: # Unit test, set "True" instead of "False"
+    print ('Number of arguments:', len(sys.argv), 'arguments.')
+    print ('Argument List:', str(sys.argv))
+    test = False
+    if(len(sys.argv) == 2 ):    # For Test Only
+        test = True
+        
+    Push = Post2onesignal()
+    #Push.push("Пуш нотификация","Тревога") # for test only
+    TV = TempValLocal()
+    WT = Weather()
+    token = Token()
+    dateTimeObj = datetime.now()
+    keepAliveToken = None
+
+    __flags_status = 0
+    __pushN = 0
+
+    #logging.basicConfig(filename='./web-serv.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
+    log_formatter = logging.Formatter('%(asctime)s %(levelname)s (%(lineno)d) %(message)s')
+    logFile = './web-serv.log'
+    my_handler = RotatingFileHandler(logFile, mode='a', maxBytes=5*1024*1024, 
+                                    backupCount=2, encoding=None, delay=0)
+    my_handler.setFormatter(log_formatter)
+    my_handler.setLevel(logging.INFO)
+    logging = logging.getLogger('root')
+    #    logging.setLevel(logging.INFO) # does not work, but why??
+    logging.addHandler(my_handler)
+
+
+    config = configparser.ConfigParser()                           
+    config.read('./config.ini')
+    log = config.get('MODE', 'LOGLEVEL')
+
+    location = config.get('MODE', 'LOCATION')
+
+    print ("[TokenJwt] location", location)
+    if (location == "cloud") and (test == False):
+        import ssl 
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER) 
+        context.load_cert_chain(
+            '/etc/letsencrypt/live/otoplenok.ru/fullchain.pem', 
+            '/etc/letsencrypt/live/otoplenok.ru/privkey.pem'
+            )
+
+
+    if(len(sys.argv) == 2 ):    # For Test Only
+        test = True
+        print("********** TEST for checkAlert() ************** ")
+        # WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA spare DI4 DI3 DI2 POWER(1-failed)
+        # X X X X WATER_SENSOR_FAIL AIR_SENSOR_FAIL PROTECHKA POWER_FAIL
         checkAlert(1)
         checkAlert(2**7 + 1)
         checkAlert(2**7 + 2**5 + 1)

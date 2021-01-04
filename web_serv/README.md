@@ -17,6 +17,11 @@ python3 main.py
 
 or
 ./start.sh
+---------------------
+For Test checkAlert() function need start with any argument ("xyz")
+python3 main.py xyz
+---------------------
+
 
 To check if server started:
 ./check_app_status.sh
