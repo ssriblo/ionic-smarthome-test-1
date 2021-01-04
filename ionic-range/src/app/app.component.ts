@@ -58,13 +58,7 @@ export class AppComponent {
       let title = data.payload.title;
       let additionalData = data.payload.additionalData;
       this.showAlert(title, msg, additionalData.task);
-      let colorEv = ""
-      if ( msg.includes("нет") || (msg.includes("норме"))) {
-        colorEv = "success";
-      } else {
-        colorEv = "danger"
-      }
-      this.alertsPage.addAlert(1, msg, colorEv)
+      this.alertsPage.addAlert(1, msg, additionalData.task)
 // addAlert(1, 'ПРОТЕЧКА', "danger");
 // addAlert(1, 'Протечки нет', "success");
 // addAlert(2, 'НЕТ ЭЛЕКТРОЭНЕРГИИ', "warning");
@@ -74,17 +68,21 @@ export class AppComponent {
     });
  
     // Notification was really clicked/opened
-    this.oneSignal.handleNotificationOpened().subscribe(data => {
-      // Just a note that the data is a different place here!
-      let additionalData = data.notification.payload.additionalData;
+    
+    // >>>>> COMMENTED because it cause of second alert splash screen   <<<<<<<
+
+    // this.oneSignal.handleNotificationOpened().subscribe(data => {
+    //   // Just a note that the data is a different place here!
+    //   let additionalData = data.notification.payload.additionalData;
  
-      this.showAlert('ВНИМАНИЕ', 'повтор:', additionalData.task);
-    });
+    //   this.showAlert('ВНИМАНИЕ', 'повтор:', additionalData.task);
+    // });
  
     this.oneSignal.endInit();
   }
  
-  async showAlert(title, msg, task) {
+  async showAlert(title, msg, option) {
+    // NOTE / ToDo: argument "option" may be used for Alert color background
     const alert = await this.alertCtrl.create({
       header: title,
       subHeader: msg,
