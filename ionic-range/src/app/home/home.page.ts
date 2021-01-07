@@ -41,7 +41,8 @@ export class HomePage  implements OnInit  {
   private keeALiveStatus: KeepAliveStatus;
   private flagKeepAliveFirst30S: boolean = true;
   private time5s:number = 0;
-  private flagOdMinute;boolean = true;
+  private flagOdMinute:boolean = true;
+  private faultStatus:number = 0;
 
   constructor(
     public platform:Platform, 
@@ -105,7 +106,7 @@ export class HomePage  implements OnInit  {
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
       if (await isActive == true) {
-        let faultStatus = this.checkFaultStatus();
+        this.updateFaultStatus();
         console.log("[setInterval]: every 60s - ACTIVE");
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
@@ -124,9 +125,43 @@ export class HomePage  implements OnInit  {
       },60000);       
   } // ngOnInit() finished
 
-  checkFaultStatus() {
-    this.apiService.getApiCB('faultStatus', (result) => {this.faultStatus = result['value'].toFixed(2) });
+  updateFaultStatus() {
+    this.apiService.getApiCB('faultStatus', (result) => {
+      this.faultStatus = result['value'].toFixed(3) 
+      if ( this.faultStatus != 0 ) {
+        this.globalVar.isFault = true;
+      }else {
+        this.globalVar.isFault = false;
+      }
+// FLAGs1 ('faultStatus') format (from main.py):
+// WATER_SENSOR_FAIL[128] AIR_SENSOR_FAIL[64] FLOOD[32] spare[16] DI4[8] DI3[4] DI2[2] POWER_FAIL[1](1-failed)
+      if ( (this.faultStatus & 1) != 0) { 
+        this.globalVar.isPowerFault = true;
+      }else {
+        this.globalVar.isPowerFault = false;
+      }
+      if ( (this.faultStatus &32) != 0) { 
+        this.globalVar.isFlood = true;
+      }else {
+        this.globalVar.isFlood = false;
+      }
+      if ( (this.faultStatus & 64) != 0) { 
+        this.globalVar.isAirSensorFault = true;
+      }else {
+        this.globalVar.isAirSensorFault = false;
+      }
+      if ( (this.faultStatus & 128) != 0) { 
+        this.globalVar.isWaterSensorFault = true;
+      }else {
+        this.globalVar.isWaterSensorFault = false;
+      }
+      console.log("[updateFaultStatus] faultStatus=", this.faultStatus);
+    });
 
+  }
+
+  displayFaultStatus() {
+    
   }
 
   checkAllVals() {

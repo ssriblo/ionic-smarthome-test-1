@@ -71,7 +71,7 @@ export class AlertsPage implements OnInit {
     this.cdr.detectChanges(); // Try to fix refresh *ngFor for Alerts List at the Html Template alerts.page.html
 
     this.ngZone.run(() => {
-      this.globalVar.isAlert = false;
+      this.globalVar.isAlert = false; // Not used yet, let save just for case...
     }); 
   }
 
