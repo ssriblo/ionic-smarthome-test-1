@@ -263,6 +263,17 @@ def keepAliveReceive():
     return value
 
 ###############################################################################
+@app.route('/faultStatus', methods=['GET']) 
+def faultStatus():
+    jwt = request.args.get('jwt')
+#    print("JWT: ", jwt)
+    _tk = token.getToken(jwt)
+#    print("[serversStatus] _tk : ", _tk)
+    value = TV.flags1 if (_tk != None) else None
+    print("[faultStatus] value:  ", value)
+    return {"value": value}
+    
+###############################################################################
 ###############################################################################
 ###############################################################################
 @app.route('/keepAliveSendToken', methods=['POST']) 

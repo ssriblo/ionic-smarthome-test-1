@@ -87,8 +87,8 @@ export class HomePage  implements OnInit  {
     setTimeout(()=> {
       this.flagKeepAliveFirst30S = false;
       this.globalVar.isKeepAliveActual = true;
-      console.log("[ngOnInit home.page]: after 60s this.keeALiveStatus", this.keeALiveStatus);
-    }, 60000);    
+      console.log("[ngOnInit home.page]: after 30s this.keeALiveStatus", this.keeALiveStatus);
+    }, 30000);    
    
     setInterval(()=> { // persisting GET KeepAlive first 30 seconds
       if (this.flagKeepAliveFirst30S === true) {
@@ -102,10 +102,10 @@ export class HomePage  implements OnInit  {
  * KeepAlive посылается (POST) каждую нечетную минуту и ожидается (GET) каждую четную минуту
  * flagOdMinute 
 ********************************************************************************************/
-
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
       if (await isActive == true) {
+        let faultStatus = this.checkFaultStatus();
         console.log("[setInterval]: every 60s - ACTIVE");
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
@@ -123,6 +123,11 @@ export class HomePage  implements OnInit  {
       }
       },60000);       
   } // ngOnInit() finished
+
+  checkFaultStatus() {
+    this.apiService.getApiCB('faultStatus', (result) => {this.faultStatus = result['value'].toFixed(2) });
+
+  }
 
   checkAllVals() {
     // This is rare issue - may be due to something RangeT or MODE may not sent properly
