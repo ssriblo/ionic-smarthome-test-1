@@ -109,4 +109,35 @@ export class Keepalive {
     await alert.present();
   }
 
+  public async faultsAlertInfo(){
+    const NORMA = "НОРМА"
+    const FAULT = "АВАРИЯ !!"
+    const isPowerFault =  this.globalVar.isPowerFault? FAULT : NORMA;
+    const isFlood =  this.globalVar.isFlood? FAULT : NORMA;
+    const isAirSensorFault =  this.globalVar.isAirSensorFault? FAULT : NORMA;
+    const isWaterSensorFault =  this.globalVar.isWaterSensorFault? FAULT : NORMA;
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      animated: true,
+      backdropDismiss: true,
+//        header: 'Информация об ошибках',
+      message: '<p><b>Информация об ошибках системы</b></p> \
+      <ul><li>Основное питание - ' + isPowerFault +
+      '</li><li>Протечка - ' + isFlood +
+      '</li><li>Датчик темп. воздуха - ' + isAirSensorFault +
+      '</li><li>Датчик темп. воды - '+ isWaterSensorFault + '</li></ul>' ,
+      buttons: [
+        {
+          text: 'ОК',
+          role: 'cancel',
+        },
+      ]
+    });
+    await alert.present();
+  }
+
+
+
+
 }

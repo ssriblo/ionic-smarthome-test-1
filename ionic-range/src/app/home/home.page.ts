@@ -106,7 +106,6 @@ export class HomePage  implements OnInit  {
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
       if (await isActive == true) {
-        this.updateFaultStatus();
         console.log("[setInterval]: every 60s - ACTIVE");
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
@@ -122,7 +121,16 @@ export class HomePage  implements OnInit  {
       }else {
 //        console.log("[setInterval]: every 60s - NOT ACTIVE");
       }
-      },60000);       
+      },60000);    
+
+      setInterval(async ()=> {
+        const isActive = this.isActiveApp();
+        if (await isActive == true) {
+          this.updateFaultStatus();
+          }
+        },10000);      
+      
+
   } // ngOnInit() finished
 
   updateFaultStatus() {
@@ -155,13 +163,8 @@ export class HomePage  implements OnInit  {
       }else {
         this.globalVar.isWaterSensorFault = false;
       }
-      console.log("[updateFaultStatus] faultStatus=", this.faultStatus);
     });
 
-  }
-
-  displayFaultStatus() {
-    
   }
 
   checkAllVals() {

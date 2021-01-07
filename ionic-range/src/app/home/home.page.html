@@ -40,7 +40,7 @@
           <!-- remove: too long string at header <span id="server-option"></span>  -->
         </ion-title>
         <ion-buttons slot="end">
-        <ion-button [color]="globalVar.isFault ? 'danger' : 'primary'"  (click)="displayFaultStatus()">
+        <ion-button [color]="globalVar.isFault ? 'danger' : 'primary'"  (click)="this.keepalive.faultsAlertInfo()">
           <ion-icon size="large" name="alert-circle-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
