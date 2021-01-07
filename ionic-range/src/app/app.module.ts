@@ -18,6 +18,9 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { GlobalService } from "./services/global.service";
 import { AlertsPage } from './pages/alerts/alerts.page';
 
+import { SmartAudioService } from  './services/smart-audio.service';
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -35,6 +38,8 @@ import { AlertsPage } from './pages/alerts/alerts.page';
     OneSignal,
     GlobalService,
     AlertsPage,
+    SmartAudioService,
+    NativeAudio,
   ],
   bootstrap: [AppComponent]
 })

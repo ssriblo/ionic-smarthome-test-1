@@ -9,6 +9,7 @@ import {UUID} from 'uuid-generator-ts';
 import { AlertsPage } from "../pages/alerts/alerts.page";
 import { TimetableService } from "../services/timetable.service"
 import { Platform } from '@ionic/angular';
+import { SmartAudioService } from '../services/smart-audio.service';
 
 @Component({
   selector: 'app-setup',
@@ -35,6 +36,8 @@ export class SetupPage implements OnInit {
     private alertsPage: AlertsPage,
     private timeTableService: TimetableService,
     public platform:Platform,  
+    public smartAudio: SmartAudioService,
+
     ) { }
 
   ngOnInit() {
@@ -117,6 +120,8 @@ export class SetupPage implements OnInit {
     this.alertsPage.deleteAllAlerts()
   }
   public async alertImitator() {
+    this.smartAudio.play('faultBeep');
+
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       animated: true,

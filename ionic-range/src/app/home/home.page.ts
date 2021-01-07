@@ -12,6 +12,7 @@ import { AlertsPage } from "../pages/alerts/alerts.page";
 import { MenuController } from '@ionic/angular';
 import { TimetableService } from "../services/timetable.service"
 import { Keepalive, KeepAliveStatus } from "../services/keepalive.service"
+import { SmartAudioService } from '../services/smart-audio.service';
 
 const { App } = Plugins;
 
@@ -55,6 +56,7 @@ export class HomePage  implements OnInit  {
     private menu: MenuController,
     private timeTableService: TimetableService,
     public keepalive: Keepalive,
+    public smartAudio: SmartAudioService,
     ) {}
 
   ngOnInit() {
@@ -137,6 +139,9 @@ export class HomePage  implements OnInit  {
     this.apiService.getApiCB('faultStatus', (result) => {
       this.faultStatus = result['value'].toFixed(3) 
       if ( this.faultStatus != 0 ) {
+        if ( this.globalVar.isFault == false) {
+          this.smartAudio.play('faultBeep');
+        }
         this.globalVar.isFault = true;
       }else {
         this.globalVar.isFault = false;

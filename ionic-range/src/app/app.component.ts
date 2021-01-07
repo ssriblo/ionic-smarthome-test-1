@@ -8,6 +8,7 @@ import { AlertController } from '@ionic/angular';
 import { environment } from './../environments/environment';
 import { SetupPage } from './setup/setup.page';
 import { AlertsPage} from './pages/alerts/alerts.page';
+import { SmartAudioService } from  './services/smart-audio.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ export class AppComponent {
     private alertCtrl: AlertController,
     private setupPage: SetupPage,
     private alertsPage: AlertsPage,
+    private smartAudio: SmartAudioService,
   ) {
     this.initializeApp();
   }
@@ -32,6 +34,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.smartAudio.preload('faultBeep', 'assets/audio/faultBeep.mp3');
 
       setTimeout(()=> {
 //        console.log('>>>>>>>>>>>>>>> after 10s >>>>>>>>>>>>>>>>>>>>> ONESIGNAL_APP_ID ANDROID_ID', environment.ONESIGNAL_APP_ID, environment.ANDROID_ID);
@@ -59,6 +62,8 @@ export class AppComponent {
       let additionalData = data.payload.additionalData;
       this.showAlert(title, msg, additionalData.task);
       this.alertsPage.addAlert(1, msg, additionalData.task)
+      this.smartAudio.play('faultBeep');
+
 // addAlert(1, 'ПРОТЕЧКА', "danger");
 // addAlert(1, 'Протечки нет', "success");
 // addAlert(2, 'НЕТ ЭЛЕКТРОЭНЕРГИИ', "warning");
