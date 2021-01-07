@@ -52,17 +52,14 @@ https://docs.google.com/document/d/1bT5rUsMWw_h5lW6ldFuMi0xZduEhXNo_R2Vjom3nCiI/
 
 ------------------------------
 For Android apk file:
+ionic build
+npx cap add android
+npx cap copy
+npx cap update <only after new plugin installed >
+npx cap sync  <not needed in most cases>
+npx cap open android
 
-1) ionic build
-
-2) npm update
-
-3) npx cap init
-
-4) ionic cap add android
-
-5) npx cap open android >> issue at Linux:
-
+>> issue at Linux:
 npx cap open android
 [info] Opening Android project at /home/me/Working/Angular/Angular_20h_course/ionic-smarthome-test-1/otoplenok/android
 [error] Unable to launch Android Studio. You must configure "linuxAndroidStudioPath" in your capacitor.config.json to point to the location of studio.sh, using JavaScript-escaped paths:
