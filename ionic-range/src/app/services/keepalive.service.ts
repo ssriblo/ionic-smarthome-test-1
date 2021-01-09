@@ -117,12 +117,17 @@ export class Keepalive {
     const isAirSensorFault =  this.globalVar.isAirSensorFault? FAULT : NORMA;
     const isWaterSensorFault =  this.globalVar.isWaterSensorFault? FAULT : NORMA;
 
+    let header = "Актуальная информация об ошибках системы";
+    if ( this.globalVar.isKeepAliveGood == false ) {
+      header = "Информация об ошибках системы не актуальна, индицируются последние значения:"
+    }
+    console.log("[faultsAlertInfo] header, isActual, this.globalVar.isKeepAliveActual  this.globalVar.isKeepAliveGood", header, this.globalVar.isKeepAliveGood);
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       animated: true,
       backdropDismiss: true,
 //        header: 'Информация об ошибках',
-      message: '<p><b>Информация об ошибках системы</b></p> \
+      message: '<p><b>' + header + '</b></p> \
       <ul><li>Основное питание - ' + isPowerFault +
       '</li><li>Протечка - ' + isFlood +
       '</li><li>Датчик темп. воздуха - ' + isAirSensorFault +

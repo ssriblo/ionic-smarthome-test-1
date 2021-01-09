@@ -7,7 +7,7 @@ import { AlertController } from '@ionic/angular';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
-  private storage = new Storage(null)
+  private storage = new Storage(null, null)
   private alertController = new AlertController()
 
 
