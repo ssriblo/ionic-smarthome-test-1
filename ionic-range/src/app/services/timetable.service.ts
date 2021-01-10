@@ -50,6 +50,7 @@ export class TimetableService {
         this.storage.set('mode', this.mode);
       }
     }); 
+//    console.log("[getTimeTable_mode()] mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.mode)
     return this.mode
   }
 

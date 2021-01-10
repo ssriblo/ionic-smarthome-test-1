@@ -64,6 +64,7 @@ export class HomePage  implements OnInit  {
   ionViewWillEnter() {
     // befor home page entering - let renovate all
     this.getMode();
+    console.log("$$$$$$$$$ ionViewWillEnter $$$$$$$ mode=", this.mode)
   }
   ngOnInit() {
     this.platform.ready().then(()=>{
@@ -131,6 +132,23 @@ export class HomePage  implements OnInit  {
       },60000);    
 
       setInterval(async ()=> {
+
+
+
+
+
+
+        // For debug only !!!!!!!!!!!!
+        this.getMode();
+//        console.log("^^^^^^^^^^^^ mode=", this.mode);
+
+
+
+
+
+
+
+
         const isActive = this.isActiveApp();
         if (await isActive == true) {
           this.updateFaultStatus();
@@ -254,7 +272,8 @@ export class HomePage  implements OnInit  {
 
   async updateRange() {
     let val = await this.storage.get('targetT');
-    if ( val === this.rangeVal) {
+    console.log("<<<<<<< updateRange]val  this.rangeVal", val, this.rangeVal);
+    if ( val  === this.rangeVal) {
       // do nothing
     }else {   
       this.storage.set('targetT', this.rangeVal);
