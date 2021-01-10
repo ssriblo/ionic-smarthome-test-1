@@ -35,9 +35,6 @@ export class HomePage  implements OnInit  {
   isDisabledComfort = false
   isDisabledEconom = false
   mode:string = ""; // may be ["Timetable", "Comfort", "Econom"]
-  tt_vals:any;
-  tt_days:any;
-  tt_active:any;
   progress = 0;   
   private keeALiveStatus: KeepAliveStatus;
   private flagKeepAliveFirst30S: boolean = true;
@@ -57,12 +54,20 @@ export class HomePage  implements OnInit  {
     private timeTableService: TimetableService,
     public keepalive: Keepalive,
     public smartAudio: SmartAudioService,
-    ) {}
+    ) {}   
 
+  // ionViewWillEnter() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewWillEnter", dateTime.getTime() )}
+  // ionViewDidEnter() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewDidEnter", dateTime.getTime() )}
+  // ionViewWillLeave() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewWillLeave", dateTime.getTime() )}
+  // ionViewDidLeave() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewDidLeave", dateTime.getTime() )}
+  
+  ionViewWillEnter() {
+    // befor home page entering - let renovate all
+    this.getMode();
+  }
   ngOnInit() {
     this.platform.ready().then(()=>{
       this.initVars();
-//      this.getTimeTable();
       document.getElementById("version").innerHTML = environment.version;
 //      document.getElementById("server-option").innerHTML = environment.serverLoc
     }) // this.platform.ready().then()
@@ -83,7 +88,7 @@ export class HomePage  implements OnInit  {
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
       this.getMode();
-      this.getTimeTable();
+      this.timeTableService.timeTableInit(false)
       this.keepalive.postKeepALive();
     }, 2500);
 
@@ -194,13 +199,6 @@ export class HomePage  implements OnInit  {
     if ( this.mode == "Econom" ) { this.clickEconom() }
     if ( this.mode == "TimeTable" ) { this.clickTimetable() }
     if ( this.mode == "Range" ) { } // do nothing
-  }
-
-  getTimeTable() {
-    this.timeTableService.timeTableInit(false)
-    this.tt_vals = this.timeTableService.getTimeTable_vals()
-    this.tt_days = this.timeTableService.getTimeTable_days()
-    this.tt_active = this.timeTableService.getTimeTable_active()
   }
 
   initVars() {
