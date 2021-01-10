@@ -6,7 +6,7 @@ import { ApiService } from '../services/api.service';
   providedIn: 'root'
 })
 export class TimetableService {
-  mode:string = ""; // may be ["Timetable", "Comfort", "Econom"]
+  mode:string = "Range"; // may be ["Timetable", "Comfort", "Econom", "Range"]
 
   tt_vals = [
     {line0: "0", start:0, end:1},

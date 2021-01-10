@@ -10,6 +10,7 @@ import { AlertsPage } from "../pages/alerts/alerts.page";
 import { TimetableService } from "../services/timetable.service"
 import { Platform } from '@ionic/angular';
 import { SmartAudioService } from '../services/smart-audio.service';
+import { HomePage } from '../home/home.page'
 
 @Component({
   selector: 'app-setup',
@@ -37,7 +38,7 @@ export class SetupPage implements OnInit {
     private timeTableService: TimetableService,
     public platform:Platform,  
     public smartAudio: SmartAudioService,
-
+    private homePage: HomePage,
     ) { }
 
   ngOnInit() {
@@ -79,6 +80,7 @@ export class SetupPage implements OnInit {
 
   toHomePage() {
     this.router.navigate(['home']);  
+    this.homePage.getMode();
   }
 
   comfortInput() {
