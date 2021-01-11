@@ -26,7 +26,11 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
     HttpClientModule,
-    IonicStorageModule.forRoot()],
+    IonicStorageModule.forRoot({
+//      name: '__mydb',
+//      driverOrder: ['indexeddb', 'sqlite', 'websql']
+    })
+  ],
   providers: [
     StatusBar,
     SplashScreen,
@@ -36,7 +40,7 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
     AuthGuardService,
     SetupPage,
     OneSignal,
-    GlobalService,
+    GlobalService, 
     AlertsPage,
     SmartAudioService,
     NativeAudio,

@@ -21,9 +21,6 @@ export class SetupPage implements OnInit {
   public economInpVal: number = 18;
   private alertController = new AlertController()
   testOption: string [] = this.globalVar.GlobalTestOption;
-  tt_vals: any;
-  tt_days: any;
-  tt_active: any;
   isErrorInterval: boolean [] = [true, true, true];
   progress = 0;   
 
@@ -37,8 +34,32 @@ export class SetupPage implements OnInit {
     private timeTableService: TimetableService,
     public platform:Platform,  
     public smartAudio: SmartAudioService,
-
     ) { }
+    
+  
+  ionViewWillEnter() {
+    // this.storage.get('modeComfEconTime').then((val) => {
+    //   if(val){ 
+    //     this.globalVar.mode = val 
+    //   }else{
+    //     this.storage.set('modeComfEconTime', this.globalVar.mode);
+    //   }
+    // }); 
+    // return this.globalVar.mode
+    // console.log("[setup.page ionViewWillEnter] mode=", this.globalVar.mode);
+  }
+
+  ionViewWillLeave() {
+    // this.storage.get('modeComfEconTime').then((val) => {
+    //   if(val){ 
+    //     this.globalVar.mode = val 
+    //   }else{
+    //     this.storage.set('modeComfEconTime', this.globalVar.mode);
+    //   }
+    // }); 
+    // return this.globalVar.mode
+    // console.log("[setup.page ionViewWillEnter] mode=", this.globalVar.mode);
+  }
 
   ngOnInit() {
     this.platform.ready().then(()=>{
@@ -51,10 +72,11 @@ export class SetupPage implements OnInit {
     }, 250 ); 
 
     setTimeout(()=> {
-        console.log("[setup.page ngOnInit]: after 5s");
+//        console.log("[setup.page ngOnInit]: after 5s");
         this.getTimeTable();
         this.getComfortT();
         this.getEconomT();
+        console.log("setup.page >>>>>>> 2 seconds")
       }, 2000);
     }) 
 
@@ -66,14 +88,14 @@ export class SetupPage implements OnInit {
 
   getTimeTable() {
     this.timeTableService.timeTableInit(false)
-    this.tt_vals = this.timeTableService.getTimeTable_vals()
-    this.tt_days = this.timeTableService.getTimeTable_days()
-    this.tt_active = this.timeTableService.getTimeTable_active()
+    this.globalVar.tt_vals = this.timeTableService.getTimeTable_vals()
+    this.globalVar.tt_days = this.timeTableService.getTimeTable_days()
+    this.globalVar.tt_active = this.timeTableService.getTimeTable_active()
   }
 
   setTestOption() {
     let opt=this;
-    console.log('Test Option is:', opt.testOption);
+//    console.log('Test Option is:', opt.testOption);
     this.globalVar.GlobalTestOption = opt.testOption;
   }
 
@@ -94,7 +116,7 @@ export class SetupPage implements OnInit {
 
   getComfortT() {
     this.storage.get('comfortT').then((val) => {
-      console.log('comfortT is', val);
+//      console.log('comfortT is', val);
       this.comfortInpVal = (val == null)? 22.5 : val
       return this.comfortInpVal;
     });  
@@ -107,7 +129,7 @@ export class SetupPage implements OnInit {
   getEconomT() {
     this.storage.get('economT').then((val) => {
       this.economInpVal = (val == null)? 18.5 : val
-      console.log('economT is', val, this.economInpVal);
+//      console.log('economT is', val, this.economInpVal);
       return this.economInpVal
     });  
   }
@@ -177,14 +199,14 @@ export class SetupPage implements OnInit {
           text: 'Отмена',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+//            console.log('Cancel clicked');
           }
         },
         {
           text: 'Новая регистрация',
           handler: () => {
             this.apiService.removeJwt().then(val => {
-              console.log('[deregistered]: remove jwtString from Local Store', val)
+//              console.log('[deregistered]: remove jwtString from Local Store', val)
               this.apiService.isJWT = false;
               this.router.navigate(['introduction'])       
             });
@@ -196,8 +218,8 @@ export class SetupPage implements OnInit {
   }
   
   timeTableSetup(ind) {
-    let start = this.tt_vals[ind].start
-    let end = this.tt_vals[ind].end
+    let start = this.globalVar.tt_vals[ind].start
+    let end = this.globalVar.tt_vals[ind].end
     if (start > 23) {start = 23}
     if (end > 24) {end = 24}
     if (start < 0) {start = 0}
@@ -205,25 +227,25 @@ export class SetupPage implements OnInit {
 //    this.isErrorInterval[ind] = (start < end)? true : false
     if (start < end) {this.isErrorInterval[ind]=true}
     if (start >= end) {this.isErrorInterval[ind]=false}
-//    console.log("[timetableSetup]", ind, this.tt_vals[ind].start, this.tt_vals[ind].end, this.isErrorInterval[ind])
-    this.tt_vals[ind].start = Math.round(start)
-    this.tt_vals[ind].end = Math.round(end)
-    this.timeTableService.updateTimeTable_vals(this.tt_vals)
+//    console.log("[timetableSetup]", ind, this.globalVar.tt_vals[ind].start, this.globalVar.tt_vals[ind].end, this.isErrorInterval[ind])
+    this.globalVar.tt_vals[ind].start = Math.round(start)
+    this.globalVar.tt_vals[ind].end = Math.round(end)
+    this.timeTableService.updateTimeTable_vals(this.globalVar.tt_vals)
   }
 
   dayToggle(i0:number, i1:number) {
-    this.tt_days[i0][i1] = !this.tt_days[i0][i1]
+    this.globalVar.tt_days[i0][i1] = !this.globalVar.tt_days[i0][i1]
     let res = false;
-    for (let val of this.tt_days[i0]) {
+    for (let val of this.globalVar.tt_days[i0]) {
       if (val === true) {
         res = true;
         break;
       }
     }
-    this.tt_active[i0] = res;
-//    console.log("dayToggle tt_active", i0, this.tt_active[0], res)
-    this.timeTableService.updateTimeTable_days(this.tt_days)
-    this.timeTableService.updateTimeTable_active(this.tt_active)
+    this.globalVar.tt_active[i0] = res;
+//    console.log("dayToggle tt_active", i0, this.globalVar.tt_active[0], res)
+    this.timeTableService.updateTimeTable_days(this.globalVar.tt_days)
+    this.timeTableService.updateTimeTable_active(this.globalVar.tt_active)
     return res;
   }
 

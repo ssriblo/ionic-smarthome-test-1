@@ -34,10 +34,6 @@ export class HomePage  implements OnInit  {
   isDisabledTimetable = false
   isDisabledComfort = false
   isDisabledEconom = false
-  mode:string = ""; // may be ["Timetable", "Comfort", "Econom"]
-  tt_vals:any;
-  tt_days:any;
-  tt_active:any;
   progress = 0;   
   private keeALiveStatus: KeepAliveStatus;
   private flagKeepAliveFirst30S: boolean = true;
@@ -57,12 +53,26 @@ export class HomePage  implements OnInit  {
     private timeTableService: TimetableService,
     public keepalive: Keepalive,
     public smartAudio: SmartAudioService,
-    ) {}
+    ) {}   
+
+  // ionViewWillEnter() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewWillEnter", dateTime.getTime() )}
+  // ionViewDidEnter() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewDidEnter", dateTime.getTime() )}
+  // ionViewWillLeave() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewWillLeave", dateTime.getTime() )}
+  // ionViewDidLeave() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewDidLeave", dateTime.getTime() )}
+  ionViewWillLeave() {
+    console.log("[home.page - ionViewWillLeave()] mode=>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+  }
+
+  ionViewWillEnter() {
+    // befor home page entering - let renovate all
+    this.initVars();
+    this.getMode(1);
+    console.log("$$$$$$$$$ ionViewWillEnter $$$$$$$ mode=", this.globalVar.mode)
+  }
 
   ngOnInit() {
     this.platform.ready().then(()=>{
       this.initVars();
-//      this.getTimeTable();
       document.getElementById("version").innerHTML = environment.version;
 //      document.getElementById("server-option").innerHTML = environment.serverLoc
     }) // this.platform.ready().then()
@@ -79,25 +89,25 @@ export class HomePage  implements OnInit  {
     }, 250 );  
       
     setTimeout(()=> {
-      console.log("[setTimeout]: after 2.5s");
+//      console.log("[setTimeout]: after 2.5s");
       this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
       this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
-      this.getMode();
-      this.getTimeTable();
+      this.getMode(2);
+      this.timeTableService.timeTableInit(false)
       this.keepalive.postKeepALive();
     }, 2500);
 
     setTimeout(()=> {
       this.flagKeepAliveFirst30S = false;
       this.globalVar.isKeepAliveActual = true;
-      console.log("[ngOnInit home.page]: after 30s this.keeALiveStatus", this.keeALiveStatus);
+//      console.log("[ngOnInit home.page]: after 30s this.keeALiveStatus", this.keeALiveStatus);
     }, 30000);    
    
     setInterval(()=> { // persisting GET KeepAlive first 30 seconds
       if (this.flagKeepAliveFirst30S === true) {
         this.keeALiveStatus = this.keepalive.isKeepALive();
         this.time5s = this.time5s + 5;
-        console.log("[ngOnInit home.page] every 5s", "seconds=", this.time5s, " this.keeALiveStatus", this.keeALiveStatus);
+//        console.log("[ngOnInit home.page] every 5s", "seconds=", this.time5s, " this.keeALiveStatus", this.keeALiveStatus);
       }
     }, 5000);
 
@@ -108,16 +118,16 @@ export class HomePage  implements OnInit  {
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
       if (await isActive == true) {
-        console.log("[setInterval]: every 60s - ACTIVE");
+//        console.log("[setInterval]: every 60s - ACTIVE");
         this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
         this.apiService.getApiCB('temperatureRoom', (result) => {this.room_t_s = result['value'].toString(10).substring(0, 4); });
         this.checkAllVals();
         this.flagOdMinute = !this.flagOdMinute;
         if (this.flagOdMinute === true) {
-          console.log("********* KEEPASS POST MINUTE")
+//          console.log("********* KEEPASS POST MINUTE")
           this.keepalive.postKeepALive();
         }else {
-          console.log("********* KEEPASS GET MINUTE")
+//          console.log("********* KEEPASS GET MINUTE")
           this.keeALiveStatus = this.keepalive.isKeepALive();
         }
       }else {
@@ -180,27 +190,19 @@ export class HomePage  implements OnInit  {
       let val = result['value']; 
       if ( this.rangeVal != val) {
         this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
-        this.timeTableService.updateTimeTable_mode(this.mode, this.comfortT, this.economT);
+        this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
         console.log("[home.page][checkAllVals] - !!!!!!!!!!!!!!!!!!!!!!!! rangeval != targetTemperature; rangeVal=", this.rangeVal, "targetTemperature=", val)
       }
     });
   }
 
-  getMode() {
+  public getMode(opt) { // opt - for debug, to find out who call it
     this.timeTableService.timeTableInit(false)
-    this.mode = this.timeTableService.getTimeTable_mode()
-    console.log("[home.page getMode()] mode", this.mode)
-    if ( this.mode == "Comfort" ) { this.clickComfort() }
-    if ( this.mode == "Econom" ) { this.clickEconom() }
-    if ( this.mode == "TimeTable" ) { this.clickTimetable() }
-    if ( this.mode == "Range" ) { } // do nothing
-  }
-
-  getTimeTable() {
-    this.timeTableService.timeTableInit(false)
-    this.tt_vals = this.timeTableService.getTimeTable_vals()
-    this.tt_days = this.timeTableService.getTimeTable_days()
-    this.tt_active = this.timeTableService.getTimeTable_active()
+    this.globalVar.mode = this.timeTableService.getTimeTable_mode()
+    if ( this.globalVar.mode == "Comfort" ) { this.clickComfort() }
+    if ( this.globalVar.mode == "Econom" ) { this.clickEconom() }
+    if ( this.globalVar.mode == "TimeTable" ) { this.clickTimetable() }
+    if ( this.globalVar.mode == "Range" ) { } // do nothing
   }
 
   initVars() {
@@ -210,7 +212,7 @@ export class HomePage  implements OnInit  {
         val = 22;
         this.rangeVal = val;
         this.storage.set('targetT', val);
-        console.log('[ngOnInit home.page.js]: targetT ', val)
+//        console.log('[ngOnInit home.page.js]: targetT ', val)
       }
     });
     this.storage.get('comfortT').then((val) => {
@@ -218,7 +220,7 @@ export class HomePage  implements OnInit  {
         val = 22;
         this.comfortT = val;
         this.storage.set('comfortT', val);
-        console.log('[ngOnInit home.page.js]: comfortT ', val)
+//        console.log('[ngOnInit home.page.js]: comfortT ', val)
       }
     });
     this.storage.get('economT').then((val) => {
@@ -226,7 +228,7 @@ export class HomePage  implements OnInit  {
         val = 22;
         this.economT = val;
         this.storage.set('economT', val);
-        console.log('[ngOnInit home.page.js]: economT ', val)
+//        console.log('[ngOnInit home.page.js]: economT ', val)
       }
     });
 
@@ -254,44 +256,57 @@ export class HomePage  implements OnInit  {
     this.menu.toggle();
   }
 
-  updateRange() {
-    this.storage.set('targetT', this.rangeVal);
-    this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
-    this.isFillComfort = "outline"
-    this.isFillEconom = "outline"
-    this.isFillTimetable = "outline"
-    this.mode = "Range"
-    console.log("updateRange() mode=", this.mode)
-    this.timeTableService.updateTimeTable_mode(this.mode, this.comfortT, this.economT);
+  async updateRange() {
+    let val = await this.storage.get('targetT');
+    console.log("<<<<<<< updateRange]val  this.rangeVal", val, this.rangeVal);
+    if ( val  === this.rangeVal) {
+      // do nothing
+    }else {   
+      this.storage.set('targetT', this.rangeVal);
+      this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
+      
+      if ( (this.rangeVal === this.comfortT * 10) || (this.rangeVal === this.economT * 10) ) {
+        // do nothing because this is OR Comfort OR Econom
+      }else {
+        this.isFillComfort = "outline"
+        this.isFillEconom = "outline"
+        this.isFillTimetable = "outline"
+        this.globalVar.mode = "Range444444"
+        console.log("updateRange() mode=>>>>>>> this.globalVar.mode, this.rangeVal, this.comfortT, this.economT >>>>>>>>>>>>>", this.globalVar.mode, this.rangeVal, this.comfortT*10, this.economT*10)
+        this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
+        }     
+    }
   }
 
   clickComfort() {
     this.storage.get('comfortT').then((val) => {
-      console.log('[clickComfort]: comfortT is', val)
+//      console.log('[clickComfort]: comfortT is', val)
       this.rangeVal = (val == null)? 22.5 * 10 : val * 10
     });
-    this.mode = "Comfort"
-    this.timeTableService.updateTimeTable_mode(this.mode, this.comfortT, this.economT);
     setTimeout(()=> {
+      this.globalVar.mode = "Comfort"
+      console.log("clickComfort() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+      this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
       this.isFillComfort = "solid"
       this.isFillEconom = "outline"
       this.isFillTimetable = "outline"
-      console.log("clickComfort()")
+//      console.log("clickComfort()")
       }, 500);
   }
 
   clickEconom() {
     this.storage.get('economT').then((val) => {
-      console.log('[clickEconom]: economT is', val)
+//      console.log('[clickEconom]: economT is', val)
       this.rangeVal = (val == null)? 18.5 * 10 : val * 10
     });
-    this.mode = "Econom"
-    this.timeTableService.updateTimeTable_mode(this.mode, this.comfortT, this.economT);
     setTimeout(()=> {
+      this.globalVar.mode = "Econom"
+      console.log("clickEconom() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+      this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
       this.isFillComfort = "outline"
       this.isFillEconom = "solid"
       this.isFillTimetable = "outline"
-      console.log("clickEconom()")
+//      console.log("clickEconom()")
       }, 500);
   }
 
@@ -311,18 +326,19 @@ export class HomePage  implements OnInit  {
     }else{
       this.rangeVal = this.economT * 10
     }
-    console.log('[clickTimetable]: TartetT is', this.rangeVal)
+//    console.log('[clickTimetable]: TartetT is', this.rangeVal)
 
     this.timeTableService.postTimeTable(this.comfortT, this.economT);
-    this.mode = "TimeTable"
-    this.timeTableService.updateTimeTable_mode(this.mode, this.comfortT, this.economT);
     setTimeout(()=> {
+      this.globalVar.mode = "TimeTable"
+      console.log("clickTimetable() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+      this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
       this.isFillComfort = "outline"
       this.isFillEconom = "outline"
       this.isFillTimetable = "solid"
-      console.log("clickTimetable()")
+//      console.log("clickTimetable()")
       }, 500);
   }
-
+ 
 }
 

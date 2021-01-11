@@ -17,4 +17,19 @@ export class GlobalService {
   public isPowerFault: boolean = false;
   public isAirSensorFault: boolean = false;
   public isWaterSensorFault: boolean = false;
+
+  mode:string = "Range"; // may be ["Timetable", "Comfort", "Econom", "Range"]
+  tt_vals = [
+    {line0: "0", start:0, end:1},
+    {line1: "1", start:0, end:1},
+    {line2: "2", start:0, end:1},
+  ]
+  tt_days = [
+    [false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false],
+  ];
+  tt_active = [false, false, false];
+
+
 }

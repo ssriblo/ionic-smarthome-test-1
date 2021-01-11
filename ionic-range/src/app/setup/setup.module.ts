@@ -13,8 +13,8 @@ import { Storage, IonicStorageModule } from '@ionic/storage';
     IonicModule,
     SetupPageRoutingModule,
     IonicStorageModule.forRoot({
-      name: '__mydb',
-      driverOrder: ['indexeddb', 'sqlite', 'websql']
+//      name: '__mydb',
+//      driverOrder: ['indexeddb', 'sqlite', 'websql']
     })
   ],
   declarations: [SetupPage]

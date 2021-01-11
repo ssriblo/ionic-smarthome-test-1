@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Storage } from '@ionic/storage';
+import { Storage, IonicStorageModule } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 
 @Injectable({
@@ -42,20 +42,18 @@ export class ApiService {
 
     this.storage.get('jwtString').then(async (val) => {
         this.jwtString = val;
-        console.log('[initApi]: get jwtString from storage: ', this.jwtString );  
+//        console.log('[initApi]: get jwtString from storage: ', this.jwtString );  
         if (val) {
           this.httpParams =  this.initHttpParams(this.jwtString);
           let res =  await this.testJwtViaGetRequest('temperatureWeather')
           if (res == true) {
-            console.log('[ApiService.initApi()] JWT test passed well', res);
+//            console.log('[ApiService.initApi()] JWT test passed well', res);
           }
           else {
-            console.log('[ApiService.initApi()] JWT test failed');
+//            console.log('[ApiService.initApi()] JWT test failed');
           }
-    
-
         }else{
-          console.log("[ApiService.initApi] jwtString not exist yet !! ")
+//          console.log("[ApiService.initApi] jwtString not exist yet !! ")
         }
       });
 
@@ -71,11 +69,11 @@ public getApiAsync(urlSurf: string): Promise<any>{
       return this.http.get(url, this.httpParams)
         .subscribe(
           result => {
-            console.log('[ApiService.getApiAsync] success', result);
+//            console.log('[ApiService.getApiAsync] success', result);
             resolve(result); // MAIN POINT - "resolve" - function; result - value, argument for resolve !!
           },
           error => {
-            console.log('[ApiService.getApiAsync] oops', error);
+//            console.log('[ApiService.getApiAsync] oops', error);
             reject(error)
           }
         );
@@ -91,7 +89,7 @@ public getApiAsync(urlSurf: string): Promise<any>{
       res = true
     }
     catch(e) {
-      console.log('[ApiService.testJwtViaGetRequest ERROR]',e)
+//      console.log('[ApiService.testJwtViaGetRequest ERROR]',e)
     }
     return res;
   }
@@ -115,7 +113,7 @@ public getApiAsync(urlSurf: string): Promise<any>{
     this.http.post(url, postData, this.httpParams )
     .subscribe(
       (data) => { 
-        console.log('[postApi]:   ', postData, urlSurf, data); 
+//        console.log('[postApi]:   ', postData, urlSurf, data); 
         return data['value'];
       },
       err => {

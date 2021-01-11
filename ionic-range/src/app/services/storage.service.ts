@@ -48,20 +48,20 @@ export class StorageService {
     return this.storage.get(key).then((items: Item[]) => {
       if (!items || items.length === 0) {
 //        return null; // was initially at the video
-        console.log('[storage.service.updateItem- set([item]) ----- 1]', item, items.length);
+//        console.log('[storage.service.updateItem- set([item]) ----- 1]', item, items.length);
         return this.storage.set(key, [item]) 
       }
       let newItem: Item[] = []
       for (let i of items) {
         if (i.type === item.type) {
           newItem.push(item)
-          console.log('[storage.service.updateItem- push ----- 3]', item,  items.length);
+//          console.log('[storage.service.updateItem- push ----- 3]', item,  items.length);
         } else {
           newItem.push(i)
-          console.log('[storage.service.updateItem- push ----- 4]', i,  items.length);
+//          console.log('[storage.service.updateItem- push ----- 4]', i,  items.length);
         }
       }
-      console.log('[storage.service.updateItem- set(newItem) ----- 2]', newItem,  newItem.length);
+//      console.log('[storage.service.updateItem- set(newItem) ----- 2]', newItem,  newItem.length);
       return this.storage.set(key, newItem)
     });
   }

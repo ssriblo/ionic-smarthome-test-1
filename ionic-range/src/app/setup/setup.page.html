@@ -53,7 +53,7 @@
     <ion-title><h1>Расписание</h1></ion-title>
   </ion-toolbar>
 
-      <ion-card  *ngFor="let tt_val of tt_vals; let i = index;" [class]="tt_active[i] ? 'cardTT active' : 'cardTT '">
+      <ion-card  *ngFor="let tt_val of this.globalVar.tt_vals; let i = index;" [class]="this.globalVar.tt_active[i] ? 'cardTT active' : 'cardTT '">
         <ion-row>
           <ion-col class="KomfortTT">
               <ion-label><h1>Комфорт</h1></ion-label>
@@ -87,13 +87,13 @@
           </ion-row>
 
       <ion-row>
-        <ion-col [class]="tt_days[i][0] ? 'day active' : 'day'" (click)="dayToggle(i,0)">Пн</ion-col>
-        <ion-col [class]="tt_days[i][1] ? 'day active' : 'day'" (click)="dayToggle(i,1)">Вт</ion-col>
-        <ion-col [class]="tt_days[i][2] ? 'day active' : 'day'" (click)="dayToggle(i,2)">Ср</ion-col>
-        <ion-col [class]="tt_days[i][3] ? 'day active' : 'day'" (click)="dayToggle(i,3)">Чт</ion-col>
-        <ion-col [class]="tt_days[i][4] ? 'day active' : 'day'" (click)="dayToggle(i,4)">Пт</ion-col>
-        <ion-col [class]="tt_days[i][5] ? 'day active' : 'day'" (click)="dayToggle(i,5)">Сб</ion-col>
-        <ion-col [class]="tt_days[i][6] ? 'day active' : 'day'" (click)="dayToggle(i,6)">Вс</ion-col>
+        <ion-col [class]="this.globalVar.tt_days[i][0] ? 'day active' : 'day'" (click)="dayToggle(i,0)">Пн</ion-col>
+        <ion-col [class]="this.globalVar.tt_days[i][1] ? 'day active' : 'day'" (click)="dayToggle(i,1)">Вт</ion-col>
+        <ion-col [class]="this.globalVar.tt_days[i][2] ? 'day active' : 'day'" (click)="dayToggle(i,2)">Ср</ion-col>
+        <ion-col [class]="this.globalVar.tt_days[i][3] ? 'day active' : 'day'" (click)="dayToggle(i,3)">Чт</ion-col>
+        <ion-col [class]="this.globalVar.tt_days[i][4] ? 'day active' : 'day'" (click)="dayToggle(i,4)">Пт</ion-col>
+        <ion-col [class]="this.globalVar.tt_days[i][5] ? 'day active' : 'day'" (click)="dayToggle(i,5)">Сб</ion-col>
+        <ion-col [class]="this.globalVar.tt_days[i][6] ? 'day active' : 'day'" (click)="dayToggle(i,6)">Вс</ion-col>
     </ion-row>
     <ion-row>
       <ion-label [class]="isErrorInterval[i] ? 'timeTableErrorOff' : 'timeTableErrorOn'">Начало интервала должно быть меньше конца интервала</ion-label>
