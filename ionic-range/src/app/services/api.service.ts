@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Storage } from '@ionic/storage';
+import { Storage, IonicStorageModule } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 
 @Injectable({

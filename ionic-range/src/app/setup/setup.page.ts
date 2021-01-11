@@ -38,21 +38,28 @@ export class SetupPage implements OnInit {
     
   
   ionViewWillEnter() {
-    this.storage.get('mode').then((val) => {
-      if(val){ 
-        this.globalVar.mode = val 
-        console.log("[ionViewWillEnter()] mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -1", this.globalVar.mode)
-      }else{
-        this.storage.set('mode', this.globalVar.mode);
-        console.log("[ionViewWillEnter()] mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -2", this.globalVar.mode)
-      }
-    }); 
-    console.log("[ionViewWillEnter()] mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -3", this.globalVar.mode)
-    return this.globalVar.mode
-
-    console.log("[setup.page ionViewWillEnter] mode=", this.globalVar.mode);
+    // this.storage.get('modeComfEconTime').then((val) => {
+    //   if(val){ 
+    //     this.globalVar.mode = val 
+    //   }else{
+    //     this.storage.set('modeComfEconTime', this.globalVar.mode);
+    //   }
+    // }); 
+    // return this.globalVar.mode
+    // console.log("[setup.page ionViewWillEnter] mode=", this.globalVar.mode);
   }
 
+  ionViewWillLeave() {
+    // this.storage.get('modeComfEconTime').then((val) => {
+    //   if(val){ 
+    //     this.globalVar.mode = val 
+    //   }else{
+    //     this.storage.set('modeComfEconTime', this.globalVar.mode);
+    //   }
+    // }); 
+    // return this.globalVar.mode
+    // console.log("[setup.page ionViewWillEnter] mode=", this.globalVar.mode);
+  }
 
   ngOnInit() {
     this.platform.ready().then(()=>{
@@ -69,6 +76,7 @@ export class SetupPage implements OnInit {
         this.getTimeTable();
         this.getComfortT();
         this.getEconomT();
+        console.log("setup.page >>>>>>> 2 seconds")
       }, 2000);
     }) 
 

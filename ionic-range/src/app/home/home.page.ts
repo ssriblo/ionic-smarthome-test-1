@@ -59,13 +59,17 @@ export class HomePage  implements OnInit  {
   // ionViewDidEnter() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewDidEnter", dateTime.getTime() )}
   // ionViewWillLeave() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewWillLeave", dateTime.getTime() )}
   // ionViewDidLeave() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewDidLeave", dateTime.getTime() )}
-  
+  ionViewWillLeave() {
+    console.log("[home.page - ionViewWillLeave()] mode=>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+  }
+
   ionViewWillEnter() {
     // befor home page entering - let renovate all
     this.initVars();
     this.getMode(1);
     console.log("$$$$$$$$$ ionViewWillEnter $$$$$$$ mode=", this.globalVar.mode)
   }
+
   ngOnInit() {
     this.platform.ready().then(()=>{
       this.initVars();
@@ -132,23 +136,6 @@ export class HomePage  implements OnInit  {
       },60000);    
 
       setInterval(async ()=> {
-
-
-
-
-
-
-        // For debug only !!!!!!!!!!!!
-//        this.getMode();
-//        console.log("^^^^^^^^^^^^ mode=", this.globalVar.mode);
-
-
-
-
-
-
-
-
         const isActive = this.isActiveApp();
         if (await isActive == true) {
           this.updateFaultStatus();
@@ -210,11 +197,8 @@ export class HomePage  implements OnInit  {
   }
 
   public getMode(opt) { // opt - for debug, to find out who call it
-    console.log("[home.page getMode()] mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>-1", this.globalVar.mode, opt)
     this.timeTableService.timeTableInit(false)
-    console.log("[home.page getMode()] mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>-2", this.globalVar.mode, opt)
     this.globalVar.mode = this.timeTableService.getTimeTable_mode()
-    console.log("[home.page getMode()] mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>-3", this.globalVar.mode, opt)
     if ( this.globalVar.mode == "Comfort" ) { this.clickComfort() }
     if ( this.globalVar.mode == "Econom" ) { this.clickEconom() }
     if ( this.globalVar.mode == "TimeTable" ) { this.clickTimetable() }
@@ -287,7 +271,7 @@ export class HomePage  implements OnInit  {
         this.isFillComfort = "outline"
         this.isFillEconom = "outline"
         this.isFillTimetable = "outline"
-        this.globalVar.mode = "Range222222222"
+        this.globalVar.mode = "Range444444"
         console.log("updateRange() mode=>>>>>>> this.globalVar.mode, this.rangeVal, this.comfortT, this.economT >>>>>>>>>>>>>", this.globalVar.mode, this.rangeVal, this.comfortT*10, this.economT*10)
         this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
         }     
@@ -299,10 +283,10 @@ export class HomePage  implements OnInit  {
 //      console.log('[clickComfort]: comfortT is', val)
       this.rangeVal = (val == null)? 22.5 * 10 : val * 10
     });
-    this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
     setTimeout(()=> {
       this.globalVar.mode = "Comfort"
       console.log("clickComfort() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+      this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
       this.isFillComfort = "solid"
       this.isFillEconom = "outline"
       this.isFillTimetable = "outline"
@@ -315,10 +299,10 @@ export class HomePage  implements OnInit  {
 //      console.log('[clickEconom]: economT is', val)
       this.rangeVal = (val == null)? 18.5 * 10 : val * 10
     });
-    this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
     setTimeout(()=> {
       this.globalVar.mode = "Econom"
       console.log("clickEconom() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+      this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
       this.isFillComfort = "outline"
       this.isFillEconom = "solid"
       this.isFillTimetable = "outline"
@@ -345,10 +329,10 @@ export class HomePage  implements OnInit  {
 //    console.log('[clickTimetable]: TartetT is', this.rangeVal)
 
     this.timeTableService.postTimeTable(this.comfortT, this.economT);
-    this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
     setTimeout(()=> {
       this.globalVar.mode = "TimeTable"
       console.log("clickTimetable() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+      this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
       this.isFillComfort = "outline"
       this.isFillEconom = "outline"
       this.isFillTimetable = "solid"

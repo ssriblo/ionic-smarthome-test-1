@@ -20,7 +20,7 @@ export class TimetableService {
 
   public timeTableInit(isCleared: boolean) {
     if (isCleared === true) {
-      this.storage.remove('mode')
+      this.storage.remove('modeComfEconTime')
       this.storage.remove('tt_vals')
       this.storage.remove('tt_days')
       this.storage.remove('tt_active')
@@ -32,14 +32,13 @@ export class TimetableService {
   }
 
   public getTimeTable_mode() { 
-    this.storage.get('mode').then((val) => {
+    this.storage.get('modeComfEconTime').then((val) => {
       if(val){ 
         this.globalVar.mode = val 
       }else{
-        this.storage.set('mode', this.globalVar.mode);
+        this.storage.set('modeComfEconTime', this.globalVar.mode);
       }
     }); 
-//    console.log("[getTimeTable_mode()] mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
     return this.globalVar.mode
   }
 
@@ -71,7 +70,7 @@ export class TimetableService {
   } 
 
   public updateTimeTable_mode(val:string, val_comfort: number, val_econom: number) { 
-    this.storage.set('mode', val);
+    this.storage.set('modeComfEconTime', val);
     this.globalVar.mode = val; 
     this.postTimeTable(val_comfort, val_econom); // this POST only for "mode". Let move POST MODE to another call in the future!!
   }

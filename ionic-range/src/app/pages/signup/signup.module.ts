@@ -7,6 +7,7 @@ import { SignupPageRoutingModule } from './signup-routing.module';
 
 import { SignupPage } from './signup.page';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Storage, IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   imports: [
@@ -14,7 +15,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     IonicModule,
     SignupPageRoutingModule,
-    ReactiveFormsModule // <- Add here
+    ReactiveFormsModule,
+    IonicStorageModule.forRoot({
+//      name: '__mydb',
+//      driverOrder: ['indexeddb', 'sqlite', 'websql']
+    })
   ],
   declarations: [SignupPage]
 })
