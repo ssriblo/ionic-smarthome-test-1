@@ -27,7 +27,7 @@ export class Keepalive {
 
   constructor(
     private apiService: ApiService,
-    public globalVar: GlobalService,
+    private globalVar: GlobalService,
   ) { }
 
   public postKeepALive() {
@@ -44,7 +44,7 @@ export class Keepalive {
     }
 
     this.apiService.getApiCB("keepAliveReceive", (result:KeepAliveACK) => {
-        console.log("[isKeepALive] result=", result, this.tkn)
+//        console.log("[isKeepALive] result=", result, this.tkn)
         const FAILSERVER = "НЕТ СВЯЗИ";
         const GOODSERVER = "НОРМА";
 
@@ -121,7 +121,7 @@ export class Keepalive {
     if ( this.globalVar.isKeepAliveGood == false ) {
       header = "Информация об ошибках системы не актуальна, индицируются последние значения:"
     }
-    console.log("[faultsAlertInfo] header, isActual, this.globalVar.isKeepAliveActual  this.globalVar.isKeepAliveGood", header, this.globalVar.isKeepAliveGood);
+//    console.log("[faultsAlertInfo] header, isActual, this.globalVar.isKeepAliveActual  this.globalVar.isKeepAliveGood", header, this.globalVar.isKeepAliveGood);
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       animated: true,

@@ -36,7 +36,7 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
     AuthGuardService,
     SetupPage,
     OneSignal,
-    GlobalService,
+    GlobalService, 
     AlertsPage,
     SmartAudioService,
     NativeAudio,

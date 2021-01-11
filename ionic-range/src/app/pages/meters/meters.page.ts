@@ -28,7 +28,7 @@ export class MetersPage implements OnInit {
   ngOnInit() {
 
     setTimeout(()=> {
-      console.log("[setTimeout]: after 5s");
+//      console.log("[setTimeout]: after 5s");
       this.apiService.getApiCB('electroMeterT1', (result) => {this.electroMeterT1 = result['value'].toFixed(2) });
       this.apiService.getApiCB('electroMeterT2', (result) => {this.electroMeterT2 = result['value'].toFixed(2) });
       this.apiService.getApiCB('warmMeter', (result) => {this.warmMeter = result['value'].toFixed(2) });

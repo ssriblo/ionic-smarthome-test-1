@@ -18,7 +18,7 @@ export class AlertsPage implements OnInit {
   constructor(
     public router: Router,
     private storageService: StorageService,
-    public globalVar: GlobalService,
+    private globalVar: GlobalService,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
   ) {}
@@ -27,7 +27,7 @@ export class AlertsPage implements OnInit {
     this.storageService.getItem(this.globalVar.GlobalAlertKey ).then(i => {
       this.items = i;
       if (this.items != null) {
-        console.log('[aletrs.page.ngOnInit()]', this.items, this.items.length);
+//        console.log('[aletrs.page.ngOnInit()]', this.items, this.items.length);
       }
     })
   }
@@ -55,7 +55,7 @@ export class AlertsPage implements OnInit {
     await this.storageService.addItem(this.globalVar.GlobalAlertKey, item );
     this.storageService.getItem(this.globalVar.GlobalAlertKey ).then(i => {
       this.items = i;
-      console.log('[aletrs.page.addAlert()]', this.items, this.items.length);
+//      console.log('[aletrs.page.addAlert()]', this.items, this.items.length);
     })
     this.updateAlerts();
   }
@@ -64,7 +64,7 @@ export class AlertsPage implements OnInit {
     this.storageService.getItem(this.globalVar.GlobalAlertKey ).then(i => {
       this.items = i;
       if (this.items != null) {
-        console.log('[aletrs.page.updateAlerts()]', this.items, this.items.length);
+//        console.log('[aletrs.page.updateAlerts()]', this.items, this.items.length);
       }
     })    
 

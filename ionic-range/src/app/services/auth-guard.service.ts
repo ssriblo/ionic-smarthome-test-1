@@ -28,7 +28,7 @@ export class AuthGuardService implements CanActivate {
   canActivate() {
     this.storage.get('jwtString').then((val) => {
 //      this.jwtString = val;
-      console.log('[AuthGuardService] get jwtString from storage: ', val );  
+//      console.log('[AuthGuardService] get jwtString from storage: ', val );  
       if (val) { 
         this.router.navigate(['home']) 
       }else {
@@ -38,7 +38,7 @@ export class AuthGuardService implements CanActivate {
       }
     });
 
-    console.log('AuthGuard#canActivate called');
+//    console.log('AuthGuard#canActivate called');
     return true;
   }
 
