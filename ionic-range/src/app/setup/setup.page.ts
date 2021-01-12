@@ -275,5 +275,10 @@ export class SetupPage implements OnInit {
     await alert.present();
   }
   
-
+  refresherAction(event) {
+    if (event) {
+      event.target.complete();
+    }
+  }
+ 
 }

@@ -78,4 +78,10 @@ export class AlertsPage implements OnInit {
   toHomePage() {
     this.router.navigate(['home']);  
   }
+
+  refresherAction(event) {
+    if (event) {
+      event.target.complete();
+    }
+  }
 }

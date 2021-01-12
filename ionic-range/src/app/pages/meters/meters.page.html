@@ -7,7 +7,10 @@
 </ion-header>
 
 <ion-content class="ion-padding"  color="secondary">
-
+  <ion-refresher slot="fixed" (ionRefresh)="refresherAction($event)">
+    <ion-refresher-content></ion-refresher-content>  
+  </ion-refresher>
+  
   <ion-grid>
     <ion-row>
       <ion-col   >

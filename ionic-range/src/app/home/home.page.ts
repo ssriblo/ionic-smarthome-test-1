@@ -72,6 +72,7 @@ export class HomePage  implements OnInit  {
 
   ngOnInit() {
     this.platform.ready().then(()=>{
+      this.refresherAction(null);
       this.initVars();
       document.getElementById("version").innerHTML = environment.version;
 //      document.getElementById("server-option").innerHTML = environment.serverLoc
@@ -338,6 +339,13 @@ export class HomePage  implements OnInit  {
       this.isFillTimetable = "solid"
 //      console.log("clickTimetable()")
       }, 500);
+  }
+
+  refresherAction(event) {
+    this.keeALiveStatus = this.keepalive.isKeepALive();
+    if (event) {
+      event.target.complete();
+    }
   }
  
 }

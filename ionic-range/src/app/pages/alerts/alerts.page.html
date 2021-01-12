@@ -16,6 +16,11 @@
   </ion-toolbar>
 </ion-header>
 <ion-content color="secondary">
+
+<ion-refresher slot="fixed" (ionRefresh)="refresherAction($event)">
+  <ion-refresher-content></ion-refresher-content>  
+</ion-refresher>
+
 <!-- List of Text Items -->
 <ion-list inset="true" lines="full">
   <div *ngFor="let a of items">

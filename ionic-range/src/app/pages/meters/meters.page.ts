@@ -28,28 +28,29 @@ export class MetersPage implements OnInit {
   ngOnInit() {
 
     setTimeout(()=> {
-//      console.log("[setTimeout]: after 5s");
-      this.apiService.getApiCB('electroMeterT1', (result) => {this.electroMeterT1 = result['value'].toFixed(2) });
-      this.apiService.getApiCB('electroMeterT2', (result) => {this.electroMeterT2 = result['value'].toFixed(2) });
-      this.apiService.getApiCB('warmMeter', (result) => {this.warmMeter = result['value'].toFixed(2) });
-      this.apiService.getApiCB('waterColdMeter', (result) => {this.waterColdMeter = result['value'].toFixed(2) });
-      this.apiService.getApiCB('waterHotMeter', (result) => {this.waterHotMeter = result['value'].toFixed(2) });
-    }, 50);
+      // console.log("[setTimeout]: after 5s");
+      this.doAll();
+    }, 500);
 
     setInterval(async ()=> {
       const isActive = this.isActiveApp();
       if (await isActive == true) {
 //        console.log("[setInterval]: every 60s - ACTIVE");
-        this.apiService.getApiCB('electroMeterT1', (result) => {this.electroMeterT1 = result['value'].toFixed(2) });
-        this.apiService.getApiCB('electroMeterT2', (result) => {this.electroMeterT2 = result['value'].toFixed(2) });
-        this.apiService.getApiCB('warmMeter', (result) => {this.warmMeter = result['value'].toFixed(2) });
-        this.apiService.getApiCB('waterColdMeter', (result) => {this.waterColdMeter = result['value'].toFixed(2) });
-        this.apiService.getApiCB('waterHotMeter', (result) => {this.waterHotMeter = result['value'].toFixed(2) });
+          this.doAll();
       }else {
 //        console.log("[setInterval]: every 60s - NOT ACTIVE");
       }
       },60000);       
   } // ngOnInit() finished
+
+  doAll() {
+    this.apiService.getApiCB('electroMeterT1', (result) => {this.electroMeterT1 = result['value'].toFixed(2) });
+    this.apiService.getApiCB('electroMeterT2', (result) => {this.electroMeterT2 = result['value'].toFixed(2) });
+    this.apiService.getApiCB('warmMeter', (result) => {this.warmMeter = result['value'].toFixed(2) });
+    this.apiService.getApiCB('waterColdMeter', (result) => {this.waterColdMeter = result['value'].toFixed(2) });
+    this.apiService.getApiCB('waterHotMeter', (result) => {this.waterHotMeter = result['value'].toFixed(2) });
+  }
+
 
   async isActiveApp() {
     return (await App.getState()).isActive
@@ -57,5 +58,12 @@ export class MetersPage implements OnInit {
 
   toHomePage() {
     this.router.navigate(['home']);  
+  }
+
+  refresherAction(event) {
+    this.doAll();
+    if (event) {
+      event.target.complete();
+    }
   }
 }

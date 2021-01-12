@@ -7,6 +7,11 @@
 </ion-header>
 
 <ion-content color="secondary" class="ion-padding">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresherAction($event)">
+    <ion-refresher-content></ion-refresher-content>  
+  </ion-refresher>
+
   <ion-grid fixed style="background-color: #3dc2ff">
     <ion-row>
       <ion-col class="width-100" style="background-color:#3dc2ff ;">

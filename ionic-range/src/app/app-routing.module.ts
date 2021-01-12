@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'introduction',
     loadChildren: () => import('./pages/introduction/introduction.module').then( m => m.IntroductionPageModule),
-    canActivate: [AuthGuardService]
+//    canActivate: [AuthGuardService]
   },
   {
     path: 'signup',

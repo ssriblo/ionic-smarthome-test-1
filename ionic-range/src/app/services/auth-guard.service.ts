@@ -34,10 +34,8 @@ export class AuthGuardService implements CanActivate {
       }else {
         this.router.navigate(['introduction']) 
         this.presentAlert();
-
       }
     });
-
 //    console.log('AuthGuard#canActivate called');
     return true;
   }
