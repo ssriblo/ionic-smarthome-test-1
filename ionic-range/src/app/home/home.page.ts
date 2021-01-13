@@ -59,15 +59,27 @@ export class HomePage  implements OnInit  {
   // ionViewDidEnter() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewDidEnter", dateTime.getTime() )}
   // ionViewWillLeave() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewWillLeave", dateTime.getTime() )}
   // ionViewDidLeave() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewDidLeave", dateTime.getTime() )}
-  ionViewWillLeave() {
-    console.log("[home.page - ionViewWillLeave()] mode=>>>>>>>>>>>>>>>>>", this.globalVar.mode)
-  }
 
   ionViewWillEnter() {
     // befor home page entering - let renovate all
-    this.initVars();
-    this.getMode(1);
-    console.log("$$$$$$$$$ ionViewWillEnter $$$$$$$ mode=", this.globalVar.mode)
+//    this.refreshAll(); // do not call "refreshAll()" here due to fault at runtime at getApiCB(...room_t_s...)
+  }
+
+  refreshAll() {
+    this.platform.ready().then(()=>{
+      this.initVars();
+      this.getMode(1);
+      this.updateTimeTabelStatus();
+      this.apiService.getApiCB('temperatureWeather', (result) => {this.weather_t_s = result['value'] });
+      this.apiService.getApiCB('temperatureRoom', (result) => {
+        let val = result['value']
+        if (val) { // need check due to fault at the start of Home Page
+          this.room_t_s  = val.toString(10).substring(0, 4); 
+        }
+      });
+      this.checkAllVals();
+      console.log("$$$$$$$$$ ionViewWillEnter $$$$$$$ mode=", this.globalVar.mode)
+      });
   }
 
   ngOnInit() {
@@ -140,6 +152,7 @@ export class HomePage  implements OnInit  {
         const isActive = this.isActiveApp();
         if (await isActive == true) {
           this.updateFaultStatus();
+          this.updateTimeTabelStatus();
           }
         },10000);      
       
@@ -207,7 +220,6 @@ export class HomePage  implements OnInit  {
   }
 
   initVars() {
-    this.room_t_s  = "20.5"
     this.storage.get('targetT').then((val) => {
       if(val){ this.rangeVal = val }else{
         val = 22;
@@ -315,20 +327,9 @@ export class HomePage  implements OnInit  {
     this.isFillComfort = "outline"
     this.isFillEconom = "outline"
     this.isFillTimetable = "solid"
-    let res = 0;
-    this.storage.get('comfortT').then((val) => {
-      this.comfortT = val
-      this.storage.get('economT').then((val) => {
-        this.economT = val
-      });
-    });
-    if (this.timeTableService.targetIsComfort() === true ) {
-      this.rangeVal = this.comfortT * 10
-    }else{
-      this.rangeVal = this.economT * 10
-    }
-//    console.log('[clickTimetable]: TartetT is', this.rangeVal)
 
+    this.updateTimeTabelStatus();
+    console.log('[clickTimetable]: TartetT is', this.rangeVal)
     this.timeTableService.postTimeTable(this.comfortT, this.economT);
     setTimeout(()=> {
       this.globalVar.mode = "TimeTable"
@@ -341,8 +342,25 @@ export class HomePage  implements OnInit  {
       }, 500);
   }
 
+  updateTimeTabelStatus() {
+    this.storage.get('comfortT').then((val) => {
+      this.comfortT = val
+      this.storage.get('economT').then((val) => {
+        this.economT = val
+      });
+    });
+    if (this.timeTableService.targetIsComfort() === true ) {
+      this.rangeVal = this.comfortT * 10
+    }else{
+      this.rangeVal = this.economT * 10
+    }
+    console.log("[updateTimeTabelStatus] ->->->->->->->->-> this.rangeVal", this.rangeVal);
+  }
+
   refresherAction(event) {
     this.keeALiveStatus = this.keepalive.isKeepALive();
+    this.refreshAll();
+//    console.log("[refresherAction] ->->->->->->->->-> ");
     if (event) {
       event.target.complete();
     }
