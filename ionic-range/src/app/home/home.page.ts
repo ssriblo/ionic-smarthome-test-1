@@ -269,6 +269,9 @@ export class HomePage  implements OnInit  {
     this.menu.toggle();
   }
 
+  toTutorial() {
+    this.router.navigate(['tutorial']);  
+  }
   async updateRange() {
     let val = await this.storage.get('targetT');
     console.log("<<<<<<< updateRange]val  this.rangeVal", val, this.rangeVal);
