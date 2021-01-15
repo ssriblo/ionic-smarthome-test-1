@@ -31,5 +31,4 @@ export class GlobalService {
   ];
   tt_active = [false, false, false];
 
-
 }

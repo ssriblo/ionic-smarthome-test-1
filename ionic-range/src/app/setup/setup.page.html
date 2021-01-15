@@ -54,37 +54,37 @@
     <ion-card  *ngFor="let tt_val of this.globalVar.tt_vals; let i = index;" [class]="this.globalVar.tt_active[i] ? 'cardTT active' : 'cardTT '">
       <ion-row>
         <ion-col class="KomfortTT">
-          <ion-label><h2>Комфорт</h2></ion-label>
+          <ion-label><h3>Комфорт</h3></ion-label>
           </ion-col>
           <ion-col class="">
-            <form [formGroup]="ionicForm[i]" (ngSubmit)="submitFormStart(i, ionicForm[i].value)" >
+            <form [formGroup]="ionicForm[i]" (ionChange)="submitFormStart(i, ionicForm[i].value)" >
               <ion-item lines="none" >
                 <ion-input 
                   class="inputformTT"
                   type="number"
                   required=true
                   debounce="0"
-                  formControlName="hours" >
+                  formControlName="hourStart" >
                 </ion-input>
               </ion-item>
             </form>
         </ion-col>
         <ion-icon size="small" name="remove-outline"></ion-icon>
         <ion-col class="">
-          <form [formGroup]="ionicForm[i]" (ngSubmit)="submitFormEnd(i, ionicForm[i].value)" >
+          <form [formGroup]="ionicForm[i]" (ionChange)="submitFormEnd(i, ionicForm[i].value)" >
             <ion-item lines="none" >
               <ion-input 
                 class="inputformTT"
                 type="number"
                 required=true
                 debounce="0"
-                formControlName="hours" >
+                formControlName="hourEnd" >
               </ion-input>
             </ion-item>
           </form>
         </ion-col>
         <ion-col>
-          <ion-icon size="large"  name="help-circle-outline" (click)=timeTableHelp()></ion-icon>
+          <ion-icon size="small"  name="help-circle-outline" (click)=timeTableHelp()></ion-icon>
         </ion-col>
       </ion-row>
 
@@ -98,7 +98,7 @@
         <ion-col [class]="this.globalVar.tt_days[i][6] ? 'day active' : 'day'" (click)="dayToggle(i,6)">Вс</ion-col>
     </ion-row>
     <ion-row>
-      <ion-label [class]="isErrorInterval[i] ? 'timeTableErrorOff' : 'timeTableErrorOn'">Неверный ввод - смотрите кнопку '?'"</ion-label>
+      <ion-label [class]="isGoodInterval[i] ? 'timeTableErrorOff' : 'timeTableErrorOn'">Неверный ввод - смотрите кнопку '?'</ion-label>
     </ion-row>
   </ion-card>
 
