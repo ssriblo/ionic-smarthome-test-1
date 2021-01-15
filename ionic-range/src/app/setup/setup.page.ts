@@ -10,6 +10,7 @@ import { AlertsPage } from "../pages/alerts/alerts.page";
 import { TimetableService } from "../services/timetable.service"
 import { Platform } from '@ionic/angular';
 import { SmartAudioService } from '../services/smart-audio.service';
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-setup',
@@ -23,6 +24,8 @@ export class SetupPage implements OnInit {
   testOption: string [] = this.globalVar.GlobalTestOption;
   isErrorInterval: boolean [] = [true, true, true];
   progress = 0;   
+  ionicForm: FormGroup;
+  isSubmitted = false;
 
   constructor( 
     public router: Router, 
@@ -34,6 +37,7 @@ export class SetupPage implements OnInit {
     private timeTableService: TimetableService,
     public platform:Platform,  
     public smartAudio: SmartAudioService,
+    public formBuilder: FormBuilder,
     ) { }
     
   
@@ -84,6 +88,10 @@ export class SetupPage implements OnInit {
       // ToDo: add here re-calculate and change background color of the TimeTable Panel
       this.timeTableService.targetIsComfort() 
     },60000);   
+
+    this.ionicForm = this.formBuilder.group({
+      hours: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]]
+    })
   } // ngOnInit()
 
   getTimeTable() {
@@ -281,4 +289,18 @@ export class SetupPage implements OnInit {
     }
   }
  
+  submitForm(ind, formData: any) {
+    console.log("[submitForm] formData", ind, formData, formData['hours']);
+
+    this.isSubmitted = true;
+    this.globalVar.tt_vals[ind].start = formData['hours']
+
+    if (!this.ionicForm.valid) {
+      console.log('Please provide all the required values!')
+      return false;
+    } else {
+      console.log(this.ionicForm.value)
+    }
+  }
+
 }

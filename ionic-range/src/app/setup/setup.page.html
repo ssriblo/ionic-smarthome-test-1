@@ -51,22 +51,27 @@
   <ion-toolbar  color="secondary" >
     <ion-title><h1>Расписание</h1></ion-title>
   </ion-toolbar>
-
       <ion-card  *ngFor="let tt_val of this.globalVar.tt_vals; let i = index;" [class]="this.globalVar.tt_active[i] ? 'cardTT active' : 'cardTT '">
         <ion-row>
           <ion-col class="KomfortTT">
               <ion-label><h1>Комфорт</h1></ion-label>
           </ion-col>
           <ion-col class="">
-            <ion-input 
+
+
+            <form [formGroup]="ionicForm" (ngSubmit)="submitForm(i, ionicForm.value)" >
+              <ion-item lines="full" >
+                <ion-input 
               class="inputformTT"
-              type="tel"
+              type="number"
               required=true
-              debounce="1000"
-              [(ngModel)]="tt_val.start"
-              (ionChange)="timeTableSetup(i)" >
+              debounce="0"
+              formControlName="hours" >
             </ion-input>
-          </ion-col>
+          </ion-item>
+        </form>
+
+        </ion-col>
             <ion-icon size="large" name="remove-outline"></ion-icon>
 <!--            <ion-label ><h1>__</h1></ion-label> -->
           <ion-col class="">
