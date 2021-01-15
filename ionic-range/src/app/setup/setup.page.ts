@@ -17,8 +17,8 @@ import { SmartAudioService } from '../services/smart-audio.service';
   styleUrls: ['./setup.page.scss'],
 })
 export class SetupPage implements OnInit {
-  public comfortInpVal: number = 22.5;
-  public economInpVal: number = 18;
+  public comfortInpVal  = 22.5;
+  public economInpVal = 18;
   private alertController = new AlertController()
   testOption: string [] = this.globalVar.GlobalTestOption;
   isErrorInterval: boolean [] = [true, true, true];
@@ -103,15 +103,13 @@ export class SetupPage implements OnInit {
     this.router.navigate(['home']);  
   }
 
-  comfortInput() {
-    this.updateComfortT(this.comfortInpVal);
-  }
-  economInput() {
-    this.updateEconomT(this.economInpVal);
-  }
-
-  updateComfortT(val) {
-    this.storage.set('comfortT', val);
+  updateComfortT() {
+    if (this.comfortInpVal > 30) { 
+      this.comfortInpVal = 30;
+      console.log("[updateComfortT] this.comfortInpVal=", this.comfortInpVal)
+    }
+    if (this.comfortInpVal < 7) { this.comfortInpVal = 7; }
+    this.storage.set('comfortT', this.comfortInpVal);
   }
 
   getComfortT() {
@@ -122,8 +120,10 @@ export class SetupPage implements OnInit {
     });  
   }
 
-  updateEconomT(val) {
-    this.storage.set('economT', val);
+  updateEconomT() {
+    if (this.economInpVal > 30) {this.economInpVal = 30};
+    if (this.economInpVal < 7) {this.economInpVal = 7};
+    this.storage.set('economT', this.economInpVal);
   }
 
   getEconomT() {

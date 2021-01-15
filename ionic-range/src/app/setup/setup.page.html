@@ -20,13 +20,10 @@
             <ion-label ><h1>Комфорт</h1></ion-label>
             <ion-input 
               class="inputform"
-              type="number"
+              type="tel"
               required=true
-              placeholder="22.5"
-              name=comfort-t
-              debounce="2000"
               [(ngModel)]="comfortInpVal"
-              (ionChange)="comfortInput()" >
+              (ionChange)="updateComfortT()" >
             </ion-input>
           </ion-item>
 
@@ -34,13 +31,10 @@
             <ion-label><h1>Эконом</h1></ion-label>
             <ion-input 
               class="inputform"
-              type="number" 
+              type="tel" 
               required=true
-              placeholder="18.5"
-              name="econom-t"
-              debounce="2000"
               [(ngModel)]="economInpVal"
-              (ionChange)="economInput()" >
+              (ionChange)="updateEconomT()" >
             </ion-input>
           </ion-item>
       </ion-col>
