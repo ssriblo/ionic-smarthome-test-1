@@ -51,44 +51,42 @@
   <ion-toolbar  color="secondary" >
     <ion-title><h1>Расписание</h1></ion-title>
   </ion-toolbar>
-      <ion-card  *ngFor="let tt_val of this.globalVar.tt_vals; let i = index;" [class]="this.globalVar.tt_active[i] ? 'cardTT active' : 'cardTT '">
-        <ion-row>
-          <ion-col class="KomfortTT">
-              <ion-label><h1>Комфорт</h1></ion-label>
+    <ion-card  *ngFor="let tt_val of this.globalVar.tt_vals; let i = index;" [class]="this.globalVar.tt_active[i] ? 'cardTT active' : 'cardTT '">
+      <ion-row>
+        <ion-col class="KomfortTT">
+          <ion-label><h2>Комфорт</h2></ion-label>
           </ion-col>
           <ion-col class="">
-
-
-            <form [formGroup]="ionicForm" (ngSubmit)="submitForm(i, ionicForm.value)" >
-              <ion-item lines="full" >
+            <form [formGroup]="ionicForm[i]" (ngSubmit)="submitFormStart(i, ionicForm[i].value)" >
+              <ion-item lines="none" >
                 <ion-input 
-              class="inputformTT"
-              type="number"
-              required=true
-              debounce="0"
-              formControlName="hours" >
-            </ion-input>
-          </ion-item>
-        </form>
-
+                  class="inputformTT"
+                  type="number"
+                  required=true
+                  debounce="0"
+                  formControlName="hours" >
+                </ion-input>
+              </ion-item>
+            </form>
         </ion-col>
-            <ion-icon size="large" name="remove-outline"></ion-icon>
-<!--            <ion-label ><h1>__</h1></ion-label> -->
-          <ion-col class="">
-
-          <ion-input 
-            class="inputformTT"
-            type="tel"
-            required=true
-            debounce="1000"
-            [(ngModel)]="tt_val.end"
-            (ionChange)="timeTableSetup(i)" >
-          </ion-input>
-          </ion-col>
-          <ion-col>
-            <ion-icon size="large"  name="help-circle-outline" (click)=timeTableHelp()></ion-icon>
-          </ion-col>
-          </ion-row>
+        <ion-icon size="small" name="remove-outline"></ion-icon>
+        <ion-col class="">
+          <form [formGroup]="ionicForm[i]" (ngSubmit)="submitFormEnd(i, ionicForm[i].value)" >
+            <ion-item lines="none" >
+              <ion-input 
+                class="inputformTT"
+                type="number"
+                required=true
+                debounce="0"
+                formControlName="hours" >
+              </ion-input>
+            </ion-item>
+          </form>
+        </ion-col>
+        <ion-col>
+          <ion-icon size="large"  name="help-circle-outline" (click)=timeTableHelp()></ion-icon>
+        </ion-col>
+      </ion-row>
 
       <ion-row>
         <ion-col [class]="this.globalVar.tt_days[i][0] ? 'day active' : 'day'" (click)="dayToggle(i,0)">Пн</ion-col>
@@ -100,7 +98,7 @@
         <ion-col [class]="this.globalVar.tt_days[i][6] ? 'day active' : 'day'" (click)="dayToggle(i,6)">Вс</ion-col>
     </ion-row>
     <ion-row>
-      <ion-label [class]="isErrorInterval[i] ? 'timeTableErrorOff' : 'timeTableErrorOn'">Начало интервала должно быть меньше конца интервала</ion-label>
+      <ion-label [class]="isErrorInterval[i] ? 'timeTableErrorOff' : 'timeTableErrorOn'">Неверный ввод - смотрите кнопку '?'"</ion-label>
     </ion-row>
   </ion-card>
 

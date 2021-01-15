@@ -24,7 +24,7 @@ export class SetupPage implements OnInit {
   testOption: string [] = this.globalVar.GlobalTestOption;
   isErrorInterval: boolean [] = [true, true, true];
   progress = 0;   
-  ionicForm: FormGroup;
+  ionicForm: FormGroup [];
   isSubmitted = false;
 
   constructor( 
@@ -89,9 +89,11 @@ export class SetupPage implements OnInit {
       this.timeTableService.targetIsComfort() 
     },60000);   
 
-    this.ionicForm = this.formBuilder.group({
-      hours: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]]
-    })
+    for (let j = 0; j < 3; j++) {
+      this.ionicForm[j] = this.formBuilder.group({
+        hours: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+      })
+    }
   } // ngOnInit()
 
   getTimeTable() {
@@ -225,22 +227,6 @@ export class SetupPage implements OnInit {
     await alert.present();
   }
   
-  timeTableSetup(ind) {
-    let start = this.globalVar.tt_vals[ind].start
-    let end = this.globalVar.tt_vals[ind].end
-    if (start > 23) {start = 23}
-    if (end > 24) {end = 24}
-    if (start < 0) {start = 0}
-    if (end < 1) {end = 1}
-//    this.isErrorInterval[ind] = (start < end)? true : false
-    if (start < end) {this.isErrorInterval[ind]=true}
-    if (start >= end) {this.isErrorInterval[ind]=false}
-//    console.log("[timetableSetup]", ind, this.globalVar.tt_vals[ind].start, this.globalVar.tt_vals[ind].end, this.isErrorInterval[ind])
-    this.globalVar.tt_vals[ind].start = Math.round(start)
-    this.globalVar.tt_vals[ind].end = Math.round(end)
-    this.timeTableService.updateTimeTable_vals(this.globalVar.tt_vals)
-  }
-
   dayToggle(i0:number, i1:number) {
     this.globalVar.tt_days[i0][i1] = !this.globalVar.tt_days[i0][i1]
     let res = false;
@@ -289,18 +275,51 @@ export class SetupPage implements OnInit {
     }
   }
  
-  submitForm(ind, formData: any) {
-    console.log("[submitForm] formData", ind, formData, formData['hours']);
-
+  submitFormStart(ind, formData: any) {
+    console.log("[submitFormStart] formData", ind, formData, formData['hours']);
     this.isSubmitted = true;
     this.globalVar.tt_vals[ind].start = formData['hours']
+    this.isErrorValidation(ind, !this.ionicForm[ind].valid)
+  }
 
-    if (!this.ionicForm.valid) {
-      console.log('Please provide all the required values!')
+  submitFormEnd(ind, formData: any) {
+    console.log("[submitFormEnd] formData", ind, formData, formData['hours']);
+    this.isSubmitted = true;
+    this.globalVar.tt_vals[ind].end = formData['hours']
+    this.isErrorValidation(ind, !this.ionicForm[ind].valid)
+  }
+
+  isErrorValidation(ind:number, isError:boolean) {
+    if (isError) {
+      console.log('Please provide all the required values! ind=', ind)
+      this.isErrorInterval[ind]=true
       return false;
     } else {
-      console.log(this.ionicForm.value)
+      console.log("[isErrorValidation] this.ionicForm[ind].value", this.ionicForm[ind].value, "ind=", ind)
+      let start = this.globalVar.tt_vals[ind].start
+      let end = this.globalVar.tt_vals[ind].end
+      if (start < end) {
+        this.isErrorInterval[ind]=false
+        this.timeTableService.updateTimeTable_vals(this.globalVar.tt_vals)
+      }
+      if (start >= end) {this.isErrorInterval[ind]=true}
     }
+  }
+
+  timeTableSetup(ind, ) { // not used more
+    let start = this.globalVar.tt_vals[ind].start
+    let end = this.globalVar.tt_vals[ind].end
+    if (start > 23) {start = 23}
+    if (end > 24) {end = 24}
+    if (start < 0) {start = 0}
+    if (end < 1) {end = 1}
+//    this.isErrorInterval[ind] = (start < end)? true : false
+    if (start < end) {this.isErrorInterval[ind]=true}
+    if (start >= end) {this.isErrorInterval[ind]=false}
+//    console.log("[timetableSetup]", ind, this.globalVar.tt_vals[ind].start, this.globalVar.tt_vals[ind].end, this.isErrorInterval[ind])
+    this.globalVar.tt_vals[ind].start = Math.round(start)
+    this.globalVar.tt_vals[ind].end = Math.round(end)
+    this.timeTableService.updateTimeTable_vals(this.globalVar.tt_vals)
   }
 
 }
