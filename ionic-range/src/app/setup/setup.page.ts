@@ -30,6 +30,7 @@ export class SetupPage implements OnInit {
   progress = 0;   
   ionicForm: FormGroup [] = [null, null, null];
   tt_days_active: boolean [] = [false, false, false];
+  ionicFormComfortEconom: FormGroup;
 
   constructor( 
     public router: Router, 
@@ -99,20 +100,31 @@ export class SetupPage implements OnInit {
         hourEnd: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
       })
     }
+    this.ionicFormComfortEconom = this.formBuilder.group({
+      Comfort: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+      Econom: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+    })
+    
+
 
     // Let re-create ioniForm with acutal values from Storage after some timeout
     setTimeout(()=> {
-    this.storage.get('tt_vals').then((val) => {
-      for (let j = 0; j < 3; j++) {
-        let start = val[j].start;
-        let end = val[j].end;
-        this.ionicForm[j] = this.formBuilder.group({
-          hourStart: [start, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
-          hourEnd: [end, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+        this.storage.get('tt_vals').then((val) => {
+        for (let j = 0; j < 3; j++) {
+          let start = val[j].start;
+          let end = val[j].end;
+          this.ionicForm[j] = this.formBuilder.group({
+            hourStart: [start, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+            hourEnd: [end, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+          })
+        }
+        this.checkWorkginInterval()
+        this.checkActiveInterval();
+        
+        this.ionicFormComfortEconom = this.formBuilder.group({
+          Comfort: [this.comfortInpVal, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+          Econom: [this.economInpVal, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
         })
-      }
-      this.checkWorkginInterval()
-      this.checkActiveInterval();
       }); 
     }, 2000);
 
@@ -373,6 +385,16 @@ export class SetupPage implements OnInit {
         this.isGoodInterval[j]=false;
         this.isWorkingInterval[j] = false;
       }
+    }
+  }
+
+  submitFormComfortEconom(formData: any) {
+    if (!formData.valid) {
+      console.log('Please provide all the required values! ind=')
+    } else {
+      let comfort = this.ionicFormComfortEconom.value['Comfort']
+      let econom = this.ionicFormComfortEconom.value['Econom']
+
     }
   }
 
