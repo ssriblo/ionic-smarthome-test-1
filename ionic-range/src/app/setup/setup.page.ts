@@ -22,13 +22,14 @@ export class SetupPage implements OnInit {
   public economInpVal = 18;
   private alertController = new AlertController()
   testOption: string [] = this.globalVar.GlobalTestOption;
-  // What difference between "isGoodInterwal" and "isWorkingInterwal" ?
+  // What difference between "isGoodInterwal" and "isWorkingInterval" ?
   // > at the start point isWorkingIntewal=FALSE and used for tt_active
   // > isGoodInterval=TRUE for start point and then they going the same values after first initialization
   isGoodInterval: boolean [] = [true, true, true];
-  isWorkingInterwal: boolean [] = [false, false, false];
+  isWorkingInterval: boolean [] = [false, false, false];
   progress = 0;   
   ionicForm: FormGroup [] = [null, null, null];
+  tt_days_active: boolean [] = [false, false, false];
 
   constructor( 
     public router: Router, 
@@ -79,11 +80,10 @@ export class SetupPage implements OnInit {
     }, 250 ); 
 
     setTimeout(()=> {
-//        console.log("[setup.page ngOnInit]: after 5s");
         this.getTimeTable();
         this.getComfortT();
         this.getEconomT();
-        console.log("setup.page >>>>>>> 2 seconds")
+//        console.log("setup.page >>>>>>> 2 seconds")
       }, 2000);
     }) 
 
@@ -92,12 +92,30 @@ export class SetupPage implements OnInit {
       this.timeTableService.targetIsComfort() 
     },60000);   
 
+    // Let create imediatelly initial value, let it value is empty (''). Because Storage reading take a long time
     for (let j = 0; j < 3; j++) {
       this.ionicForm[j] = this.formBuilder.group({
         hourStart: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
         hourEnd: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
       })
     }
+
+    // Let re-create ioniForm with acutal values from Storage after some timeout
+    setTimeout(()=> {
+    this.storage.get('tt_vals').then((val) => {
+      for (let j = 0; j < 3; j++) {
+        let start = val[j].start;
+        let end = val[j].end;
+        this.ionicForm[j] = this.formBuilder.group({
+          hourStart: [start, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+          hourEnd: [end, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+        })
+      }
+      this.checkWorkginInterval()
+      this.checkActiveInterval();
+      }); 
+    }, 2000);
+
   } // ngOnInit()
 
   getTimeTable() {
@@ -120,7 +138,6 @@ export class SetupPage implements OnInit {
   updateComfortT() {
     if (this.comfortInpVal > 30) { 
       this.comfortInpVal = 30;
-      console.log("[updateComfortT] this.comfortInpVal=", this.comfortInpVal)
     }
     if (this.comfortInpVal < 7) { this.comfortInpVal = 7; }
     this.storage.set('comfortT', this.comfortInpVal);
@@ -230,26 +247,6 @@ export class SetupPage implements OnInit {
     });
     await alert.present();
   }
-  
-  dayToggle(i0:number, i1:number) {
-    this.globalVar.tt_days[i0][i1] = !this.globalVar.tt_days[i0][i1]
-    let res = false;
-    for (let val of this.globalVar.tt_days[i0]) {
-      if (val === true) {
-        res = true;
-        break;
-      }
-    }
-    if ( (this.isWorkingInterwal[i0] === true)  && (res === true) ) {
-      this.globalVar.tt_active[i0] = true;
-    }else {
-      this.globalVar.tt_active[i0] = false;      
-    }
-//    console.log("dayToggle tt_active", i0, this.globalVar.tt_active[0], res)
-    this.timeTableService.updateTimeTable_days(this.globalVar.tt_days)
-    this.timeTableService.updateTimeTable_active(this.globalVar.tt_active)
-    return res;
-  }
 
   public async timeTableHelp() {
     const alert = await this.alertController.create({
@@ -282,40 +279,99 @@ export class SetupPage implements OnInit {
       event.target.complete();
     }
   }
- 
+  
+  checkDaysActive () {
+    // is at least one day is turn-on?
+    let res = false;
+    let days_active = [false, false, false];
+    for (let j = 0; j < 3; j++) {
+      for (let val of this.globalVar.tt_days[j]) {
+        if (val === true) {
+          days_active[j] = true;
+          break;
+        }
+      }
+    }
+//    console.log("[checkDaysActive] days_active",days_active);
+    return days_active;
+  }
+
+  dayToggle(i0:number, i1:number) {
+    this.globalVar.tt_days[i0][i1] = !this.globalVar.tt_days[i0][i1]
+    let val = this.checkDaysActive()[i0];
+    if ( (this.isWorkingInterval[i0] === true)  && (val === true) ) {
+      this.globalVar.tt_active[i0] = true;
+    }else {
+      this.globalVar.tt_active[i0] = false;      
+    }
+    this.timeTableService.updateTimeTable_days(this.globalVar.tt_days)
+    this.timeTableService.updateTimeTable_active(this.globalVar.tt_active)
+    return val;
+  }
+
+  checkActiveInterval() {
+    // similar to dayToggle(). Difference - this method called at the initialization and enumerate all intervals
+    let val = false;
+    for (let j = 0; j < 3; j++) {
+      val = this.checkDaysActive()[j];
+      if ( (this.isWorkingInterval[j] === true)  && (val === true) ) {
+        this.globalVar.tt_active[j] = true;
+      }else {
+        this.globalVar.tt_active[j] = false;      
+      }
+      this.timeTableService.updateTimeTable_active(this.globalVar.tt_active)
+    }
+  }
+
   submitFormStart(ind, formData: any) {
-    console.log("[submitFormStart] formData", ind, formData, formData['hourStart']);
-    this.globalVar.tt_vals[ind].start = formData['hourStart']
+//    console.log("[submitFormStart] formData", ind, formData, formData['hourStart']);
+//    this.globalVar.tt_vals[ind].start = formData['hourStart'] // value may be incorrect, let save only after validation
     this.isErrorValidation(ind, !this.ionicForm[ind].valid)
+    this.checkActiveInterval();
   }
 
   submitFormEnd(ind, formData: any) {
-    console.log("[submitFormEnd] formData", ind, formData, formData['hourEnd']);
-    this.globalVar.tt_vals[ind].end = formData['hourEnd']
+//    console.log("[submitFormEnd] formData", ind, formData, formData['hourEnd']);
+//    this.globalVar.tt_vals[ind].end = formData['hourEnd'] // value may be incorrect, let save only after validation
     this.isErrorValidation(ind, !this.ionicForm[ind].valid)
+    this.checkActiveInterval();
   }
 
   isErrorValidation(ind:number, isError:boolean) {
     if (isError) {
       console.log('Please provide all the required values! ind=', ind)
       this.isGoodInterval[ind]=false;
-      this.isWorkingInterwal[ind] = false;
+      this.isWorkingInterval[ind] = false;
       return false;
     } else {
-      console.log("[isErrorValidation] this.ionicForm[ind].value", this.ionicForm[ind].value, "ind=", ind)
+//      console.log("[isErrorValidation] this.ionicForm[ind].value", this.ionicForm[ind].value, "ind=", ind)
       let start = this.ionicForm[ind].value['hourStart']
       let end = this.ionicForm[ind].value['hourEnd']
       if (start < end) {
         this.isGoodInterval[ind]=true;
-        this.isWorkingInterwal[ind] = true;
+        this.isWorkingInterval[ind] = true;
         this.globalVar.tt_vals[ind].start = start
         this.globalVar.tt_vals[ind].end = end
-        console.log("[isErrorValidation] this.globalVar.tt_vals[ind].start/end", this.globalVar.tt_vals[ind].start, this.globalVar.tt_vals[ind].end, "ind=", ind)
+//        console.log("[isErrorValidation] this.globalVar.tt_vals[ind].start/end", this.globalVar.tt_vals[ind].start, this.globalVar.tt_vals[ind].end, "ind=", ind)
         this.timeTableService.updateTimeTable_vals(this.globalVar.tt_vals)
-      }
-      if (start >= end) {
+      }else {
         this.isGoodInterval[ind]=false;
-        this.isWorkingInterwal[ind] = false;
+        this.isWorkingInterval[ind] = false;
+      }
+    }
+  }
+
+  checkWorkginInterval() {
+    for (let j = 0; j < 3; j++) {
+      let start = this.ionicForm[j].value['hourStart']
+      let end = this.ionicForm[j].value['hourEnd']
+      console.log("[checkWorkginInterval]", j, start, end);
+      if (start < end) {
+        this.isGoodInterval[j]=true;
+        this.isWorkingInterval[j] = true;
+      }else {
+        this.isGoodInterval[j]=false;
+        this.isWorkingInterval[j] = false;
       }
     }
   }

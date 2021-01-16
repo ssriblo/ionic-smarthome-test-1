@@ -19,7 +19,7 @@ export class GlobalService {
   public isWaterSensorFault: boolean = false;
 
   mode:string = "Range"; // may be ["Timetable", "Comfort", "Econom", "Range"]
-  tt_vals = [
+  tt_vals = [  // note: lineX - not used yet
     {line0: "0", start:0, end:1},
     {line1: "1", start:0, end:1},
     {line2: "2", start:0, end:1},
@@ -29,6 +29,10 @@ export class GlobalService {
     [false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false],
   ];
+  // indicates that this TimeTable Interval has valid start/end hours and turn-on at some days
   tt_active = [false, false, false];
+  // indicates that on of 3 TimeTable Intervals has valid start/end hours and turn-on at some days
+  // tt_active_total = tt_active[0] OR tt_active[1] OR tt_active[2]
+  tt_active_total = false; 
 
 }
