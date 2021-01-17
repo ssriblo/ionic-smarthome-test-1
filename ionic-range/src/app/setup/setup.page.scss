@@ -1,10 +1,11 @@
 .inputformTT{
-    border-radius: 5px !important;
+//    border-radius: 5px !important;
     text-align: center;
-    font-size: 1.5em;
-    border: 2px solid #f1f1f1 !important;
+    font-size: 0.8em;
+    border: 1px solid #f1f1f1 !important;
     background: #a8dff8 !important;
-    padding: 3px 5px;
+    padding: 1px 2px;
+    min-width: 2rem;
 }
 
 .cardTT{
@@ -57,6 +58,17 @@
 
 .inputarea{
     background: #a8dff8 !important;
+}
+
+.inputdata{
+    border-radius: 5px !important;
+    text-align: center;
+    font-size: 1.5em;
+    border: 1px solid #f1f1f1 !important;
+    background: #a8dff8 !important;
+    padding: 1px 2px;
+    min-width: 2rem;
+    width: 30%;
 }
 
 .radioarea{

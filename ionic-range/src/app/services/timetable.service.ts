@@ -85,6 +85,13 @@ export class TimetableService {
   public updateTimeTable_active(val) { 
     this.storage.set('tt_active', val);
     this.globalVar.tt_active = val;
+    this.checkActiveTotal();
+  }
+
+  public logTimeTable_vals(){ // for debug only
+    this.storage.get('tt_vals').then((val) => {
+      console.log("[logTimeTable_vals]>>>>>>>>>>>> ", val);
+    }); 
   }
 
   public targetIsComfort(): boolean {
@@ -144,5 +151,13 @@ export class TimetableService {
     
     }) // postApi()
   } // postTimeTable
+
+  private checkActiveTotal() {
+    let res = false
+    for (let j = 0; j < 3; j++) {
+      if (this.globalVar.tt_active[j]) { res = true; }
+    }
+    this.globalVar.tt_active_total = res;
+  }
 
 }

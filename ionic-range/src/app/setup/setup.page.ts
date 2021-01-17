@@ -10,6 +10,7 @@ import { AlertsPage } from "../pages/alerts/alerts.page";
 import { TimetableService } from "../services/timetable.service"
 import { Platform } from '@ionic/angular';
 import { SmartAudioService } from '../services/smart-audio.service';
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-setup',
@@ -17,12 +18,22 @@ import { SmartAudioService } from '../services/smart-audio.service';
   styleUrls: ['./setup.page.scss'],
 })
 export class SetupPage implements OnInit {
-  public comfortInpVal: number = 22.5;
-  public economInpVal: number = 18;
+  public comfortInpVal  = 22.5;
+  public economInpVal = 18;
   private alertController = new AlertController()
   testOption: string [] = this.globalVar.GlobalTestOption;
-  isErrorInterval: boolean [] = [true, true, true];
+  // What difference between "isGoodInterwal" and "isWorkingInterval" ?
+  // > at the start point isWorkingIntewal=FALSE and used for tt_active
+  // > isGoodInterval=TRUE for start point and then they going the same values after first initialization
+  isGoodInterval: boolean [] = [true, true, true];
+  isWorkingInterval: boolean [] = [false, false, false];
   progress = 0;   
+  ionicForm: FormGroup [] = [null, null, null];
+  tt_days_active: boolean [] = [false, false, false];
+  ionicFormComfort: FormGroup;
+  ionicFormEconom: FormGroup;
+  isSubmittedComfort = false;
+  isSubmittedEconom = false;
 
   constructor( 
     public router: Router, 
@@ -34,6 +45,7 @@ export class SetupPage implements OnInit {
     private timeTableService: TimetableService,
     public platform:Platform,  
     public smartAudio: SmartAudioService,
+    public formBuilder: FormBuilder,
     ) { }
     
   
@@ -72,11 +84,10 @@ export class SetupPage implements OnInit {
     }, 250 ); 
 
     setTimeout(()=> {
-//        console.log("[setup.page ngOnInit]: after 5s");
         this.getTimeTable();
         this.getComfortT();
         this.getEconomT();
-        console.log("setup.page >>>>>>> 2 seconds")
+//        console.log("setup.page >>>>>>> 2 seconds")
       }, 2000);
     }) 
 
@@ -84,6 +95,46 @@ export class SetupPage implements OnInit {
       // ToDo: add here re-calculate and change background color of the TimeTable Panel
       this.timeTableService.targetIsComfort() 
     },60000);   
+
+    // Let create imediatelly initial value, let it value is empty (''). Because Storage reading take a long time
+    for (let j = 0; j < 3; j++) {
+      this.ionicForm[j] = this.formBuilder.group({
+        hourStart: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+        hourEnd: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+      })
+    }
+    this.ionicFormComfort = this.formBuilder.group({
+      Comfort: ['', [Validators.required, Validators.min(7), Validators.max(30) ]],
+    })
+    this.ionicFormEconom = this.formBuilder.group({
+      Econom: ['', [Validators.required, Validators.min(7), Validators.max(30) ]],
+    })
+  
+
+
+    // Let re-create ioniForm with acutal values from Storage after some timeout
+    setTimeout(()=> {
+        this.storage.get('tt_vals').then((val) => {
+        for (let j = 0; j < 3; j++) {
+          let start = val[j].start;
+          let end = val[j].end;
+          this.ionicForm[j] = this.formBuilder.group({
+            hourStart: [start, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+            hourEnd: [end, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+          })
+        }
+        this.checkWorkginInterval()
+        this.checkActiveInterval();
+        
+        this.ionicFormComfort = this.formBuilder.group({
+          Comfort: [this.comfortInpVal, [Validators.required, Validators.min(7), Validators.max(30) ]],
+        })
+        this.ionicFormEconom = this.formBuilder.group({
+          Econom: [this.economInpVal, [Validators.required, Validators.min(7), Validators.max(30) ]],
+        })
+      }); 
+    }, 2000);
+
   } // ngOnInit()
 
   getTimeTable() {
@@ -103,17 +154,6 @@ export class SetupPage implements OnInit {
     this.router.navigate(['home']);  
   }
 
-  comfortInput() {
-    this.updateComfortT(this.comfortInpVal);
-  }
-  economInput() {
-    this.updateEconomT(this.economInpVal);
-  }
-
-  updateComfortT(val) {
-    this.storage.set('comfortT', val);
-  }
-
   getComfortT() {
     this.storage.get('comfortT').then((val) => {
 //      console.log('comfortT is', val);
@@ -122,9 +162,6 @@ export class SetupPage implements OnInit {
     });  
   }
 
-  updateEconomT(val) {
-    this.storage.set('economT', val);
-  }
 
   getEconomT() {
     this.storage.get('economT').then((val) => {
@@ -216,38 +253,6 @@ export class SetupPage implements OnInit {
     });
     await alert.present();
   }
-  
-  timeTableSetup(ind) {
-    let start = this.globalVar.tt_vals[ind].start
-    let end = this.globalVar.tt_vals[ind].end
-    if (start > 23) {start = 23}
-    if (end > 24) {end = 24}
-    if (start < 0) {start = 0}
-    if (end < 1) {end = 1}
-//    this.isErrorInterval[ind] = (start < end)? true : false
-    if (start < end) {this.isErrorInterval[ind]=true}
-    if (start >= end) {this.isErrorInterval[ind]=false}
-//    console.log("[timetableSetup]", ind, this.globalVar.tt_vals[ind].start, this.globalVar.tt_vals[ind].end, this.isErrorInterval[ind])
-    this.globalVar.tt_vals[ind].start = Math.round(start)
-    this.globalVar.tt_vals[ind].end = Math.round(end)
-    this.timeTableService.updateTimeTable_vals(this.globalVar.tt_vals)
-  }
-
-  dayToggle(i0:number, i1:number) {
-    this.globalVar.tt_days[i0][i1] = !this.globalVar.tt_days[i0][i1]
-    let res = false;
-    for (let val of this.globalVar.tt_days[i0]) {
-      if (val === true) {
-        res = true;
-        break;
-      }
-    }
-    this.globalVar.tt_active[i0] = res;
-//    console.log("dayToggle tt_active", i0, this.globalVar.tt_active[0], res)
-    this.timeTableService.updateTimeTable_days(this.globalVar.tt_days)
-    this.timeTableService.updateTimeTable_active(this.globalVar.tt_active)
-    return res;
-  }
 
   public async timeTableHelp() {
     const alert = await this.alertController.create({
@@ -280,5 +285,130 @@ export class SetupPage implements OnInit {
       event.target.complete();
     }
   }
- 
+  
+  checkDaysActive () {
+    // is at least one day is turn-on?
+    let res = false;
+    let days_active = [false, false, false];
+    for (let j = 0; j < 3; j++) {
+      for (let val of this.globalVar.tt_days[j]) {
+        if (val === true) {
+          days_active[j] = true;
+          break;
+        }
+      }
+    }
+//    console.log("[checkDaysActive] days_active",days_active);
+    return days_active;
+  }
+
+  dayToggle(i0:number, i1:number) {
+    this.globalVar.tt_days[i0][i1] = !this.globalVar.tt_days[i0][i1]
+    let val = this.checkDaysActive()[i0];
+    if ( (this.isWorkingInterval[i0] === true)  && (val === true) ) {
+      this.globalVar.tt_active[i0] = true;
+    }else {
+      this.globalVar.tt_active[i0] = false;      
+    }
+    this.timeTableService.updateTimeTable_days(this.globalVar.tt_days)
+    this.timeTableService.updateTimeTable_active(this.globalVar.tt_active)
+    return val;
+  }
+
+  checkActiveInterval() {
+    // similar to dayToggle(). Difference - this method called at the initialization and enumerate all intervals
+    let val = false;
+    for (let j = 0; j < 3; j++) {
+      val = this.checkDaysActive()[j];
+      if ( (this.isWorkingInterval[j] === true)  && (val === true) ) {
+        this.globalVar.tt_active[j] = true;
+      }else {
+        this.globalVar.tt_active[j] = false;      
+      }
+      this.timeTableService.updateTimeTable_active(this.globalVar.tt_active)
+    }
+  }
+
+  submitFormStart(ind, formData: any) {
+//    console.log("[submitFormStart] formData", ind, formData, formData['hourStart']);
+//    this.globalVar.tt_vals[ind].start = formData['hourStart'] // value may be incorrect, let save only after validation
+    this.isErrorValidation(ind, !this.ionicForm[ind].valid)
+    this.checkActiveInterval();
+  }
+
+  submitFormEnd(ind, formData: any) {
+//    console.log("[submitFormEnd] formData", ind, formData, formData['hourEnd']);
+//    this.globalVar.tt_vals[ind].end = formData['hourEnd'] // value may be incorrect, let save only after validation
+    this.isErrorValidation(ind, !this.ionicForm[ind].valid)
+    this.checkActiveInterval();
+  }
+
+  isErrorValidation(ind:number, isError:boolean) {
+    if (isError) {
+      console.log('Please provide all the required values! ind=', ind)
+      this.isGoodInterval[ind]=false;
+      this.isWorkingInterval[ind] = false;
+      return false;
+    } else {
+//      console.log("[isErrorValidation] this.ionicForm[ind].value", this.ionicForm[ind].value, "ind=", ind)
+      let start = this.ionicForm[ind].value['hourStart']
+      let end = this.ionicForm[ind].value['hourEnd']
+      if (start < end) {
+        this.isGoodInterval[ind]=true;
+        this.isWorkingInterval[ind] = true;
+        this.globalVar.tt_vals[ind].start = start
+        this.globalVar.tt_vals[ind].end = end
+//        console.log("[isErrorValidation] this.globalVar.tt_vals[ind].start/end", this.globalVar.tt_vals[ind].start, this.globalVar.tt_vals[ind].end, "ind=", ind)
+        this.timeTableService.updateTimeTable_vals(this.globalVar.tt_vals)
+      }else {
+        this.isGoodInterval[ind]=false;
+        this.isWorkingInterval[ind] = false;
+      }
+    }
+  }
+
+  checkWorkginInterval() {
+    for (let j = 0; j < 3; j++) {
+      let start = this.ionicForm[j].value['hourStart']
+      let end = this.ionicForm[j].value['hourEnd']
+//      console.log("[checkWorkginInterval]", j, start, end);
+      if (start < end) {
+        this.isGoodInterval[j]=true;
+        this.isWorkingInterval[j] = true;
+      }else {
+        this.isGoodInterval[j]=false;
+        this.isWorkingInterval[j] = false;
+      }
+    }
+  }
+
+  submitFormComfort(formData: any) {
+    this.isSubmittedComfort = true;
+    if (!formData.valid) {
+//      console.log('Please provide all the required values! ind=')
+    } else {
+      let comfort = this.ionicFormComfort.value['Comfort']
+      this.comfortInpVal = comfort;
+      this.storage.set('comfortT', this.comfortInpVal);
+    }
+  }
+
+  submitFormEconom(formData: any) {
+    this.isSubmittedEconom = true;
+    if (!formData.valid) {
+//      console.log('Please provide all the required values! ind=')
+    } else {
+      let econom = this.ionicFormEconom.value['Econom']
+      this.economInpVal = econom;
+      this.storage.set('economT', this.economInpVal);
+    }
+  }
+
+  get errorControlComfort() {
+    return this.ionicFormComfort.controls;
+  }
+
+  get errorControlEconom() {
+    return this.ionicFormEconom.controls;
+  }  
 }

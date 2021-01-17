@@ -20,12 +20,15 @@ import { AlertsPage } from './pages/alerts/alerts.page';
 
 import { SmartAudioService } from  './services/smart-audio.service';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     IonicStorageModule.forRoot({
 //      name: '__mydb',
 //      driverOrder: ['indexeddb', 'sqlite', 'websql']
