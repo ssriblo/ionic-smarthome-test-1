@@ -30,7 +30,10 @@ export class SetupPage implements OnInit {
   progress = 0;   
   ionicForm: FormGroup [] = [null, null, null];
   tt_days_active: boolean [] = [false, false, false];
-  ionicFormComfortEconom: FormGroup;
+  ionicFormComfort: FormGroup;
+  ionicFormEconom: FormGroup;
+  isSubmittedComfort = false;
+  isSubmittedEconom = false;
 
   constructor( 
     public router: Router, 
@@ -100,11 +103,13 @@ export class SetupPage implements OnInit {
         hourEnd: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
       })
     }
-    this.ionicFormComfortEconom = this.formBuilder.group({
-      Comfort: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
-      Econom: ['', [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+    this.ionicFormComfort = this.formBuilder.group({
+      Comfort: ['', [Validators.required, Validators.min(7), Validators.max(30) ]],
     })
-    
+    this.ionicFormEconom = this.formBuilder.group({
+      Econom: ['', [Validators.required, Validators.min(7), Validators.max(30) ]],
+    })
+  
 
 
     // Let re-create ioniForm with acutal values from Storage after some timeout
@@ -121,9 +126,11 @@ export class SetupPage implements OnInit {
         this.checkWorkginInterval()
         this.checkActiveInterval();
         
-        this.ionicFormComfortEconom = this.formBuilder.group({
-          Comfort: [this.comfortInpVal, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
-          Econom: [this.economInpVal, [Validators.required, Validators.pattern('^([01]?[0-9]|2[0-4])$')]],
+        this.ionicFormComfort = this.formBuilder.group({
+          Comfort: [this.comfortInpVal, [Validators.required, Validators.min(7), Validators.max(30) ]],
+        })
+        this.ionicFormEconom = this.formBuilder.group({
+          Econom: [this.economInpVal, [Validators.required, Validators.min(7), Validators.max(30) ]],
         })
       }); 
     }, 2000);
@@ -147,14 +154,6 @@ export class SetupPage implements OnInit {
     this.router.navigate(['home']);  
   }
 
-  updateComfortT() {
-    if (this.comfortInpVal > 30) { 
-      this.comfortInpVal = 30;
-    }
-    if (this.comfortInpVal < 7) { this.comfortInpVal = 7; }
-    this.storage.set('comfortT', this.comfortInpVal);
-  }
-
   getComfortT() {
     this.storage.get('comfortT').then((val) => {
 //      console.log('comfortT is', val);
@@ -163,11 +162,6 @@ export class SetupPage implements OnInit {
     });  
   }
 
-  updateEconomT() {
-    if (this.economInpVal > 30) {this.economInpVal = 30};
-    if (this.economInpVal < 7) {this.economInpVal = 7};
-    this.storage.set('economT', this.economInpVal);
-  }
 
   getEconomT() {
     this.storage.get('economT').then((val) => {
@@ -377,7 +371,7 @@ export class SetupPage implements OnInit {
     for (let j = 0; j < 3; j++) {
       let start = this.ionicForm[j].value['hourStart']
       let end = this.ionicForm[j].value['hourEnd']
-      console.log("[checkWorkginInterval]", j, start, end);
+//      console.log("[checkWorkginInterval]", j, start, end);
       if (start < end) {
         this.isGoodInterval[j]=true;
         this.isWorkingInterval[j] = true;
@@ -388,14 +382,33 @@ export class SetupPage implements OnInit {
     }
   }
 
-  submitFormComfortEconom(formData: any) {
+  submitFormComfort(formData: any) {
+    this.isSubmittedComfort = true;
     if (!formData.valid) {
-      console.log('Please provide all the required values! ind=')
+//      console.log('Please provide all the required values! ind=')
     } else {
-      let comfort = this.ionicFormComfortEconom.value['Comfort']
-      let econom = this.ionicFormComfortEconom.value['Econom']
-
+      let comfort = this.ionicFormComfort.value['Comfort']
+      this.comfortInpVal = comfort;
+      this.storage.set('comfortT', this.comfortInpVal);
     }
   }
 
+  submitFormEconom(formData: any) {
+    this.isSubmittedEconom = true;
+    if (!formData.valid) {
+//      console.log('Please provide all the required values! ind=')
+    } else {
+      let econom = this.ionicFormEconom.value['Econom']
+      this.economInpVal = econom;
+      this.storage.set('economT', this.economInpVal);
+    }
+  }
+
+  get errorControlComfort() {
+    return this.ionicFormComfort.controls;
+  }
+
+  get errorControlEconom() {
+    return this.ionicFormEconom.controls;
+  }  
 }

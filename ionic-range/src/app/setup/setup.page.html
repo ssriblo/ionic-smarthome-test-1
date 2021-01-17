@@ -20,7 +20,7 @@
           <ion-label ><h1>Комфорт</h1></ion-label>
         </ion-col>
         <ion-col size=6 class="">
-          <form [formGroup]="ionicFormComfortEconom" (ionChange)="submitFormComfortEconom(ionicFormComfortEconom.value)" >
+          <form [formGroup]="ionicFormComfort" (ionChange)="submitFormComfort(ionicFormComfort.value)" novalidate>
             <ion-item class="inputarea"  lines="none">
               <ion-input 
                 class="inputdata"
@@ -30,6 +30,16 @@
                 formControlName="Comfort" >
               </ion-input>
             </ion-item>
+            <!-- Error messages -->
+            <span class="error ion-padding" *ngIf="isSubmittedEconom && errorControlComfort.Comfort.errors?.required">
+              Требуется число от 7 до 30
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmittedEconom && errorControlComfort.Comfort.errors?.min">
+              Требуется число > 6
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmittedEconom && errorControlComfort.Comfort.errors?.max">
+              Требуется число  < 31
+            </span>
           </form>
         </ion-col>
       </ion-row>
@@ -39,7 +49,7 @@
           <ion-label ><h1>Эконом</h1></ion-label>
         </ion-col>
         <ion-col size=6 class="">
-          <form [formGroup]="ionicFormComfortEconom" (ionChange)="submitFormComfortEconom(ionicFormComfortEconom.value)" >
+          <form [formGroup]="ionicFormEconom" (ionChange)="submitFormEconom(ionicFormEconom.value)" novalidate>
             <ion-item class="inputarea"  lines="none">
               <ion-input 
                 class="inputdata"
@@ -49,6 +59,16 @@
                 formControlName="Econom" >
               </ion-input>
             </ion-item>
+            <!-- Error messages -->
+            <span class="error ion-padding" *ngIf="isSubmittedEconom && errorControlEconom.Econom.errors?.required">
+              Требуется число от 7 до 30
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmittedEconom && errorControlEconom.Econom.errors?.min">
+              Требуется число > 6
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmittedEconom && errorControlEconom.Econom.errors?.max">
+              Требуется число  < 31
+            </span>
           </form>
         </ion-col>
       </ion-row>
