@@ -86,6 +86,7 @@ export class HomePage  implements OnInit  {
     this.platform.ready().then(()=>{
       this.refresherAction(null);
       this.initVars();
+      this.timeTableService.checkActiveTotal();
       document.getElementById("version").innerHTML = environment.version;
 //      document.getElementById("server-option").innerHTML = environment.serverLoc
     }) // this.platform.ready().then()
@@ -203,9 +204,15 @@ export class HomePage  implements OnInit  {
     this.apiService.getApiCB('targetTemperature', (result) => {
       let val = result['value']; 
       if ( this.rangeVal != val) {
-        this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
-        this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
-        console.log("[home.page][checkAllVals] - !!!!!!!!!!!!!!!!!!!!!!!! rangeval != targetTemperature; rangeVal=", this.rangeVal, "targetTemperature=", val)
+        if ( (this.rangeVal != NaN) || (this.globalVar.mode != null) || (this.globalVar.mode != "") || (this.comfortT != NaN) || (this.economT != NaN) ) {
+          this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
+          this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
+          console.log("[home.page][checkAllVals] - !!!!!!!POST rangeVal !!! rangeval != targetTemperature; rangeVal=", this.rangeVal, "targetTemperature=", val);
+          console.log("[home.page][checkAllVals] - !!!!!!!POST rangeVal !!! rangeval != targetTemperature; this.globalVar.mode=", this.globalVar.mode, "this.comfortT=", this.comfortT, "this.economT=",this.economT);
+        }else {
+          console.log("[home.page][checkAllVals] - !!!!!!!!!!!!!!!!!!!!!!!! rangeval != targetTemperature; rangeVal=", this.rangeVal, "targetTemperature=", val);
+          console.log("[home.page][checkAllVals] - !!!!!!!!!!!!!!!!!!!!!!!! rangeval != targetTemperature; this.globalVar.mode=", this.globalVar.mode, "this.comfortT=", this.comfortT, "this.economT=",this.economT);
+        }
       }
     });
   }

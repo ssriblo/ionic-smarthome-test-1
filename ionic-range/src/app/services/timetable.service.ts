@@ -152,12 +152,13 @@ export class TimetableService {
     }) // postApi()
   } // postTimeTable
 
-  private checkActiveTotal() {
+  public checkActiveTotal() {
     let res = false
     for (let j = 0; j < 3; j++) {
       if (this.globalVar.tt_active[j]) { res = true; }
     }
     this.globalVar.tt_active_total = res;
+//    console.log("[checkActiveTotal >>>>>>>>>>>>>>>>>>>> tt_active_total=", this.globalVar.tt_active_total);
   }
 
 }

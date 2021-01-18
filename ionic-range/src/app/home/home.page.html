@@ -118,7 +118,7 @@
         <ion-col>
           <ion-button [fill]="isFillTimetable" strong="true"  shape="round" size="large" 
             expand="full" color="primary" (click)="clickTimetable()" 
-            [disabled]="isDisabledTimetable" >Расписание</ion-button>
+            [disabled]="!this.globalVar.tt_active_total" >Расписание</ion-button>
         </ion-col>
       </ion-row>
   </ion-grid>
