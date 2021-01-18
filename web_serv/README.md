@@ -36,8 +36,7 @@ gcloud app deploy
 # https://www.linode.com/docs/quick-answers/linux/start-service-at-boot/
 # https://sysadmin.ru/articles/avtozapusk-v-linux
 
-#cat apiserver.service 
-# PATH: /lib/systemd/system  
+root@otoplenok:/lib/systemd/system# cat apiserver.service 
 [Unit]
 Decription=API Server Autostart script
 After=multi-user.target
@@ -50,5 +49,6 @@ Restart=always
 
 [Install]
 WantedBy=multi-user.target
+
 
 --------------

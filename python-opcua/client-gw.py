@@ -14,6 +14,7 @@ from data_parser import DataParserF8, DataParserB2
 from timetable_parser import DataParserTT
 from logging.handlers import RotatingFileHandler
 import traceback
+from datetime import datetime
 
 
 
@@ -105,6 +106,19 @@ def loggingAndCheckBrokenPipe(i, e):
     logging.error(f'EXCEPTION i={i} e[0]={e[0]}  e[1]={e[1]} {traceback.format_exc()}')
     traceback.print_exc()
     if ( str(type(e[0])).find("BrokenPipe") != -1 ):
+        lastEvent("1")
+    if ( str(e[0]).find("BrokenPipe") != -1 ):
+        lastEvent("2")
+################################################################################################
+def lastEvent(opt):
+    with open('lastEventBrokenPipeIndication.txt', 'a') as f:
+        now = datetime.now()
+        timestamp = datetime.timestamp(now)
+        dt_object = datetime.fromtimestamp(timestamp)
+        f.write(str(dt_object) + ' lastEvent at loggingAndCheckBrokenPipe(); opt=' + opt + '\n')
+        f.flush()
+        f.close()
+        time.sleep(1)
         sys.exit(1)
 ################################################################################################
 def testOnlyEception():
@@ -123,6 +137,7 @@ def testOnlyEception():
 
 ################################################################################################
 if __name__ == "__main__":
+#    lastEvent("1")
 #    logging.basicConfig(filename='./client-gw.log', filemode='a', format='%(levelname)s - %(asctime)s - %(message)s', level=logging.WARN)
     log_formatter = logging.Formatter('%(asctime)s %(levelname)s (%(lineno)d) %(message)s')
     logFile = './client-gw.log'

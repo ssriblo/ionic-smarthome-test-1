@@ -189,8 +189,7 @@ or
 # https://sysadmin.ru/articles/avtozapusk-v-linux
 
 ## Autostart:
-#cat apiserver.service 
-# PATH: /lib/systemd/system  
+root@otoplenok:/lib/systemd/system# cat opcua-client.service 
 [Unit]
 Description=OPC UA Client Autostart script
 After=multi-user.target
