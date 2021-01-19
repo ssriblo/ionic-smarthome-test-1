@@ -330,7 +330,7 @@ export class SetupPage implements OnInit {
   }
 
   submitFormStart(ind, formData: any) {
-//    console.log("[submitFormStart] formData", ind, formData, formData['hourStart']);
+//    console.log("[submitFormStart] formData", ind, formData, formData['hourStart'], this.ionicForm[ind].valid);
 //    this.globalVar.tt_vals[ind].start = formData['hourStart'] // value may be incorrect, let save only after validation
     this.isErrorValidation(ind, !this.ionicForm[ind].valid)
     this.checkActiveInterval();
@@ -383,26 +383,31 @@ export class SetupPage implements OnInit {
   }
 
   submitFormComfort(formData: any) {
+//    console.log("[submitFormComfort] formData=", this.ionicFormComfort, this.ionicFormComfort.valid);
     this.isSubmittedComfort = true;
-    if (!formData.valid) {
-//      console.log('Please provide all the required values! ind=')
-    } else {
+    if (this.ionicFormComfort.valid) {
       let comfort = this.ionicFormComfort.value['Comfort']
       this.comfortInpVal = comfort;
       this.storage.set('comfortT', this.comfortInpVal);
+//      console.log("[submitFormComfort] 11 comfort=", comfort);
+    } else {
+      console.log('Please provide all the required values! ind=')
     }
   }
 
   submitFormEconom(formData: any) {
-    this.isSubmittedEconom = true;
-    if (!formData.valid) {
-//      console.log('Please provide all the required values! ind=')
-    } else {
-      let econom = this.ionicFormEconom.value['Econom']
-      this.economInpVal = econom;
-      this.storage.set('economT', this.economInpVal);
-    }
+//  console.log("[submitFormEconom] formData=", this.ionicFormEconom, this.ionicFormEconom.valid);
+  this.isSubmittedComfort = true;
+  if (this.ionicFormEconom.valid) {
+    let econom = this.ionicFormEconom.value['Econom']
+    this.economInpVal = econom;
+    this.storage.set('economT', this.economInpVal);
+//    console.log("[submitFormEconom] 11 comfort=", econom);
+  } else {
+    console.log('Please provide all the required values! ind=')
   }
+}  
+
 
   get errorControlComfort() {
     return this.ionicFormComfort.controls;
