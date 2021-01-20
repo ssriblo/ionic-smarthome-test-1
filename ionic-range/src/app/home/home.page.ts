@@ -337,14 +337,13 @@ export class HomePage  implements OnInit  {
     this.isFillComfort = "outline"
     this.isFillEconom = "outline"
     this.isFillTimetable = "solid"
-
-    this.updateTimeTabelStatus();
-    console.log('[clickTimetable]: TartetT is', this.rangeVal)
-    this.timeTableService.postTimeTable(this.comfortT, this.economT);
     setTimeout(()=> {
       this.globalVar.mode = "TimeTable"
-      console.log("clickTimetable() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
       this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
+      this.updateTimeTabelStatus();
+      console.log('[clickTimetable]: TartetT is', this.rangeVal)
+      this.timeTableService.postTimeTable(this.comfortT, this.economT);
+      console.log("clickTimetable() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
       this.isFillComfort = "outline"
       this.isFillEconom = "outline"
       this.isFillTimetable = "solid"
