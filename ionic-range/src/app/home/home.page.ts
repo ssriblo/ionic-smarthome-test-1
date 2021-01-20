@@ -353,18 +353,21 @@ export class HomePage  implements OnInit  {
   }
 
   updateTimeTabelStatus() {
-    this.storage.get('comfortT').then((val) => {
-      this.comfortT = val
-      this.storage.get('economT').then((val) => {
-        this.economT = val
+    this.globalVar.mode = this.timeTableService.getTimeTable_mode()
+    if (this.globalVar.mode === "TimeTable") {
+      this.storage.get('comfortT').then((val) => {
+        this.comfortT = val
+        this.storage.get('economT').then((val) => {
+          this.economT = val
+        });
       });
-    });
-    if (this.timeTableService.targetIsComfort() === true ) {
-      this.rangeVal = this.comfortT * 10
-    }else{
-      this.rangeVal = this.economT * 10
+      if (this.timeTableService.targetIsComfort() === true ) {
+        this.rangeVal = this.comfortT * 10
+      }else{
+        this.rangeVal = this.economT * 10
+      }
+      console.log("[updateTimeTabelStatus] ->->->->->->->->-> this.rangeVal", this.rangeVal);
     }
-    console.log("[updateTimeTabelStatus] ->->->->->->->->-> this.rangeVal", this.rangeVal);
   }
 
   refresherAction(event) {
