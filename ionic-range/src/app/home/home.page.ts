@@ -61,6 +61,7 @@ export class HomePage  implements OnInit  {
   // ionViewDidLeave() {let  dateTime = new Date(); console.log(">>>>>>>>> ionViewDidLeave", dateTime.getTime() )}
 
   ionViewWillEnter() {
+    this.getMode(3);
     // befor home page entering - let renovate all
 //    this.refreshAll(); // do not call "refreshAll()" here due to fault at runtime at getApiCB(...room_t_s...)
   }
