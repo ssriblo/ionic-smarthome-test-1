@@ -97,10 +97,10 @@ export class HomePage  implements OnInit  {
         App.exitApp();
       }
     });
-
-    setInterval( () => {  
-      this.progress += .1;  
-    }, 250 );  
+    var refreshIntervalId = setInterval( () => {  
+      this.progress += .15; 
+      console.log("********** 0.1"); 
+    }, 200 );  
       
     setTimeout(()=> {
 //      console.log("[setTimeout]: after 2.5s");
@@ -109,6 +109,8 @@ export class HomePage  implements OnInit  {
       this.getMode(2);
       this.timeTableService.timeTableInit(false)
       this.keepalive.postKeepALive();
+      this.timeTableService.checkActiveTotal();
+      clearInterval(refreshIntervalId);
     }, 2500);
 
     setTimeout(()=> {
@@ -220,6 +222,7 @@ export class HomePage  implements OnInit  {
   public getMode(opt) { // opt - for debug, to find out who call it
     this.timeTableService.timeTableInit(false)
     this.globalVar.mode = this.timeTableService.getTimeTable_mode()
+    console.log("[getMode] >>>>>>>>>>>>>>---->>>>>>>> opt=", opt, "mode=", this.globalVar.mode);
     if ( this.globalVar.mode == "Comfort" ) { this.clickComfort() }
     if ( this.globalVar.mode == "Econom" ) { this.clickEconom() }
     if ( this.globalVar.mode == "TimeTable" ) { this.clickTimetable() }
@@ -294,7 +297,7 @@ export class HomePage  implements OnInit  {
         this.isFillComfort = "outline"
         this.isFillEconom = "outline"
         this.isFillTimetable = "outline"
-        this.globalVar.mode = "Range444444"
+        this.globalVar.mode = "Range"
         console.log("updateRange() mode=>>>>>>> this.globalVar.mode, this.rangeVal, this.comfortT, this.economT >>>>>>>>>>>>>", this.globalVar.mode, this.rangeVal, this.comfortT*10, this.economT*10)
         this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
         }     
@@ -305,6 +308,9 @@ export class HomePage  implements OnInit  {
     this.storage.get('comfortT').then((val) => {
 //      console.log('[clickComfort]: comfortT is', val)
       this.rangeVal = (val == null)? 22.5 * 10 : val * 10
+      this.globalVar.mode = "Comfort"
+      console.log("clickComfort() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+      this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
     });
     setTimeout(()=> {
       this.globalVar.mode = "Comfort"
@@ -321,6 +327,9 @@ export class HomePage  implements OnInit  {
     this.storage.get('economT').then((val) => {
 //      console.log('[clickEconom]: economT is', val)
       this.rangeVal = (val == null)? 18.5 * 10 : val * 10
+      this.globalVar.mode = "Econom"
+      console.log("clickEconom() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+      this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
     });
     setTimeout(()=> {
       this.globalVar.mode = "Econom"
@@ -365,7 +374,7 @@ export class HomePage  implements OnInit  {
       }else{
         this.rangeVal = this.economT * 10
       }
-      console.log("[updateTimeTabelStatus] ->->->->->->->->-> this.rangeVal", this.rangeVal);
+      console.log("[updateTimeTabelStatus] ->->->->->->->->-> this.rangeVal", this.rangeVal, this.globalVar.mode );
     }
   }
 
