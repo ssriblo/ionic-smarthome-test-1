@@ -157,7 +157,7 @@ export class HomePage  implements OnInit  {
         const isActive = this.isActiveApp();
         if (await isActive == true) {
           this.updateFaultStatus();
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!          this.updateTimeTabelStatus();
+          this.updateTimeTabelStatus();
           }
         },10000);      
       
@@ -208,11 +208,15 @@ export class HomePage  implements OnInit  {
     this.apiService.getApiCB('targetTemperature', (result) => {
       let val = result['value']; 
       if ( this.rangeVal != val) {
-        if ( (this.rangeVal != NaN) || (this.globalVar.mode != null) || (this.globalVar.mode != "") || (this.comfortT != NaN) || (this.economT != NaN) ) {
-          this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
-          this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
-          console.log("[home.page][checkAllVals] - !!!!!!!POST rangeVal !!! rangeval != targetTemperature; rangeVal=", this.rangeVal, "targetTemperature=", val);
-          console.log("[home.page][checkAllVals] - !!!!!!!POST rangeVal !!! rangeval != targetTemperature; this.globalVar.mode=", this.globalVar.mode, "this.comfortT=", this.comfortT, "this.economT=",this.economT);
+        if ( (this.rangeVal != NaN) && (this.rangeVal != undefined)
+          && (this.globalVar.mode != null) && (this.globalVar.mode != undefined)
+          && (this.globalVar.mode != "") 
+          && (this.comfortT != NaN) && (this.economT != NaN) 
+          && (this.comfortT != undefined) && (this.economT != undefined) ) {
+            this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
+            this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
+            console.log("[home.page][checkAllVals] - !!!!!!!POST rangeVal !!! rangeval != targetTemperature; rangeVal=", this.rangeVal, "targetTemperature=", val);
+            console.log("[home.page][checkAllVals] - !!!!!!!POST rangeVal !!! rangeval != targetTemperature; this.globalVar.mode=", this.globalVar.mode, "this.comfortT=", this.comfortT, "this.economT=",this.economT);
         }else {
           console.log("[home.page][checkAllVals] - !!!!!!!!!!!!!!!!!!!!!!!! rangeval != targetTemperature; rangeVal=", this.rangeVal, "targetTemperature=", val);
           console.log("[home.page][checkAllVals] - !!!!!!!!!!!!!!!!!!!!!!!! rangeval != targetTemperature; this.globalVar.mode=", this.globalVar.mode, "this.comfortT=", this.comfortT, "this.economT=",this.economT);
@@ -287,8 +291,8 @@ export class HomePage  implements OnInit  {
   async updateRange() {
     let val = await this.storage.get('targetT');
     console.log("<<<<<<< updateRange]val  this.rangeVal", val, this.rangeVal);
-    if ( val  === this.rangeVal) {
-      // do nothing
+    if ( (val  === this.rangeVal)  || ( this.rangeVal === NaN ) ) {
+        // do nothing
     }else {   
       this.storage.set('targetT', this.rangeVal);
       this.apiService.postApi('updateTargetTemperature', {"id":"target_room_t", "value":this.rangeVal})
@@ -302,7 +306,7 @@ export class HomePage  implements OnInit  {
         this.globalVar.mode = "Range"
         console.log("updateRange() mode=>>>>>>> this.globalVar.mode, this.rangeVal, this.comfortT, this.economT >>>>>>>>>>>>>", this.globalVar.mode, this.rangeVal, this.comfortT*10, this.economT*10)
         this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
-        }     
+      }  
     }
   }
 
