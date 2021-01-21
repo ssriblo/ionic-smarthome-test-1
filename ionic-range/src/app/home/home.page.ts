@@ -157,7 +157,7 @@ export class HomePage  implements OnInit  {
         const isActive = this.isActiveApp();
         if (await isActive == true) {
           this.updateFaultStatus();
-          this.updateTimeTabelStatus();
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!          this.updateTimeTabelStatus();
           }
         },10000);      
       
@@ -317,6 +317,7 @@ export class HomePage  implements OnInit  {
     setTimeout(()=> {
       this.globalVar.mode = "Comfort"
       console.log("clickComfort() mode=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.globalVar.mode)
+      console.log("clickComfort() mode=>>>>>>> this.globalVar.mode, this.rangeVal, this.comfortT, this.economT >>>>>>>>>>>>>", this.globalVar.mode, this.rangeVal, this.comfortT*10, this.economT*10)
       this.timeTableService.updateTimeTable_mode(this.globalVar.mode, this.comfortT, this.economT);
       this.isFillComfort = "solid"
       this.isFillEconom = "outline"
@@ -364,13 +365,13 @@ export class HomePage  implements OnInit  {
 
   updateTimeTabelStatus() {
     this.globalVar.mode = this.timeTableService.getTimeTable_mode()
-    if (this.globalVar.mode === "TimeTable") {
-      this.storage.get('comfortT').then((val) => {
-        this.comfortT = val
-        this.storage.get('economT').then((val) => {
-          this.economT = val
-        });
+    this.storage.get('comfortT').then((val) => {
+      this.comfortT = val
+      this.storage.get('economT').then((val) => {
+        this.economT = val
       });
+    });
+    if (this.globalVar.mode === "TimeTable") {
       if (this.timeTableService.targetIsComfort() === true ) {
         this.rangeVal = this.comfortT * 10
       }else{
