@@ -62,6 +62,7 @@ export class HomePage  implements OnInit  {
 
   ionViewWillEnter() {
     this.getMode(3);
+    this.updateTimeTabelStatus();
     // befor home page entering - let renovate all
 //    this.refreshAll(); // do not call "refreshAll()" here due to fault at runtime at getApiCB(...room_t_s...)
   }
