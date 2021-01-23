@@ -23,7 +23,7 @@ const { App } = Plugins;
 })
 
 export class HomePage  implements OnInit  {
-  rangeVal:number;
+  rangeVal: number = 20;
   comfortT: number;
   economT: number;
   weather_t_s:string = "";

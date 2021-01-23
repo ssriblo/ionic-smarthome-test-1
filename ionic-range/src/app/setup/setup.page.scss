@@ -11,15 +11,13 @@
 .cardTT{
     border-radius: 8px !important;
     padding: 3px 5px;
-//    border: 2px solid #545ca7;
-//    background: #a8dff8 !important;
+    border: 4px double #545ca7;
 }
 
 .cardTT.active{
     border-radius: 8px !important;
     padding: 3px 5px;
-    border: 3px solid #545ca7;
-//    background: #a8dff8 !important;
+    border: 4px solid #545ca7;
 }
 
 
@@ -72,7 +70,7 @@
 }
 
 .radioarea{
-    background: #3dc2ff !important;
+    background: secondary !important;
 }
 
 ion-select {
