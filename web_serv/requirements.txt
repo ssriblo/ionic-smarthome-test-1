@@ -32,7 +32,7 @@ openapi-spec-validator==0.2.9
 protobuf==3.12.2
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-PyJWT==1.7.1
+PyJWT==2.4.0
 pylint==2.5.3
 pyrsistent==0.16.0
 pytz==2020.1
