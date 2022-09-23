@@ -28,7 +28,7 @@ mccabe==0.6.1
 numpy==1.19.4
 opcua==0.98.12
 openapi-spec-validator==0.2.9
-protobuf==3.12.4
+protobuf==3.18.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pylint==2.5.3
